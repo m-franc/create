@@ -12,7 +12,8 @@
 <h2><%= @project.description %></h2>
 <p>calendar</p>
 <p>members</p>
-<p>task</p>
+
+<%= link_to "Task", project_tasks_path(@project) %>
 <h2><%= @project.notes %></h2>
 <p>document</p>
 <h2>Place: <%= @project.location %></h2>

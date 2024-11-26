@@ -60,6 +60,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_26_143438) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
+  create_table "project_users", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_project_users_on_project_id"
+    t.index ["user_id"], name: "index_project_users_on_user_id"
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string "name"
     t.string "notes"
@@ -73,6 +82,29 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_26_143438) do
     t.date "starting_date"
     t.date "end_date"
     t.index ["user_id"], name: "index_projects_on_user_id"
+  end
+
+  create_table "task_users", force: :cascade do |t|
+    t.bigint "task_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_task_users_on_task_id"
+    t.index ["user_id"], name: "index_task_users_on_user_id"
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.string "location"
+    t.date "date"
+    t.boolean "status"
+    t.string "deadline"
+    t.string "priority"
+    t.bigint "project_user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_user_id"], name: "index_tasks_on_project_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -97,5 +129,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_26_143438) do
   add_foreign_key "conversations", "projects"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "users"
+  add_foreign_key "project_users", "projects"
+  add_foreign_key "project_users", "users"
   add_foreign_key "projects", "users"
+  add_foreign_key "task_users", "tasks"
+  add_foreign_key "task_users", "users"
+  add_foreign_key "tasks", "project_users"
 end
