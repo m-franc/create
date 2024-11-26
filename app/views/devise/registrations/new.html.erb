@@ -19,13 +19,11 @@
     <%= f.input :password_confirmation,
                 required: true,
                 input_html: { autocomplete: "new-password" } %>
-    <%= form_with model: current_user, local: true do |f| %>
     <div class="form-group">
       <%= f.label :profile_image, "Upload Profile Image" %>
       <%= f.file_field :profile_image, class: "form-control" %>
     </div>
   </div>
-
   <div class="form-actions">
     <%= f.button :submit, "Sign up" %>
   </div>

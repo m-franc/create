@@ -18,14 +18,13 @@ class ProjectsController < ApplicationController
   # POST /projects
   def create
     @project = Project.new(project_params)
+    @project.user = current_user
 
-    if @project.save
+    if @project.save!
       flash[:notice] = "Project created ✅"
       redirect_to @project
     else
-      Rails.logger.error(@project.errors.full_messages)
-      flash[:alert] = "Error: Unable to create project"
-      render :new
+      raise
     end
   end
 
@@ -59,6 +58,6 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:name, :location, :status, :notes, :date, :image)
+    params.require(:project).permit(:name, :location, :status, :notes, :date, :image, :description)
   end
 end
