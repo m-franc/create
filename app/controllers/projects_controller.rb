@@ -51,7 +51,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-
   # DELETE /projects/:id
   # Supprime un projet existant
   def destroy
@@ -65,9 +64,7 @@ class ProjectsController < ApplicationController
   # Définit le projet à manipuler
 
   def set_project
-    def set_project
-      @project = Project.find(params[:id]) if params[:id].present?
-    end
+    @project = Project.find(params[:id]) if params[:id].present?
   end
 
   # Filtre les paramètres autorisés pour un projet
