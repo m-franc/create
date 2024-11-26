@@ -1,0 +1,75 @@
+.bottom-menu {
+  position: fixed;
+  bottom: 15px; /* 15px depuis le bas */
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 30px); /* Largeur ajustée avec 15px de chaque côté */
+  height: 80px; /* Hauteur du menu */
+  background-color: #B9050E; /* Couleur de fond */
+  display: flex;
+  justify-content: space-evenly; /* Espacement uniforme (icônes + bords) */
+  align-items: center; /* Centre les icônes verticalement */
+  padding: 10px 15px; /* Ajuste l'espacement interne */
+  border-radius: 40px; /* Arrondi parfait */
+  z-index: 10;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+
+  .menu-item {
+    position: relative; /* Pour positionner le texte par rapport à l'icône */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centre les icônes */
+    color: #F9F9F9;
+    text-align: center;
+    cursor: pointer;
+
+    .icon-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: translateY(0); /* Par défaut, l'icône est centrée */
+      transition: transform 0.2s ease-out; /* Animation douce */
+    }
+
+    .icon {
+      width: 56px; /* Taille des icônes */
+      height: 56px;
+    }
+
+    .menu-label {
+      position: absolute; /* Texte absolu pour ne pas influencer l'icône */
+      top: 120%; /* Par défaut, le texte est bien en dessous de l'icône */
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 16px; /* Taille du texte */
+      font-weight: 500;
+      opacity: 0; /* Par défaut, le texte est caché */
+      pointer-events: none; /* Empêche d'interagir avec le texte */
+      transition: opacity 0.3s ease-in-out, top 0.2s ease-out; /* Animation pour l'apparition et le déplacement */
+    }
+
+    &.active {
+      .icon-container {
+        transform: translateY(-12px); /* Monte davantage l'icône active */
+      }
+
+      .menu-label {
+        opacity: 1; /* Affiche le texte lorsque l'icône est active */
+        top: 70%; /* Fait remonter le texte plus près de l'icône */
+      }
+    }
+  }
+
+  .active-ellipse {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    filter: blur(35px);
+    transform: translateX(0); /* Position initiale */
+    transition: transform 0.2s cubic-bezier(0.25, 0.1, 0.25, 1); /* Animation fluide */
+    z-index: -1; /* Derrière les icônes */
+  }
+}
