@@ -1,0 +1,15 @@
+<h1>All Conversations</h1>
+
+<%= link_to "New Conversation", new_conversation_path, class: "btn btn-primary mb-3" %>
+
+<% if @conversations.any? %>
+  <ul>
+    <% @conversations.each do |conversation| %>
+      <li>
+        <%= link_to conversation.name || "Untitled Conversation", conversation_path(conversation) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No conversations found. <%= link_to "Create a new one", new_conversation_path %>.</p>
+<% end %>
