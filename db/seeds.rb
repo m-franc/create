@@ -8,8 +8,17 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 Project.destroy_all
-# Crée 10 projets avec des titres aléatoires
-10.times do |i|
- Project.create(name: "Projet #{i + 1}")
+
+User.destroy_all
+
+# Crée un utilisateur
+user = User.create!(email: "carapuce@test.com", username: 'Carapuce', password: 'carapuce')
+
+# Crée 5 projets avec des noms uniques, associés à cet utilisateur
+5.times do |i|
+  Project.create!(name: "Projet #{i + 1}", user: user)
 end
-puts "10 projets créés avec succès !"
+
+puts "5 projets créés avec succès pour l'utilisateur #{user.username} !"
+
+

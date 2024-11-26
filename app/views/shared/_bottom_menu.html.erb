@@ -7,32 +7,35 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <nav class="bottom-menu" data-controller="bottom-menu">
-    <div class="menu-item active" data-menu="home" data-action="click->bottom-menu#selectMenu" data-bottom-menu-target="menuItem">
-      <div class="icon-container">
+  <div class="mobile-only">
+    <nav class="bottom-menu" data-controller="bottom-menu">
+      <div class="menu-item active" data-menu="home" data-action="click->bottom-menu#selectMenu" data-bottom-menu-target="menuItem">
+        <div class="icon-container">
+          <%= inline_svg_tag "icons/home.svg", class: "icon" %>
+        </div>
+        <span class="menu-label">Home</span>
       </div>
-      <span class="menu-label">Home</span>
-    </div>
-    <div class="menu-item" data-menu="create" data-action="click->bottom-menu#selectMenu" data-bottom-menu-target="menuItem">
-      <div class="icon-container">
-        <%= inline_svg_tag "icons/create.svg", class: "icon" %>
+      <div class="menu-item" data-menu="create" data-action="click->bottom-menu#selectMenu" data-bottom-menu-target="menuItem">
+        <div class="icon-container">
+          <%= inline_svg_tag "icons/create.svg", class: "icon" %>
+        </div>
+        <span class="menu-label">Create</span>
       </div>
-      <span class="menu-label">Create</span>
-    </div>
-    <div class="menu-item" data-menu="search" data-action="click->bottom-menu#selectMenu" data-bottom-menu-target="menuItem">
-      <div class="icon-container">
-        <%= inline_svg_tag "icons/search.svg", class: "icon" %>
+      <div class="menu-item" data-menu="search" data-action="click->bottom-menu#selectMenu" data-bottom-menu-target="menuItem">
+        <div class="icon-container">
+          <%= inline_svg_tag "icons/search.svg", class: "icon" %>
+        </div>
+        <span class="menu-label">Search</span>
       </div>
-      <span class="menu-label">Search</span>
-    </div>
-    <div class="menu-item" data-menu="inbox" data-action="click->bottom-menu#selectMenu" data-bottom-menu-target="menuItem">
-      <div class="icon-container">
-        <%= inline_svg_tag "icons/inbox.svg", class: "icon" %>
+      <div class="menu-item" data-menu="inbox" data-action="click->bottom-menu#selectMenu" data-bottom-menu-target="menuItem">
+        <div class="icon-container">
+          <%= inline_svg_tag "icons/inbox.svg", class: "icon" %>
+        </div>
+        <span class="menu-label">Inbox</span>
       </div>
-      <span class="menu-label">Inbox</span>
-    </div>
-    <div class="active-ellipse" data-bottom-menu-target="ellipse"></div>
-  </nav>
+      <div class="active-ellipse" data-bottom-menu-target="ellipse"></div>
+    </nav>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
