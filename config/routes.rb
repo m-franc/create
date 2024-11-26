@@ -11,7 +11,7 @@ Rails.application.routes.draw do
    root 'projects#index'
   resources :projects do
     # Project-specific conversations
-    resource :conversation, only: [:index, :new, :create, :show] do
+    resource :conversations, only: [:index, :new, :create, :show] do
       resources :messages, only: [:create]
     end
   end

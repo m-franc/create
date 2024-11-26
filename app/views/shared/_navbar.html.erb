@@ -1,7 +1,7 @@
 <div class="desktop-only">
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar" style="width: 250px; height: 100vh;">
   <%= link_to "#", class: "navbar-brand mb-3 text-center" do %>
-    <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/logo.png", class: "img-fluid" %>
+    <%= image_tag "https://img.over-blog.com/242x200/2/81/29/14/Carapuce_de_Sacha.png", class: "img-fluid" %>
   <% end %>
 
   <hr>
@@ -15,16 +15,10 @@
         <%= link_to "Dashboard", "#", class: "nav-link" %>
       </li>
       <li class="nav-item">
-        <%= link_to "Projects", "#", class: "nav-link" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to "Tasks", "#", class: "nav-link" %>
+        <%= link_to "Projects", projects_path, class: "nav-link" %>
       </li>
       <li class="nav-item">
         <%= link_to "Conversations", conversations_path, class: "nav-link" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to "Messages", "#", class: "nav-link" %>
       </li>
       <li class="nav-item">
         <%= link_to "Search bar", "#", class: "nav-link" %>
@@ -35,29 +29,16 @@
       </li>
     <% end %>
 
-    <hr>
-
-    <ul class="nav nav-pills flex-column mb-auto">
-      <% if user_signed_in? %>
-        <li class="nav-item">
-          <%= link_to "Home", "#", class: "nav-link active" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Messages", "#", class: "nav-link" %>
-        </li>
-      <% else %>
-        <li class="nav-item">
-          <%= link_to "Login", new_user_session_path, class: "nav-link" %>
-        </li>
-      <% end %>
-    </ul>
-
     <% if user_signed_in? %>
       <hr>
 
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-          <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "rounded-circle me-2", style: "width: 40px; height: 40px;" %>
+          <% if current_user.profile_image.attached? %>
+            <%= image_tag current_user.profile_image, class: "img-thumbnail", size: "150x150" %>
+          <% else %>
+            <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "rounded-circle me-2", style: "width: 40px; height: 40px;" %>
+          <% end %>
           <strong><%= current_user.username || "User" %></strong>
         </a>
         <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">

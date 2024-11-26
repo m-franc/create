@@ -13,9 +13,9 @@ class ConversationsController < ApplicationController
   def show
     if params[:project_id]
       @project = Project.find(params[:project_id])
-      @conversation = @project.conversations.find(params[:id]) # Find the specific conversation for the project
+      @conversation = @project.conversations.find(params[:id])
     else
-      @conversation = Conversation.find(params[:id]) # General conversation
+      @conversation = Conversation.find(params[:id])
     end
 
     @messages = @conversation.messages.order(created_at: :asc)
@@ -24,8 +24,12 @@ class ConversationsController < ApplicationController
 
   def new
     if params[:project_id]
-      @project = Project.find(params[:project_id])
-      @conversation = @project.conversations.build
+      @project = current_user.projects.find_by(id: params[:project_id]) # Ensure project belongs to the user
+      if @project
+        @conversation = @project.conversations.build
+      else
+        redirect_to projects_path, alert: "Project not found or not accessible."
+      end
     else
       @conversation = Conversation.new
     end
