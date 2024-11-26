@@ -10,7 +10,6 @@
 Message.destroy_all
 Conversation.destroy_all
 Project.destroy_all
-
 User.destroy_all
 
 # Crée un utilisateur
@@ -18,7 +17,16 @@ user = User.create!(email: "carapuce@test.com", username: 'Carapuce', password: 
 
 # Crée 5 projets avec des noms uniques, associés à cet utilisateur
 5.times do |i|
-  Project.create!(name: "Projet #{i + 1}", user: user)
+  Project.create!(
+    name: "Projet #{i + 1}",
+    user: user,
+    location: "Paris",
+    status: false,
+    notes: "note 1",
+    starting_date: Date.parse("2024-11-26"),
+    end_date: Date.parse("2025-03-12"),
+    description: "Un projet super"
+  )
 end
 
 puts "5 projets créés avec succès pour l'utilisateur #{user.username} !"
