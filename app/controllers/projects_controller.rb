@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  # before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   # GET /projects
   # Affiche une liste de tous les projets
@@ -33,7 +33,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/:id/edit
   # Formulaire pour modifier un projet existant
-  def edit
+  def update
     @project = Project.find(project_params)
     if @project.save
       flash[:notice] = "Project edited 💾"
@@ -42,16 +42,14 @@ class ProjectsController < ApplicationController
     end
   end
 
-
   def set_project
     @project = Project.find(params[:id])
   end
 
-
   private
   # Filtre les paramètres autorisés pour un projet
   def project_params
-    params.require(:project).permit(:name, :description, :start_date, :end_date, :status)
+    params.require(:project).permit(:name)
   end
 end
   # PATCH/PUT /projects/:id
