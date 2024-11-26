@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  # before_action :set_project, only: [:show, :edit, :update, :destroy]
 
 
   # GET /projects
@@ -34,6 +34,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/:id/edit
   # Formulaire pour modifier un projet existant
+
   def edit
     # `@project` est déjà défini via le callback `set_project`
   end
@@ -44,11 +45,13 @@ class ProjectsController < ApplicationController
     if @project.update(project_params)
       flash[:notice] = "Project successfully updated 💾"
       redirect_to @project
+
     else
       flash[:alert] = "Unable to update the project. Please fix the errors."
       render :edit, status: :unprocessable_entity
     end
   end
+
 
   # DELETE /projects/:id
   # Supprime un projet existant
@@ -61,14 +64,17 @@ class ProjectsController < ApplicationController
   private
 
   # Définit le projet à manipuler
+
+
   def set_project
     def set_project
       @project = Project.find(params[:id]) if params[:id].present?
     end
   end
 
+
   # Filtre les paramètres autorisés pour un projet
   def project_params
-    params.require(:project).permit(:name, :description, :start_date, :end_date, :status)
+    params.require(:project).permit(:name)
   end
 end

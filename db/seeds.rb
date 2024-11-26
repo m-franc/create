@@ -8,6 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 Project.destroy_all
+
 User.destroy_all
 
 # Crée un utilisateur
@@ -19,3 +20,5 @@ user = User.create!(email: "carapuce@test.com", username: 'Carapuce', password: 
 end
 
 puts "5 projets créés avec succès pour l'utilisateur #{user.username} !"
+
+
