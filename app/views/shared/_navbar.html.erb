@@ -1,3 +1,4 @@
+<div class="desktop-only">
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar" style="width: 250px; height: 100vh;">
   <%= link_to "#", class: "navbar-brand mb-3 text-center" do %>
     <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/logo.png", class: "img-fluid" %>
@@ -11,7 +12,7 @@
         <%= link_to "Home", "#", class: "nav-link" %>
       </li>
       <li class="nav-item">
-        <%= link_to "Dashboard", "#", class: projects_path %>
+        <%= link_to "Dashboard", "#", class: "nav-link" %>
       </li>
       <li class="nav-item">
         <%= link_to "Projects", "#", class: "nav-link" %>
@@ -33,24 +34,41 @@
         <%= link_to "Login", new_user_session_path, class: "nav-link" %>
       </li>
     <% end %>
-  </ul>
 
-  <% if user_signed_in? %>
     <hr>
 
-    <div class="dropdown">
-      <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-        <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "rounded-circle me-2", style: "width: 40px; height: 40px;" %>
-        <strong><%= current_user.username || "User" %></strong>
-      </a>
-      <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-        <li><%= link_to "Action", "#", class: "dropdown-item" %></li>
-        <li><%= link_to "Another action", "#", class: "dropdown-item" %></li>
-        <li>
-          <hr class="dropdown-divider">
+    <ul class="nav nav-pills flex-column mb-auto">
+      <% if user_signed_in? %>
+        <li class="nav-item">
+          <%= link_to "Home", "#", class: "nav-link active" %>
         </li>
-        <li><%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %></li>
-      </ul>
-    </div>
-  <% end %>
+        <li class="nav-item">
+          <%= link_to "Messages", "#", class: "nav-link" %>
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+        </li>
+      <% end %>
+    </ul>
+
+    <% if user_signed_in? %>
+      <hr>
+
+      <div class="dropdown">
+        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+          <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "rounded-circle me-2", style: "width: 40px; height: 40px;" %>
+          <strong><%= current_user.username || "User" %></strong>
+        </a>
+        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+          <li><%= link_to "Action", "#", class: "dropdown-item" %></li>
+          <li><%= link_to "Another action", "#", class: "dropdown-item" %></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %></li>
+        </ul>
+      </div>
+    <% end %>
+  </div>
 </div>
