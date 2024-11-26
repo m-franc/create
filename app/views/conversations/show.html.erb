@@ -1,20 +1,25 @@
-<h2>Conversation for Project: <%= @project.name %></h2>
+<h2>
+  Conversation
+  <% if @project.present? %>
+    for Project: <%= @project.name %>
+  <% else %>
+    (General)
+  <% end %>
+</h2>
 
 <div id="messages">
   <% @messages.each do |message| %>
-    <div>
-      <strong><%= message.user.first_name %>:</strong>
-      <%= message.content %>
-      <small><%= message.created_at.strftime('%Y-%m-%d %H:%M') %></small>
-    </div>
+    <%= render partial: 'messages/message', locals: { message: message } %>
   <% end %>
 </div>
 
-<%= form_with(model: [@conversation, @message], local: true) do |f| %>
-  <div>
-    <%= f.text_area :content, placeholder: "Type your message here..." %>
-  </div>
-  <div>
-    <%= f.submit "Send" %>
-  </div>
+<%= turbo_frame_tag 'message_form' do %>
+  <%= form_with(model: [@conversation, @message], data: { turbo_stream: true }, local: true) do |f| %>
+    <div class="form-group">
+      <%= f.text_area :content, class: "form-control", placeholder: "Type your message here..." %>
+    </div>
+    <div class="form-group mt-2">
+      <%= f.submit "Send", class: "btn btn-primary" %>
+    </div>
+  <% end %>
 <% end %>

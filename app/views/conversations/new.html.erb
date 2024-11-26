@@ -1,0 +1,16 @@
+<h1>New Conversation</h1>
+
+<%= form_with(model: @conversation, url: conversations_path, local: true) do |f| %>
+  <div class="form-group">
+    <%= f.label :name, "Conversation Name" %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+
+  <% if params[:project_id] %>
+    <p>This conversation will be linked to the project: <strong><%= @project.name %></strong></p>
+  <% end %>
+
+  <div class="form-group mt-3">
+    <%= f.submit "Create Conversation", class: "btn btn-primary" %>
+  </div>
+<% end %>

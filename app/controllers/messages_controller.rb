@@ -7,9 +7,15 @@ class MessagesController < ApplicationController
     @message.user = current_user
 
     if @message.save
-      redirect_to project_conversation_path(@conversation.project)
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to @conversation }
+      end
     else
-      redirect_to project_conversation_path(@conversation.project), alert: 'Message cannot be blank.'
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace('message_form', partial: 'messages/form', locals: { message: @message }) }
+        format.html { redirect_to @conversation, alert: 'Message cannot be blank.' }
+      end
     end
   end
 

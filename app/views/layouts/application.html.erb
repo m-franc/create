@@ -10,17 +10,20 @@
   </head>
 
   <body>
-    <%= render "shared/navbar" %> <!-- Optionnel si tu as un navbar -->
-    <%= render "shared/flashes" %> <!-- Optionnel pour les messages flash -->
+    <div class="d-flex">
+      <%= render "shared/navbar" %> <!-- Optionnel si tu as un navbar -->
+      <%= render "shared/flashes" %> <!-- Optionnel pour les messages flash -->
 
-    <%= yield %> <!-- Contenu de la page -->
+      <div class="content" style="flex-grow: 1; padding: 20px;">
+        <%= yield %>
+      </div>
+      <!-- Bottom Menu (visible partout) -->
+      <%= render "shared/bottom_menu" %>
 
-    <!-- Bottom Menu (visible partout) -->
-    <%= render "shared/bottom_menu" %>
-
-    <!-- Project Menu (masqué par défaut) -->
-    <div id="project-menu-wrapper" style="display: none;">
-      <%= render "shared/project_menu" %>
+      <!-- Project Menu (masqué par défaut) -->
+      <div id="project-menu-wrapper" style="display: none;">
+        <%= render "shared/project_menu" %>
+      </div>
     </div>
   </body>
 </html>
