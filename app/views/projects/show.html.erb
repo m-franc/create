@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <h1>BONJOUR</h1>
 <% @project %>
 
@@ -6,3 +7,31 @@
   <%# <li> <%= task.name %>
 <%# </ul> %>
 <%# <% end %>
+=======
+
+
+<h1><%= @project.name %></h1>
+
+<% if @project.image.present? %>
+  <%= image_tag @project.image %>
+<% else %>
+  <p>add image pls</p>
+<% end %>
+<%= link_to 'Edit Project', edit_project_path(@project) %>
+
+<h2><%= @project.description %></h2>
+<p>calendar</p>
+<p>members</p>
+<p>task</p>
+<h2><%= @project.notes %></h2>
+<p>document</p>
+<h2>Place: <%= @project.location %></h2>
+<h2>Statue : <%= @project.status %></h2>
+<h2>Starting date: <%= @project.starting_date %></h2>
+<h2>Creation: <%= @project.created_at %></h2>
+<h2>Last update: <h2>Date: <%= @project.updated_at %></h2>
+
+
+
+<p>message</p>
+>>>>>>> master
