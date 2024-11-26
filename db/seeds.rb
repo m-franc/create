@@ -10,6 +10,7 @@
 Project.destroy_all
 # Crée 10 projets avec des titres aléatoires
 10.times do |i|
- Project.create(name: "Projet #{i + 1}")
+  Project.create(name: "Projet #{i + 1}")
 end
+
 puts "10 projets créés avec succès !"
