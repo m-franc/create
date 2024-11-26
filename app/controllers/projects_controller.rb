@@ -33,7 +33,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/:id/edit
   # Formulaire pour modifier un projet existant
-  def edit
+  def update
     @project = Project.find(project_params)
     if @project.save
       flash[:notice] = "Project edited 💾"
