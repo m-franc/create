@@ -52,21 +52,11 @@ class ProjectsController < ApplicationController
 
   private
 
-<<<<<<< HEAD
-  # Définit le projet à manipuler
-
-  def set_project
-    @project = Project.find(params[:id]) if params[:id].present?
-  end
-
-  # Filtre les paramètres autorisés pour un projet
-=======
   def set_project
     @project = Project.find_by(id: params[:id])
     redirect_to projects_path, alert: 'Project not found.' if @project.nil?
   end
 
->>>>>>> master
   def project_params
     params.require(:project).permit(:name, :location, :status, :notes, :date, :image, :description)
   end

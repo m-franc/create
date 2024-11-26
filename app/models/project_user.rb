@@ -2,5 +2,5 @@ class ProjectUser < ApplicationRecord
   belongs_to :project
   belongs_to :user
 
-  has_many :tasks
+  has_many :tasks, dependent: :destroy
 end

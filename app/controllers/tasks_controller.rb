@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :authenticate_user!, :set_project, :set_task
 
   def index
-    @tasks = Task.find_by(task_user: current_user)
+    @tasks = Task.all
   end
 
   def new
