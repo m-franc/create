@@ -8,10 +8,25 @@
   <ul class="nav nav-pills flex-column mb-auto">
     <% if user_signed_in? %>
       <li class="nav-item">
-        <%= link_to "Home", "#", class: "nav-link active" %>
+        <%= link_to "Home", "#", class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Dashboard", "#", class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Projects", "#", class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Tasks", "#", class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Conversations", "#", class: "nav-link" %>
       </li>
       <li class="nav-item">
         <%= link_to "Messages", "#", class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Search bar", "#", class: "nav-link" %>
       </li>
     <% else %>
       <li class="nav-item">
