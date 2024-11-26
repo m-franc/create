@@ -7,23 +7,27 @@
     <%= f.input :email,
                 required: true,
                 autofocus: true,
-                input_html: { autocomplete: "email" }%>
+                input_html: { autocomplete: "email" } %>
+
     <%= f.input :username,
                 required: true,
                 autofocus: true,
-                input_html: { autocomplete: "username" }%>
+                input_html: { autocomplete: "username" } %>
+
     <%= f.input :password,
                 required: true,
                 hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
                 input_html: { autocomplete: "new-password" } %>
+
     <%= f.input :password_confirmation,
                 required: true,
                 input_html: { autocomplete: "new-password" } %>
-    <%= form_with model: current_user, local: true do |f| %>
-    <div class="form-group">
-      <%= f.label :profile_image, "Upload Profile Image" %>
-      <%= f.file_field :profile_image, class: "form-control" %>
-    </div>
+
+    <!-- Profile Image Upload -->
+    <%= f.input :profile_image,
+                as: :file,
+                label: "Upload Profile Image",
+                input_html: { class: "form-control" } %>
   </div>
 
   <div class="form-actions">
