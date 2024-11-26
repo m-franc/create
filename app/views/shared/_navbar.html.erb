@@ -34,7 +34,11 @@
 
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-          <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "rounded-circle me-2", style: "width: 40px; height: 40px;" %>
+          <% if current_user.profile_image.attached? %>
+            <%= image_tag current_user.profile_image, class: "img-thumbnail", size: "150x150" %>
+          <% else %>
+            <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "rounded-circle me-2", style: "width: 40px; height: 40px;" %>
+          <% end %>
           <strong><%= current_user.username || "User" %></strong>
         </a>
         <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
