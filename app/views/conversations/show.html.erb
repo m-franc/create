@@ -1,0 +1,20 @@
+<h2>Conversation for Project: <%= @project.name %></h2>
+
+<div id="messages">
+  <% @messages.each do |message| %>
+    <div>
+      <strong><%= message.user.first_name %>:</strong>
+      <%= message.content %>
+      <small><%= message.created_at.strftime('%Y-%m-%d %H:%M') %></small>
+    </div>
+  <% end %>
+</div>
+
+<%= form_with(model: [@conversation, @message], local: true) do |f| %>
+  <div>
+    <%= f.text_area :content, placeholder: "Type your message here..." %>
+  </div>
+  <div>
+    <%= f.submit "Send" %>
+  </div>
+<% end %>
