@@ -1,7 +1,6 @@
 class ProjectsController < ApplicationController
   # before_action :set_project, only: [:show, :edit, :update, :destroy]
 
-
   # GET /projects
   # Affiche une liste de tous les projets
   def index
@@ -65,13 +64,11 @@ class ProjectsController < ApplicationController
 
   # Définit le projet à manipuler
 
-
   def set_project
     def set_project
       @project = Project.find(params[:id]) if params[:id].present?
     end
   end
-
 
   # Filtre les paramètres autorisés pour un projet
   def project_params
