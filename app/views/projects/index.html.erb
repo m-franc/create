@@ -1,13 +1,15 @@
 <h1>Pages#home</h1>
 <p>Find me in app/views/pages/home.html.erb</p>
+
+<%= link_to 'New Project', new_project_path %>
+
 <% if @projects.any? %>
   <h1>Liste des Projets</h1>
   <ul>
     <% @projects.each do |project| %>
-      <li><%= project.name %></li>
+      <li><%= link_to project.name, project_path(project.id) %></li>
     <% end %>
   </ul>
 <% else %>
   <p>Aucun projet trouvé.</p>
 <% end %>
-

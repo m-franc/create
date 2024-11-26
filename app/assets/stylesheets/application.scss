@@ -13,3 +13,10 @@
 @import "components/bottom_menu";
 @import "components/project_menu";
 @import "utilities/visibility";
+
+
+$body-color: #F6EDED;
+
+body {
+  background-color: $body-color
+}
