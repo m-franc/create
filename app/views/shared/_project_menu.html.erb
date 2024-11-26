@@ -1,0 +1,23 @@
+<div class="project-menu-container">
+  <nav class="project-menu" data-controller="project-menu">
+    <div class="menu-item" data-menu="new_project" data-action="click->project-menu#selectMenu" data-project-menu-target="menuItem">
+      <div class="icon-container">
+        <%= inline_svg_tag "icons/new_project.svg", class: "icon" %>
+      </div>
+      <span class="menu-label">New Project</span>
+    </div>
+    <div class="menu-item active" data-menu="projects" data-action="click->project-menu#selectMenu" data-project-menu-target="menuItem">
+      <div class="icon-container">
+        <%= inline_svg_tag "icons/projects.svg", class: "icon" %>
+      </div>
+      <span class="menu-label">Projects</span>
+    </div>
+    <div class="menu-item" data-menu="schedule" data-action="click->project-menu#selectMenu" data-project-menu-target="menuItem">
+      <div class="icon-container">
+        <%= inline_svg_tag "icons/schedule.svg", class: "icon" %>
+      </div>
+      <span class="menu-label">Schedule</span>
+    </div>
+    <div class="active-block" data-project-menu-target="activeBlock"></div>
+  </nav>
+</div>
