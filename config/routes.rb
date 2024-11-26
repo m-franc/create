@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # General project routes
-   root 'projects#index'
+  root 'projects#index'
   resources :projects do
     # Project-specific conversations
     resource :conversation, only: [:index, :new, :create, :show] do
