@@ -1,31 +1,39 @@
 <div class="project">
-<h1><%= @project.name %></h1>
+  <h1><%= @project.name %></h1>
 
-<% if @project.image.present? %>
-  <%= image_tag @project.image %>
-<% else %>
-  <p>add image pls</p>
-<% end %>
-<%= link_to 'Edit Project', edit_project_path(@project) %>
+  <% if @project.image.attached? %>
+    <%= cl_image_tag @project.image.key, height: 300, width: 400, crop: :fill, class: 'img-fluid mb-3' %>
+  <% else %>
+    <p>add image pls</p>
+  <% end %>
+  
+  <%= link_to 'Edit Project', edit_project_path(@project), class: 'btn btn-warning mb-3' %>
 
-<p>calendar</p>
-<h2><%= @project.description %></h2>
+  <p>calendar</p>
+  <h2><%= @project.description %></h2>
 
-<% @joined_users.each do |user| %>
-    <li>
-      <strong>Nom :</strong> <%= user.username %> <br>
-    </li>
-<% end %>
+  <div class="members mb-3">
+    <h3>Members:</h3>
+    <% @joined_users.each do |user| %>
+      <li>
+        <strong>Nom :</strong> <%= user.username %>
+      </li>
+    <% end %>
+  </div>
 
-<%= link_to "Task", project_tasks_path(@project) %>
-<%= link_to "Notes", project_notes_path(@project), class: 'btn btn-primary' %>
-<h2><%= @project.notes %></h2>
-<p>document</p>
-<h2>Place: <%= @project.location %></h2>
-<h2>Statue : <%= @project.status %></h2>
-<h2>Starting date: <%= @project.starting_date %></h2>
-<h2>Creation: <%= @project.created_at %></h2>
-<h2>Last update: <h2>Date: <%= @project.updated_at %></h2>
+  <div class="actions mb-3">
+    <%= link_to "Task", project_tasks_path(@project), class: 'btn btn-primary' %>
+    <%= link_to "Documents", project_documents_path(@project), class: 'btn btn-info' %>
+    <%= link_to "Notes", project_notes_path(@project), class: 'btn btn-primary' %>
+  </div>
 
-<p>message</p>
+  <div class="project-details">
+    <h2>Place: <%= @project.location %></h2>
+    <h2>Status: <%= @project.status %></h2>
+    <h2>Starting date: <%= @project.starting_date %></h2>
+    <h2>Creation: <%= @project.created_at %></h2>
+    <h2>Last update: <%= @project.updated_at %></h2>
+  </div>
+
+  <p>message</p>
 </div>
