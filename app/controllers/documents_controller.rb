@@ -27,6 +27,16 @@ class DocumentsController < ApplicationController
     @document.user = current_user
 
     if params[:document][:file].present?
+      # Debug logs
+      Rails.logger.debug "Original filename: #{params[:document][:file].original_filename}"
+      
+      # Sauvegarder l'extension du fichier original
+      original_filename = params[:document][:file].original_filename
+      @document.file_extension = File.extname(original_filename).delete('.')
+      
+      # Debug logs
+      Rails.logger.debug "Extracted extension: #{@document.file_extension}"
+      
       folder_path = "projects/#{@project.id}/#{@document.folder_name}"
       upload = Cloudinary::Uploader.upload(
         params[:document][:file],
@@ -37,6 +47,8 @@ class DocumentsController < ApplicationController
     end
 
     if @document.save
+      # Debug logs
+      Rails.logger.debug "Saved document with extension: #{@document.file_extension}"
       redirect_to project_documents_path(@project), notice: 'Document was successfully uploaded.'
     else
       render :new
@@ -53,7 +65,26 @@ class DocumentsController < ApplicationController
 
   def download
     if @document.cloudinary_id.present?
-      redirect_to Cloudinary::Utils.cloudinary_url(@document.cloudinary_id, resource_type: 'auto')
+      begin
+        # Récupérer les informations du fichier depuis Cloudinary
+        info = Cloudinary::Api.resource(@document.cloudinary_id)
+        
+        # Récupérer le fichier
+        response = Cloudinary::Downloader.download(@document.cloudinary_id)
+        
+        # Construire le nom du fichier avec l'extension
+        extension = info['format']
+        filename = "#{@document.name}.#{extension}"
+        
+        # Envoyer le fichier au navigateur
+        send_data response,
+                filename: filename,
+                disposition: 'attachment',
+                type: info['resource_type']
+      rescue => e
+        Rails.logger.error "Cloudinary error: #{e.message}"
+        redirect_to project_documents_path(@project), alert: 'Error downloading the document.'
+      end
     else
       redirect_to project_documents_path(@project), alert: 'Document not found.'
     end
@@ -82,6 +113,7 @@ class DocumentsController < ApplicationController
   end
 
   def document_params
-    params.require(:document).permit(:name, :folder_name, :file)
+    # Assurez-vous que file_extension est inclus dans les paramètres autorisés
+    params.require(:document).permit(:name, :folder_name, :file, :file_extension)
   end
 end
