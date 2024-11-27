@@ -17,6 +17,14 @@
     <%= form.text_field :location %>
   </div>
 
+       <div class="field">
+
+  <%= form.text_field :starting_date,
+            as: :string,
+            input_html: { data: { controller: "datepicker" } } %>
+
+              </div>
+
     <div class="field">
     <%= form.label :starting_date %>
     <%= form.text_field :starting_date %>

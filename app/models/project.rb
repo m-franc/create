@@ -1,11 +1,10 @@
 class Project < ApplicationRecord
   belongs_to :user
-  has_one_attached :image
-
-  has_many :project_users, dependent: :destroy
-
-  has_one :conversation, dependent: :destroy
-
+  has_many :project_users
+  has_many :users, through: :project_users
+  has_many :conversations, dependent: :destroy
+  validates :name, presence: true
+  validates :description, presence: true
   after_create :create_default_conversation
 
   private
