@@ -9,7 +9,7 @@ class ProjectsController < ApplicationController
   # GET /projects/:id
   def show
     @project = Project.find(params[:id])
-    @joined_users = @project.users
+    @joined_users = @project.joined_users
   end
 
   # GET /projects/new
@@ -48,6 +48,7 @@ class ProjectsController < ApplicationController
       flash[:alert] = "Unable to update the project. Please fix the errors."
       render :edit, status: :unprocessable_entity
     end
+
   end
 
   # DELETE /projects/:id
