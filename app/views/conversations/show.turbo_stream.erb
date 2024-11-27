@@ -1,0 +1,26 @@
+<%= turbo_stream.replace "messages_section" do %>
+  <div class="messages-section p-3" style="flex: 1; overflow-y: auto;">
+    <h2><%= @conversation.name.presence || "Untitled Conversation" %></h2>
+
+    <div id="messages" class="mb-4">
+      <% @messages.each do |message| %>
+        <div class="mb-3">
+          <strong><%= message.user.username || "Anonymous" %>:</strong>
+          <p><%= message.content %></p>
+          <small><%= message.created_at.strftime('%b %d, %Y %H:%M') %></small>
+        </div>
+      <% end %>
+    </div>
+
+    <%= turbo_frame_tag "message_form" do %>
+      <%= form_with(model: [@conversation, @message], data: { turbo_stream: true }, local: true) do |f| %>
+        <div class="form-group">
+          <%= f.text_area :content, class: "form-control", placeholder: "Type your message here..." %>
+        </div>
+        <div class="form-group mt-2">
+          <%= f.submit "Send", class: "btn btn-primary rounded" %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
