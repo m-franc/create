@@ -4,27 +4,12 @@ class ConversationsController < ApplicationController
   before_action :authorize_conversation, only: [:show]
 
   def index
-    if params[:project_id]
-      @project = current_user.projects.find_by(id: params[:project_id])
-      if @project
-        @conversations = @project.conversations
-      else
-        redirect_to projects_path, alert: "Project not found or not accessible."
-        return
-      end
-    else
-      @conversations = current_user.conversations.distinct
-    end
+    load_conversations
   end
 
   def show
     @messages = @conversation.messages.includes(:user).order(created_at: :asc)
     @message = Message.new
-
-    respond_to do |format|
-      format.html # For full-page loads
-      format.turbo_stream # For Turbo Stream updates
-    end
   end
 
   def new
@@ -57,6 +42,11 @@ class ConversationsController < ApplicationController
         user: current_user
       )
 
+      # Load necessary data for the response
+      load_conversations
+      @messages = @conversation.messages.includes(:user).order(created_at: :asc)
+      @message = Message.new
+
       respond_to do |format|
         format.html { redirect_to @conversation, notice: "Conversation was successfully created." }
         format.turbo_stream
@@ -77,6 +67,15 @@ class ConversationsController < ApplicationController
 
   private
 
+  def load_conversations
+    @conversations = if params[:project_id]
+      @project = current_user.projects.find_by(id: params[:project_id])
+      @project ? @project.conversations : []
+    else
+      current_user.conversations.distinct
+    end
+  end
+
   def set_conversation
     @conversation = Conversation.find(params[:id])
   end
@@ -89,6 +88,6 @@ class ConversationsController < ApplicationController
   end
 
   def conversation_params
-    params.require(:conversation).permit(:name)
+    params.require(:conversation).permit(:name, :project_id)
   end
 end
