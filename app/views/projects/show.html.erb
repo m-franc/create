@@ -1,16 +1,11 @@
 <div class="project">
-  <h1><%= @project.name %></h1>
 
-  <% if @project.image.attached? %>
-    <%= cl_image_tag @project.image.key, height: 300, width: 400, crop: :fill, class: 'img-fluid mb-3' %>
-  <% else %>
-    <p>add image pls</p>
-  <% end %>
-  
-  <%= link_to 'Edit Project', edit_project_path(@project), class: 'btn btn-warning mb-3' %>
-
-  <p>calendar</p>
-  <h2><%= @project.description %></h2>
+  <div class="project-header">
+    <% if @project.image.present? %>
+      <%= image_tag @project.image, class: 'project-image' %>
+    <% else %>
+      <p>add image pls</p>
+    <% end %>
 
   <div class="members mb-3">
     <h3>Members:</h3>
@@ -27,6 +22,22 @@
     <%= link_to "Notes", project_notes_path(@project), class: 'btn btn-primary' %>
   </div>
 
+<<<<<<< HEAD
+    <div class="project-details">
+      <h2><%= @project.name %></h2>
+      <p><%= @project.description %></p>
+      <%= link_to 'Edit Project', edit_project_path(@project), class: 'edit-link' %>
+    </div>
+  </div>
+
+<div class="nav-project">
+  <a href="#member">Member</a>
+  <a href="#tasks">Tasks</a>
+  <a href="#notes">Notes</a>
+  <a href="#documents">Documents</a>
+  <a href="#messages">Messages</a>
+  <a href="#infos">Infos</a>
+=======
   <div class="project-details">
     <h2>Place: <%= @project.location %></h2>
     <h2>Status: <%= @project.status %></h2>
@@ -36,4 +47,44 @@
   </div>
 
   <p>message</p>
+>>>>>>> master
 </div>
+      <p>Place: <%= @project.location %>
+      Status: <%= @project.status %>
+      Starting date: <%= @project.starting_date %>
+      Creation: <%= @project.created_at %></p>
+
+
+
+  <div class="cards">
+
+    <div class="card-project" id="task">
+
+      <%= link_to "Task", project_tasks_path(@project) %>
+      </div>
+
+
+    <div class="card-project" id="card-2">
+      <% @joined_users.each do |user| %>
+        <li>
+          <strong>Nom :</strong> <%= user.username %> <br>
+        </li>
+      <% end %>
+      <p>members</p>
+    </div>
+
+
+    <div class="card-project" id="card-3">
+      <h2>NOTES</h2>
+      <p><%= @project.notes %></p>
+    </div>
+
+    <div class="card-project" id="card-4">
+      <p>Document</p>
+    </div>
+
+    <div class="card-project" id="card-5">
+      <p>Message</p>
+    </div>
+
+ </div>
