@@ -1,4 +1,3 @@
-
 <div class="project">
 <h1><%= @project.name %></h1>
 
@@ -12,14 +11,14 @@
 <p>calendar</p>
 <h2><%= @project.description %></h2>
 
-
 <% @joined_users.each do |user| %>
     <li>
       <strong>Nom :</strong> <%= user.username %> <br>
     </li>
-  <% end %>
+<% end %>
 
 <%= link_to "Task", project_tasks_path(@project) %>
+<%= link_to "Notes", project_notes_path(@project), class: 'btn btn-primary' %>
 <h2><%= @project.notes %></h2>
 <p>document</p>
 <h2>Place: <%= @project.location %></h2>
@@ -27,8 +26,6 @@
 <h2>Starting date: <%= @project.starting_date %></h2>
 <h2>Creation: <%= @project.created_at %></h2>
 <h2>Last update: <h2>Date: <%= @project.updated_at %></h2>
-
-
 
 <p>message</p>
 </div>

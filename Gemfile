@@ -56,7 +56,6 @@ gem "sassc-rails"
 gem "inline_svg"
 gem "dotenv-rails"
 gem "cloudinary"
-gem "image_processing", "~> 1.2"
 
 group :development, :test do
   gem "dotenv-rails"
