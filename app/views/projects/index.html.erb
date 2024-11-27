@@ -11,11 +11,11 @@
     <% @projects.each do |project| %>
       <div class="card">
         <!-- Image du projet -->
-        <% if project.image.present? %>
-          <%= image_tag project.image, class: 'card-image', alt: "#{project.name} Image" %>
-        <% else %>
+        <%# <% if project.image.present? %>
+          <%# <%= image_tag project.image, class: 'card-image', alt: "#{project.name} Image" %>
+        <%# <% else %>
           <p class="placeholder-image">No image available</p>
-        <% end %>
+        <%# <% end %>
 
         <!-- Détails du projet -->
         <div class="card-content">
