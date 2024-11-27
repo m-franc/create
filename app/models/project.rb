@@ -3,6 +3,7 @@ class Project < ApplicationRecord
   has_one_attached :image
 
   has_many :project_users, dependent: :destroy
+  has_many :notes, dependent: :destroy
 
   has_one :conversation, dependent: :destroy
 

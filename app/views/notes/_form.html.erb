@@ -1,0 +1,27 @@
+<%= form_with(model: [@project, note], local: true) do |f| %>
+  <% if note.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(note.errors.count, "error") %> prohibited this note from being saved:</h2>
+      <ul>
+        <% note.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :content %>
+    <%= f.text_area :content, class: 'form-control', rows: 5 %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit class: 'btn btn-primary' %>
+    <%= link_to 'Back', project_notes_path(@project), class: 'btn btn-secondary' %>
+  </div>
+<% end %>

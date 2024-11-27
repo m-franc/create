@@ -1,5 +1,3 @@
-
-
 <h1><%= @project.name %></h1>
 
 <% if @project.image.present? %>
@@ -14,6 +12,7 @@
 <p>members</p>
 
 <%= link_to "Task", project_tasks_path(@project) %>
+<%= link_to "Notes", project_notes_path(@project), class: 'btn btn-primary' %>
 <h2><%= @project.notes %></h2>
 <p>document</p>
 <h2>Place: <%= @project.location %></h2>
