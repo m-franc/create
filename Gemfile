@@ -6,6 +6,8 @@ gem 'omniauth-google-oauth2'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.5"
 
+gem 'pg_search', '~> 2.3'
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
@@ -54,7 +56,6 @@ gem "sassc-rails"
 gem "inline_svg"
 gem "dotenv-rails"
 gem "cloudinary"
-gem "pg_search"
 
 group :development, :test do
   gem "dotenv-rails"

@@ -1,3 +1,4 @@
+<div class="project">
 <h1><%= @project.name %></h1>
 
 <% if @project.image.present? %>
@@ -7,9 +8,14 @@
 <% end %>
 <%= link_to 'Edit Project', edit_project_path(@project) %>
 
-<h2><%= @project.description %></h2>
 <p>calendar</p>
-<p>members</p>
+<h2><%= @project.description %></h2>
+
+<% @joined_users.each do |user| %>
+    <li>
+      <strong>Nom :</strong> <%= user.username %> <br>
+    </li>
+<% end %>
 
 <%= link_to "Task", project_tasks_path(@project) %>
 <%= link_to "Notes", project_notes_path(@project), class: 'btn btn-primary' %>
@@ -21,6 +27,5 @@
 <h2>Creation: <%= @project.created_at %></h2>
 <h2>Last update: <h2>Date: <%= @project.updated_at %></h2>
 
-
-
 <p>message</p>
+</div>

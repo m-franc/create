@@ -1,5 +1,14 @@
 <div id="message_<%= message.id %>" class="message">
-  <strong><%= message.user.username || "User" %>:</strong>
-  <%= message.content %>
-  <small><%= message.created_at.strftime('%Y-%m-%d %H:%M') %></small>
+  <div class="message-avatar">
+    <% if message.user.avatar.attached? %>
+      <%= image_tag message.user.avatar.variant(:small), class: "avatar" %>
+    <% else %>
+      <%= image_tag "https://ui-avatars.com/api/?name=#{message.user.username}&background=random", class: "avatar" %>
+    <% end %>
+  </div>
+  <div class="message-content">
+    <strong><%= message.user.username || "User" %>:</strong>
+    <%= message.content %>
+    <small><%= message.created_at.strftime('%Y-%m-%d %H:%M') %></small>
+  </div>
 </div>

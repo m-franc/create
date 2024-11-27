@@ -388,7 +388,7 @@ DEPENDENCIES
   jbuilder
   omniauth-google-oauth2
   pg (~> 1.1)
-  pg_search
+  pg_search (~> 2.3)
   puma (>= 5.0)
   rails (~> 7.1.5)
   sassc-rails
