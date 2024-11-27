@@ -13,4 +13,15 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true
   validates :username, presence: true, uniqueness: true
+
+  class User < ApplicationRecord
+    include PgSearch::Model
+
+    pg_search_scope :search_by_name_and_email,
+                    against: [:name, :email], # Colonnes à rechercher
+                    using: {
+                      tsearch: { prefix: true } # Recherche sur les débuts de mots
+                    }
+  end
+
 end

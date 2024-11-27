@@ -8,11 +8,18 @@ class ProjectsController < ApplicationController
 
   # GET /projects/:id
   def show
+    @project = Project.find(params[:id])
+    @joined_users = @project.users
   end
 
   # GET /projects/new
   def new
     @project = Project.new
+    if params[:query].present?
+      @users = User.search_by_name_and_email(params[:query])
+    else
+      @users = User.all
+    end
   end
 
   # POST /projects
@@ -58,6 +65,9 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:name, :location, :status, :notes, :date, :image, :description)
+    params.require(:project).permit(:name, :location, :status, :notes, :date, :image, :description, joined_user_ids: [])
   end
+
+
+
 end
