@@ -23,21 +23,26 @@
     <!-- Messages Area -->
     <div id="messages_conversation_<%= @conversation.id %>" class="conversation-messages flex-grow-1 p-3" style="overflow-y: auto;">
       <% @messages.each do |message| %>
-        <div class="message mb-3 <%= message.user == current_user ? 'text-end' : '' %>">
-          <div class="message-content d-inline-block p-3 rounded <%= message.user == current_user ? 'bg-primary text-white' : 'bg-light' %>"
-               style="max-width: 75%;">
-            <div class="message-header mb-1">
-              <small class="<%= message.user == current_user ? 'text-white-50' : 'text-muted' %>">
-                <%= message.user.username %>
-              </small>
+        <div class="message mb-3 <%= message.user == current_user ? 'message-right' : 'message-left' %>">
+          <div class="message-wrapper d-flex <%= message.user == current_user ? 'flex-row-reverse' : 'flex-row' %> align-items-end">
+            <div class="message-avatar mx-2">
+              <% if message.user.avatar.attached? %>
+                <%= image_tag message.user.avatar, class: "avatar" %>
+              <% else %>
+                <%= image_tag "https://ui-avatars.com/api/?name=#{message.user.username}&background=random", class: "avatar" %>
+              <% end %>
             </div>
-            <div class="message-body">
-              <%= message.content %>
-            </div>
-            <div class="message-footer mt-1">
-              <small class="<%= message.user == current_user ? 'text-white-50' : 'text-muted' %>">
-                <%= message.created_at.strftime('%H:%M') %>
-              </small>
+            <div class="message-bubble">
+              <div class="message-content d-inline-block p-3 rounded <%= message.user == current_user ? 'bg-primary text-white' : 'bg-light' %>">
+                <div class="message-body">
+                  <%= message.content %>
+                </div>
+                <div class="message-footer mt-1">
+                  <small class="<%= message.user == current_user ? 'text-white-50' : 'text-muted' %>">
+                    <%= message.created_at.strftime('%H:%M') %>
+                  </small>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -66,6 +71,7 @@
   <style>
     .message-content {
       box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      border-radius: 18px !important;
     }
 
     .conversation-messages {
@@ -80,6 +86,19 @@
     .input-group .btn {
       border-radius: 20px !important;
       margin-left: 8px;
+    }
+
+    .message-right .message-content {
+      border-bottom-right-radius: 4px !important;
+    }
+
+    .message-left .message-content {
+      border-bottom-left-radius: 4px !important;
+    }
+
+    .message-avatar .avatar {
+      width: 32px;
+      height: 32px;
     }
   </style>
 <% end %>
