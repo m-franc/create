@@ -1,4 +1,8 @@
-<h1>Tasks#index</h1>
+<%= link_to project_path(@project), class: 'btn btn-secondary mb-3' do %>
+  <i class="fas fa-arrow-left"></i> Back to Project
+<% end %>
+
+<h1>Tasks for <%= @project.name %></h1>
 <p>Find me in app/views/tasks/index.html.erb</p>
 
 
@@ -9,6 +13,3 @@
 </ul>
 
 <% end %>
-
-
-<%= link_to "Retour au projet", project_path(@tasks) %>

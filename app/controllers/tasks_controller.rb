@@ -1,8 +1,11 @@
 class TasksController < ApplicationController
-  before_action :authenticate_user!, :set_project, :set_task
+  before_action :authenticate_user!
+  before_action :set_project
+  before_action :set_task, except: [:index, :new, :create]
 
   def index
-    @tasks = Task.all
+    project_user_ids = @project.project_users.pluck(:id)
+    @tasks = Task.where(project_user_id: project_user_ids)
   end
 
   def new
@@ -10,18 +13,20 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task.new(task_params)
-    @task.task_user = current_user
+    project_user = @project.project_users.find_by(user: current_user)
+    @task = Task.new(task_params)
+    @task.project_user = project_user
+
     if @task.save
       flash[:notice] = "Task created ✅"
-      redirect_to @tasks
+      redirect_to project_tasks_path(@project)
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def show
-    @user = @task.task_user
+    @user = @task.project_user.user
     @project = @task.project
   end
 
@@ -29,10 +34,9 @@ class TasksController < ApplicationController
   end
 
   def update
-    @task = set_task
     if @task.update(task_params)
       flash[:notice] = "Task successfully updated 💾"
-      redirect_to @task
+      redirect_to project_tasks_path(@project)
     else
       flash[:alert] = "Unable to update the task. Please fix the errors."
       render :edit, status: :unprocessable_entity
@@ -41,12 +45,13 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
+    redirect_to project_tasks_path(@project), notice: 'Task was successfully deleted.'
   end
 
   private
 
   def task_params
-    params.require(:task).permit(:name, :description)
+    params.require(:task).permit(:name, :description, :location, :date, :status, :deadline, :priority)
   end
 
   def set_task
@@ -54,6 +59,6 @@ class TasksController < ApplicationController
   end
 
   def set_project
-    @projet = Project.find(params[:project_id]) if params[:project_id].present?
+    @project = Project.find(params[:project_id])
   end
 end

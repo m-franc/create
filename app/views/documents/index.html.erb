@@ -1,4 +1,8 @@
 <div class="container mt-4">
+  <%= link_to project_path(@project), class: 'btn btn-secondary mb-3' do %>
+    <i class="fas fa-arrow-left"></i> Back to Project
+  <% end %>
+
   <h1>Documents for <%= @project.name %></h1>
 
   <%= link_to 'Upload New Document', new_project_document_path(@project), class: 'btn btn-primary mb-4' %>
