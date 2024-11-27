@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         get :download
       end
     end
+    resources :notes
     resources :tasks
     # Project-specific conversations
     resource :conversations, only: [:index, :new, :create, :show] do
