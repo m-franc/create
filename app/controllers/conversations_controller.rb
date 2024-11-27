@@ -10,6 +10,7 @@ class ConversationsController < ApplicationController
   def show
     @messages = @conversation.messages.includes(:user).order(created_at: :asc)
     @message = Message.new
+    
   end
 
   def new
