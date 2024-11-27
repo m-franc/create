@@ -15,7 +15,6 @@
   </div>
 
   <div class="field">
-<<<<<<< HEAD
     <%= form.label :starting_date %>
     <%= form.text_field :starting_date,
       data: {
@@ -35,9 +34,6 @@
         datepicker_min_date: Time.zone.now
       }
     %>
-=======
-    <%= form.select :joined_user_ids, User.all.map { |user| [ user.username, user.id ] }, {}, { placeholder: "Rechercher un utilisateur...", multiple: true, data: { controller: "tom-select", tom_select_options_value: { tags: true } } } %>
->>>>>>> master
   </div>
 
   <div class="field">

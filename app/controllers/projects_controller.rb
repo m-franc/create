@@ -48,7 +48,6 @@ class ProjectsController < ApplicationController
       flash[:alert] = "Unable to update the project. Please fix the errors."
       render :edit, status: :unprocessable_entity
     end
-
   end
 
   # DELETE /projects/:id
@@ -68,7 +67,4 @@ class ProjectsController < ApplicationController
   def project_params
     params.require(:project).permit(:name, :location, :status, :notes, :starting_date, :end_date, :image, :description)
   end
-
-
-
 end
