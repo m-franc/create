@@ -10,7 +10,10 @@
   <div class="form-group mt-3">
     <%= f.label :project_id, "Link to a Project (optional)" %>
     <%= f.select :project_id,
-                 options_for_select(current_user.projects.pluck(:name, :id), @conversation.project_id),
+                 options_for_select(
+                   (current_user.owned_projects + current_user.joined_projects).uniq.map { |p| [p.name, p.id] },
+                   @conversation.project_id
+                 ),
                  { include_blank: "No Project" },
                  class: "form-control" %>
   </div>
