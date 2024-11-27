@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :joined_projects, through: :project_users, source: :project
   has_many :messages, dependent: :destroy
   has_many :conversations, through: :messages
-  has_one_attached :avatar
+  has_one_attached :profile_image
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
