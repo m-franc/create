@@ -1,6 +1,9 @@
 class Project < ApplicationRecord
   belongs_to :user
   has_one_attached :image
+
+  has_many :project_users, dependent: :destroy
+
   has_one :conversation, dependent: :destroy
 
   after_create :create_default_conversation

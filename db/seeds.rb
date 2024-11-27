@@ -7,26 +7,25 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-Message.destroy_all
-Conversation.destroy_all
-Project.destroy_all
 User.destroy_all
+Project.destroy_all
 
 # Crée un utilisateur
-user = User.create!(email: "carapuce@test.com", username: 'Carapuce', password: 'carapuce')
+owner = User.create!(email: "owner@test.com", username: 'Owner', password: 'carapuce')
+member = User.create!(email: "member@test.com", username: 'Member', password: 'carapuce')
 
-# Crée 5 projets avec des noms uniques, associés à cet utilisateur
+projects = []# Crée 5 projets avec des noms uniques, associés à cet utilisateur
 5.times do |i|
-  Project.create!(
-    name: "Projet #{i + 1}",
-    user: user,
-    location: "Paris",
-    status: false,
-    notes: "note 1",
-    starting_date: Date.parse("2024-11-26"),
-    end_date: Date.parse("2025-03-12"),
-    description: "Un projet super"
-  )
+  projects.push(Project.create!(name: "Projet #{i + 1}", user: owner))
 end
 
-puts "5 projets créés avec succès pour l'utilisateur #{user.username} !"
+puts "5 projets créés avec succès pour l'utilisateur #{owner.username} !"
+
+project_user = ProjectUser.create!(project: projects[0], user: member)
+
+Task.create!(name: "repetition", description: "acte 4 scène 6", project_user: project_user)
+Task.create!(name: "repetition", description: "acte 4 scène 7", project_user: project_user)
+Task.create!(name: "repetition", description: "acte 4 scène 8", project_user: project_user)
+Task.create!(name: "repetition", description: "acte 4 scène 9", project_user: project_user)
+Task.create!(name: "repetition", description: "acte 4 scène 10", project_user: project_user)
+Task.create!(name: "repetition", description: "acte 4 scène 11", project_user: project_user)
