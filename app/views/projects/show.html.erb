@@ -7,8 +7,22 @@
       <p>add image pls</p>
     <% end %>
 
+  <div class="members mb-3">
+    <h3>Members:</h3>
+    <% @joined_users.each do |user| %>
+      <li>
+        <strong>Nom :</strong> <%= user.username %>
+      </li>
+    <% end %>
+  </div>
 
+  <div class="actions mb-3">
+    <%= link_to "Task", project_tasks_path(@project), class: 'btn btn-primary' %>
+    <%= link_to "Documents", project_documents_path(@project), class: 'btn btn-info' %>
+    <%= link_to "Notes", project_notes_path(@project), class: 'btn btn-primary' %>
+  </div>
 
+<<<<<<< HEAD
     <div class="project-details">
       <h2><%= @project.name %></h2>
       <p><%= @project.description %></p>
@@ -23,6 +37,17 @@
   <a href="#documents">Documents</a>
   <a href="#messages">Messages</a>
   <a href="#infos">Infos</a>
+=======
+  <div class="project-details">
+    <h2>Place: <%= @project.location %></h2>
+    <h2>Status: <%= @project.status %></h2>
+    <h2>Starting date: <%= @project.starting_date %></h2>
+    <h2>Creation: <%= @project.created_at %></h2>
+    <h2>Last update: <%= @project.updated_at %></h2>
+  </div>
+
+  <p>message</p>
+>>>>>>> master
 </div>
       <p>Place: <%= @project.location %>
       Status: <%= @project.status %>
