@@ -9,12 +9,14 @@
     <%= form.text_field :name %>
   </div>
 
-    <div class="field">
+  <div class="field">
     <%= form.label :description %>
     <%= form.text_field :description %>
   </div>
 
-
+  <div class="field">
+    <%= form.select :joined_user_ids, User.all.map { |user| [ user.username, user.id ] }, {}, { placeholder: "Rechercher un utilisateur...", multiple: true, data: { controller: "tom-select", tom_select_options_value: { tags: true } } } %>
+  </div>
 
   <div class="field">
     <%= form.label :location %>
