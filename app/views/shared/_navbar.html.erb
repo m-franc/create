@@ -35,14 +35,14 @@
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
           <% if current_user.avatar.attached? %>
-            <%= image_tag current_user.avatar, class: "avatar me-2" %>
+            <%= image_tag current_user.avatar.variant(:thumb), class: "avatar me-2" %>
           <% else %>
             <%= image_tag "https://ui-avatars.com/api/?name=#{current_user.username}&background=random", class: "avatar me-2" %>
           <% end %>
           <strong><%= current_user.username || "User" %></strong>
         </a>
         <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-          <li><%= link_to "Action", "#", class: "dropdown-item" %></li>
+          <li><%= link_to "Edit", edit_user_registration_path, class: "dropdown-item" %></li>
           <li><%= link_to "Another action", "#", class: "dropdown-item" %></li>
           <li>
             <hr class="dropdown-divider">
