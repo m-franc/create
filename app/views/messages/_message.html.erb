@@ -1,7 +1,7 @@
 <div id="message_<%= message.id %>" class="message">
   <div class="message-avatar">
     <% if message.user.avatar.attached? %>
-      <%= image_tag message.user.avatar, class: "avatar" %>
+      <%= image_tag message.user.avatar.variant(:small), class: "avatar" %>
     <% else %>
       <%= image_tag "https://ui-avatars.com/api/?name=#{message.user.username}&background=random", class: "avatar" %>
     <% end %>
