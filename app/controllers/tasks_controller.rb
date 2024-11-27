@@ -10,26 +10,27 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task.new(task_params)
-    @task.task_user = current_user
+    @task = Task.new(task_params)
+    @task.project = @project
+    @task.user = current_user
+
     if @task.save
       flash[:notice] = "Task created ✅"
-      redirect_to @tasks
+      redirect_to project_tasks_path(@project)
     else
+      flash[:alert] = "Unable to create the task. Please fix the errors."
       render :new, status: :unprocessable_entity
     end
   end
 
   def show
-    @user = @task.task_user
-    @project = @task.project
+    # @user = @task.task_users
   end
 
   def edit
   end
 
   def update
-    @task = set_task
     if @task.update(task_params)
       flash[:notice] = "Task successfully updated 💾"
       redirect_to @task
@@ -46,7 +47,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :description)
+    params.require(:task).permit(:name, :description, :location, :date, :deadline, :status, :priority)
   end
 
   def set_task
@@ -54,6 +55,6 @@ class TasksController < ApplicationController
   end
 
   def set_project
-    @projet = Project.find(params[:project_id]) if params[:project_id].present?
+    @project = Project.find(params[:project_id]) if params[:project_id].present?
   end
 end

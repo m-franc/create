@@ -4,6 +4,7 @@ class Project < ApplicationRecord
   has_many :joined_users, through: :project_users, source: :user
   has_many :conversations, dependent: :destroy
   has_many :notes, dependent: :destroy
+  has_many :tasks, dependent: :destroy
   has_one_attached :image
 
   validates :name, presence: true
