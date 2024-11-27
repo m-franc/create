@@ -8,7 +8,6 @@ class ProjectsController < ApplicationController
 
   # GET /projects/:id
   def show
-    @project = Project.find(params[:id])
     @joined_users = @project.joined_users
   end
 
@@ -27,11 +26,14 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     @project.user = current_user
 
-    if @project.save!
+    if @project.save
+      if params[:project][:image].present?
+        @project.image.attach(params[:project][:image])
+      end
       flash[:notice] = "Project created ✅"
       redirect_to @project
     else
-      raise
+      render :new
     end
   end
 
@@ -42,13 +44,15 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/:id
   def update
     if @project.update(project_params)
+      if params[:project][:image].present?
+        @project.image.attach(params[:project][:image])
+      end
       flash[:notice] = "Project successfully updated 💾"
       redirect_to @project
     else
       flash[:alert] = "Unable to update the project. Please fix the errors."
       render :edit, status: :unprocessable_entity
     end
-
   end
 
   # DELETE /projects/:id
@@ -61,14 +65,10 @@ class ProjectsController < ApplicationController
   private
 
   def set_project
-    @project = Project.find_by(id: params[:id])
-    redirect_to projects_path, alert: 'Project not found.' if @project.nil?
+    @project = Project.find(params[:id])
   end
 
   def project_params
-    params.require(:project).permit(:name, :location, :status, :notes, :date, :image, :description, joined_user_ids: [])
+    params.require(:project).permit(:name, :location, :status, :notes, :date, :description, :image, joined_user_ids: [])
   end
-
-
-
 end

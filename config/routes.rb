@@ -10,6 +10,11 @@ Rails.application.routes.draw do
   # General project routes
   root 'projects#index'
   resources :projects do
+    resources :documents do
+      member do
+        get :download
+      end
+    end
     resources :tasks
     # Project-specific conversations
     resource :conversations, only: [:index, :new, :create, :show] do
