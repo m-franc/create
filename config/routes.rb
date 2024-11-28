@@ -28,4 +28,11 @@ Rails.application.routes.draw do
     resources :messages, only: [:create]
   end
 
+  # Routes pour la recherche globale
+  resources :searches, only: [:index] do
+    collection do
+      get :suggestions
+    end
+  end
+
 end

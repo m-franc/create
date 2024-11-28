@@ -3,6 +3,26 @@
     <%= link_to "#", class: "navbar-brand mb-3 text-center" do %>
       <%= image_tag "https://img.over-blog.com/242x200/2/81/29/14/Carapuce_de_Sacha.png", class: "img-fluid" %>
     <% end %>
+    
+    <% if user_signed_in? %>
+      <div class="mb-3 search-container" data-controller="search">
+        <%= form_tag searches_path, method: :get, class: "d-flex" do %>
+          <%= text_field_tag :query, 
+                           params[:query], 
+                           class: "form-control form-control-sm me-2", 
+                           placeholder: "Rechercher...",
+                           data: {
+                             search_target: "input",
+                             action: "input->search#suggest focusout->search#hideSuggestions"
+                           } %>
+          <%= button_tag type: 'submit', class: "btn btn-sm btn-primary" do %>
+            <i class="fas fa-search"></i>
+          <% end %>
+        <% end %>
+        <div class="suggestions-container" data-search-target="suggestions"></div>
+      </div>
+    <% end %>
+    
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <% if user_signed_in? %>
@@ -17,9 +37,6 @@
         </li>
         <li class="nav-item">
           <%= link_to "Conversations", conversations_path, class: "nav-link" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Search bar", "#", class: "nav-link" %>
         </li>
       <% else %>
         <li class="nav-item">
