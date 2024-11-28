@@ -1,26 +1,36 @@
-<%= turbo_stream.replace "messages_section" do %>
-  <div class="messages-section p-3" style="flex: 1; overflow-y: auto;">
-    <h2><%= @conversation.name.presence || "Untitled Conversation" %></h2>
+<%= turbo_stream.update "conversation_messages" do %>
+  <div class="conversation-container d-flex flex-column">
+    <!-- Conversation Header -->
+    <%= render 'header', conversation: @conversation %>
 
-    <div id="messages" class="mb-4">
-      <% @messages.each do |message| %>
-        <div class="mb-3">
-          <strong><%= message.user.username || "Anonymous" %>:</strong>
-          <p><%= message.content %></p>
-          <small><%= message.created_at.strftime('%b %d, %Y %H:%M') %></small>
-        </div>
-      <% end %>
+    <!-- Messages Area -->
+    <%= turbo_stream_from @conversation %>
+    <div id="messages_conversation_<%= @conversation.id %>" 
+         class="conversation-messages flex-grow-1"
+         data-controller="chat-scroll"
+         data-action="turbo:frame-render->chat-scroll#scrollToBottom">
+      <%= render @messages || [], current_user: current_user %>
     </div>
 
-    <%= turbo_frame_tag "message_form" do %>
-      <%= form_with(model: [@conversation, @message], data: { turbo_stream: true }, local: true) do |f| %>
-        <div class="form-group">
-          <%= f.text_area :content, class: "form-control", placeholder: "Type your message here..." %>
-        </div>
-        <div class="form-group mt-2">
-          <%= f.submit "Send", class: "btn btn-primary rounded" %>
-        </div>
-      <% end %>
-    <% end %>
+    <!-- Message Input -->
+    <div class="message-input-container">
+      <div id="message_form">
+        <%= form_with(model: [@conversation, Message.new], 
+                      class: "d-flex align-items-center gap-2",
+                      data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" }) do |f| %>
+          <%= f.text_field :content, 
+              class: "form-control",
+              placeholder: "Type your message...",
+              autocomplete: "off",
+              data: { 
+                controller: "textarea-autogrow",
+                action: "keydown->textarea-autogrow#submit"
+              } %>
+          <%= f.button class: "btn btn-send" do %>
+            <i class="fas fa-paper-plane text-white"></i>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
   </div>
 <% end %>

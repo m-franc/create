@@ -1,0 +1,80 @@
+<div id="conversation_header" class="conversation-header p-3 bg-white">
+  <div class="d-flex justify-content-between align-items-center">
+    <div>
+      <h4 class="mb-1"><%= conversation.name.presence || "Untitled Conversation" %></h4>
+      <div class="d-flex align-items-center gap-2">
+        <% if conversation.project %>
+          <small class="text-muted">
+            <i class="fas fa-folder me-2"></i>
+            <%= conversation.project.name %>
+          </small>
+        <% end %>
+        <!-- Participants dropdown -->
+        <div class="dropdown">
+          <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-users me-1"></i>
+            <%= pluralize(conversation.participants.count, 'participant') %>
+          </button>
+          <div class="dropdown-menu p-3" style="min-width: 300px;">
+            <h6 class="dropdown-header mb-2">Current Participants</h6>
+            <div class="participants-list mb-3">
+              <% conversation.participants.each do |participant| %>
+                <div class="participant d-flex align-items-center justify-content-between py-1">
+                  <div class="d-flex align-items-center gap-2">
+                    <% if participant.avatar.attached? %>
+                      <%= cl_image_tag participant.avatar.key, class: "avatar-small", transformation: [{ width: 24, height: 24, crop: :fill }] %>
+                    <% else %>
+                      <%= image_tag "https://ui-avatars.com/api/?name=#{participant.username}&size=24&background=random", class: "avatar-small" %>
+                    <% end %>
+                    <%= participant.username %>
+                  </div>
+                  <% if participant != current_user %>
+                    <%= button_to remove_participant_conversation_path(conversation, user_id: participant.id),
+                                method: :delete,
+                                class: "btn btn-link btn-sm text-danger p-0",
+                                form: { data: { turbo_confirm: "Remove #{participant.username} from the conversation?" } } do %>
+                      <i class="fas fa-times"></i>
+                    <% end %>
+                  <% else %>
+                    <span class="badge bg-secondary">You</span>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+            
+            <div class="dropdown-divider"></div>
+            
+            <!-- Add participant form -->
+            <%= form_with(url: add_participant_conversation_path(conversation), 
+                        method: :post,
+                        data: { turbo: true },
+                        local: false,
+                        class: "add-participant-form") do |f| %>
+              <div class="form-group mb-2">
+                <label class="form-label">Add New Participant</label>
+                <%= f.select :user_id, 
+                    User.where.not(id: conversation.participant_ids).map { |u| [u.username, u.id] },
+                    { prompt: "Select user..." },
+                    { 
+                      class: "form-select form-select-sm",
+                      data: {
+                        controller: "tom-select",
+                        tom_select_options_value: {
+                          placeholder: "Search users...",
+                        }
+                      }
+                    } %>
+              </div>
+              <%= f.submit "Add Participant", class: "btn btn-primary btn-sm w-100", data: { disable_with: "Adding..." } %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <%= link_to conversations_path, class: "btn btn-outline-secondary btn-sm" do %>
+        <i class="fas fa-times"></i>
+      <% end %>
+    </div>
+  </div>
+</div>

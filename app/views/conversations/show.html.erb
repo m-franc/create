@@ -1,105 +1,21 @@
 <%= turbo_frame_tag "conversation_messages" do %>
   <div class="conversation-container d-flex flex-column">
     <!-- Conversation Header -->
-    <div class="conversation-header p-3 bg-white">
-      <div class="d-flex justify-content-between align-items-center">
-        <div>
-          <h4 class="mb-1"><%= @conversation.name.presence || "Untitled Conversation" %></h4>
-          <div class="d-flex align-items-center gap-2">
-            <% if @conversation.project %>
-              <small class="text-muted">
-                <i class="fas fa-folder me-2"></i>
-                <%= @conversation.project.name %>
-              </small>
-            <% end %>
-            <!-- Participants dropdown -->
-            <div class="dropdown">
-              <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-users me-1"></i>
-                <%= pluralize(@conversation.participants.count, 'participant') %>
-              </button>
-              <div class="dropdown-menu p-3" style="min-width: 300px;">
-                <h6 class="dropdown-header">Participants</h6>
-                <div class="participants-list mb-3">
-                  <% @conversation.participants.each do |participant| %>
-                    <div class="participant d-flex align-items-center justify-content-between py-1">
-                      <div class="d-flex align-items-center gap-2">
-                        <% if participant.avatar.attached? %>
-                          <%= cl_image_tag participant.avatar.key, class: "avatar-small", transformation: [{ width: 24, height: 24, crop: :fill }] %>
-                        <% else %>
-                          <%= image_tag "https://ui-avatars.com/api/?name=#{participant.username}&size=24&background=random", class: "avatar-small" %>
-                        <% end %>
-                        <%= participant.username %>
-                      </div>
-                      <% if current_user == participant %>
-                        <span class="badge bg-secondary">You</span>
-                      <% end %>
-                    </div>
-                  <% end %>
-                </div>
-                
-                <!-- Add participant form -->
-                <%= form_with(url: add_participant_conversation_path(@conversation), method: :post, class: "add-participant-form") do |f| %>
-                  <div class="form-group">
-                    <%= f.select :user_id, 
-                        User.where.not(id: @conversation.participant_ids).map { |u| [u.username, u.id] },
-                        { prompt: "Add participant..." },
-                        { 
-                          class: "form-select form-select-sm",
-                          data: {
-                            controller: "tom-select",
-                            tom_select_options_value: {
-                              placeholder: "Search users...",
-                            }
-                          }
-                        } %>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <%= link_to conversations_path, class: "btn btn-outline-secondary btn-sm" do %>
-            <i class="fas fa-times"></i>
-          <% end %>
-        </div>
-      </div>
-    </div>
+    <%= render 'header', conversation: @conversation %>
 
     <!-- Messages Area -->
+    <%= turbo_stream_from @conversation %>
     <div id="messages_conversation_<%= @conversation.id %>" 
          class="conversation-messages flex-grow-1"
          data-controller="chat-scroll"
          data-action="turbo:frame-render->chat-scroll#scrollToBottom">
-      <% @messages.each do |message| %>
-        <div class="message <%= message.user == current_user ? 'message-right' : 'message-left' %>">
-          <div class="message-wrapper d-flex <%= message.user == current_user ? 'flex-row-reverse' : 'flex-row' %> align-items-end gap-2">
-            <div class="message-avatar">
-              <% if message.user.avatar.attached? %>
-                <%= cl_image_tag message.user.avatar.key, class: "avatar", transformation: [{ width: 36, height: 36, crop: :fill }] %>
-              <% else %>
-                <%= image_tag "https://ui-avatars.com/api/?name=#{message.user.username}&size=36&background=random", class: "avatar" %>
-              <% end %>
-            </div>
-            <div class="message-bubble">
-              <div class="message-content">
-                <%= message.content %>
-              </div>
-              <div class="message-footer">
-                <small><%= message.created_at.strftime('%H:%M') %></small>
-              </div>
-            </div>
-          </div>
-        </div>
-      <% end %>
+      <%= render @messages || [], current_user: current_user %>
     </div>
 
     <!-- Message Input -->
     <div class="message-input-container">
       <div id="message_form">
         <%= form_with(model: [@conversation, Message.new], 
-                      local: false, 
                       class: "d-flex align-items-center gap-2",
                       data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" }) do |f| %>
           <%= f.text_field :content, 

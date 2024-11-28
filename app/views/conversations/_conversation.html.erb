@@ -1,0 +1,24 @@
+<%= link_to conversation_path(conversation),
+    class: "list-group-item list-group-item-action #{'active' if conversation.id == @conversation&.id}",
+    data: { turbo_frame: "conversation_messages" } do %>
+  <div class="d-flex justify-content-between align-items-center">
+    <div>
+      <h6 class="mb-1"><%= conversation.name.presence || "Untitled Conversation" %></h6>
+      <% if conversation.project %>
+        <small class="text-muted">
+          <i class="fas fa-folder me-1"></i>
+          <%= conversation.project.name %>
+        </small>
+      <% else %>
+        <small class="text-muted">
+          <%= pluralize(conversation.participants.count, 'participant') %>
+        </small>
+      <% end %>
+    </div>
+    <% if conversation.messages.any? %>
+      <small class="text-muted">
+        <%= time_ago_in_words(conversation.messages.last.created_at) %> ago
+      </small>
+    <% end %>
+  </div>
+<% end %>

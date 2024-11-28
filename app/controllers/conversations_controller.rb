@@ -1,68 +1,53 @@
 class ConversationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_conversation, only: [:show, :add_participant, :remove_participant]
-  before_action :authorize_conversation, only: [:show]
 
   def index
     load_conversations
   end
 
   def show
-    @messages = @conversation.messages.includes(:user).order(created_at: :asc)
-    @message = Message.new
+    unless @conversation.participant?(current_user)
+      redirect_to root_path, alert: "You don't have access to this conversation"
+      return
+    end
+    @messages = @conversation.messages.includes(:user)
+    @new_message = Message.new
     
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   def new
     if params[:project_id]
       @project = current_user.projects.find_by(id: params[:project_id])
-      if @project
-        @conversation = @project.conversations.build
-      else
-        redirect_to projects_path, alert: "Project not found or not accessible."
-        return
-      end
+      return redirect_to projects_path, alert: "Project not found." unless @project
+      @conversation = @project.conversations.build
     else
       @conversation = Conversation.new
     end
+    # Store the referrer URL for redirect after creation
+    session[:return_to] = request.referrer
   end
 
   def create
-    if params[:project_id]
-      @project = current_user.projects.find_by(id: params[:project_id])
-      return redirect_to projects_path, alert: "Project not found." unless @project
-      @conversation = @project.conversations.build(conversation_params)
-    else
-      @conversation = Conversation.new(conversation_params)
-    end
-
+    @conversation = params[:project_id] ? build_project_conversation : Conversation.new(conversation_params)
+    return redirect_to projects_path, alert: "Project not found." if @conversation.nil?
+  
     if @conversation.save
-      # Create initial system message
+      @conversation.add_participant(current_user)
       @conversation.messages.create!(
-        content: "Conversation started",
+        content: "#{current_user.username} has joined the conversation",
+        system_message: true,
         user: current_user
       )
-
-      # Load necessary data for the response
-      load_conversations
-      @messages = @conversation.messages.includes(:user).order(created_at: :asc)
-      @message = Message.new
-
-      respond_to do |format|
-        format.html { redirect_to @conversation, notice: "Conversation was successfully created." }
-        format.turbo_stream
-      end
+      
+      # Redirect back to the stored URL or default to conversations path
+      redirect_to session.delete(:return_to) || conversations_path
     else
-      respond_to do |format|
-        format.html { render :new, status: :unprocessable_entity }
-        format.turbo_stream {
-          render turbo_stream: turbo_stream.replace(
-            "new_conversation_form",
-            partial: "conversations/form",
-            locals: { conversation: @conversation }
-          )
-        }
-      end
+      render_failure_response
     end
   end
 
@@ -71,6 +56,7 @@ class ConversationsController < ApplicationController
     
     respond_to do |format|
       if @conversation.add_participant(user)
+        format.html { redirect_to @conversation, notice: "#{user.username} has been added to the conversation" }
         format.turbo_stream { 
           render turbo_stream: turbo_stream.replace(
             "conversation_header",
@@ -79,11 +65,12 @@ class ConversationsController < ApplicationController
           )
         }
       else
-        format.turbo_stream {
+        format.html { redirect_to @conversation, alert: @conversation.errors.full_messages.join(", ") }
+        format.turbo_stream { 
           render turbo_stream: turbo_stream.update(
-            "flash_messages",
-            partial: "shared/flash_messages",
-            locals: { message: @conversation.errors.full_messages.join(", "), type: "error" }
+            "flash",
+            partial: "shared/flashes",
+            locals: { flash: { alert: @conversation.errors.full_messages.join(", ") } }
           )
         }
       end
@@ -95,6 +82,7 @@ class ConversationsController < ApplicationController
     
     respond_to do |format|
       if @conversation.remove_participant(user)
+        format.html { redirect_to @conversation, notice: "#{user.username} has been removed from the conversation" }
         format.turbo_stream { 
           render turbo_stream: turbo_stream.replace(
             "conversation_header",
@@ -103,11 +91,12 @@ class ConversationsController < ApplicationController
           )
         }
       else
-        format.turbo_stream {
+        format.html { redirect_to @conversation, alert: "Cannot remove participant with existing messages" }
+        format.turbo_stream { 
           render turbo_stream: turbo_stream.update(
-            "flash_messages",
-            partial: "shared/flash_messages",
-            locals: { message: "Cannot remove participant with existing messages", type: "error" }
+            "flash",
+            partial: "shared/flashes",
+            locals: { flash: { alert: "Cannot remove participant with existing messages" } }
           )
         }
       end
@@ -116,27 +105,40 @@ class ConversationsController < ApplicationController
 
   private
 
-  def load_conversations
-    @conversations = if params[:project_id]
-      @project = current_user.projects.find_by(id: params[:project_id])
-      @project ? @project.conversations : []
-    else
-      current_user.conversations.distinct
-    end
-  end
-
   def set_conversation
     @conversation = Conversation.find(params[:id])
   end
 
-  def authorize_conversation
-    unless @conversation.users.include?(current_user) ||
-           (@conversation.project && @conversation.project.user == current_user)
-      redirect_to conversations_path, alert: "You don't have access to this conversation."
+  def conversation_params
+    params.require(:conversation).permit(:name, :project_id)
+  end
+
+  def load_conversations
+    @conversations = if params[:project_id]
+      project = current_user.projects.find_by(id: params[:project_id])
+      project ? project.conversations : Conversation.none
+    else
+      Conversation.joins(:conversation_users)
+                 .where(conversation_users: { user_id: current_user.id })
+                 .distinct
     end
   end
 
-  def conversation_params
-    params.require(:conversation).permit(:name, :project_id)
+  def build_project_conversation
+    project = current_user.projects.find_by(id: params[:project_id])
+    project&.conversations.build(conversation_params)
+  end
+  
+  def render_failure_response
+    respond_to do |format|
+      format.html { render :new, status: :unprocessable_entity }
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update(
+          "flash",
+          partial: "shared/flashes",
+          locals: { flash: { alert: @conversation.errors.full_messages.join(", ") } }
+        )
+      end
+    end
   end
 end

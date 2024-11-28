@@ -18,13 +18,10 @@ class MessagesController < ApplicationController
           render turbo_stream: turbo_stream.replace(
             'message_form',
             partial: 'messages/form',
-            locals: { message: @message }
+            locals: { message: @message, conversation: @conversation }
           )
         }
-        format.html {
-          redirect_to @conversation,
-          alert: 'Message cannot be blank.'
-        }
+        format.html { redirect_to @conversation, alert: @message.errors.full_messages.join(", ") }
       end
     end
   end
@@ -33,13 +30,10 @@ class MessagesController < ApplicationController
 
   def set_conversation
     @conversation = Conversation.find(params[:conversation_id])
-  rescue ActiveRecord::RecordNotFound
-    redirect_to conversations_path, alert: "Conversation not found."
   end
 
   def authorize_conversation
-    unless @conversation.users.include?(current_user) ||
-           (@conversation.project && @conversation.project.user == current_user)
+    unless @conversation.participant?(current_user)
       redirect_to conversations_path, alert: "You don't have access to this conversation."
     end
   end
