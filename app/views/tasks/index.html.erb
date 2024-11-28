@@ -4,23 +4,25 @@
 
 <h1>Tasks for <%= @project.name %></h1>
 <p>Find me in app/views/tasks/index.html.erb</p>
+  <div class="cards">
 
-<% @tasks.each do |task| %>
+<% @tasks.each.with_index(1) do |task, i| %>
 
-<ul class="list-group">
-  <li class="list-group-item"><h2> <%= link_to task.name, project_task_path(@project, task) %></h2>
-    <%= task.description %>
+    <div class="card-project" id="card-<%= i %>">
+    <h2><%= link_to task.name, project_task_path(@project, task) %></h2>
     <div>Se termine le <span class="text-danger"><%= task.deadline %></span>
     </div>
-    <div class="nav-project">
       <%= link_to "EDIT", edit_project_task_path(@project, task) %> <%= link_to "DELETE", project_task_path(@project, task), data: { "turbo-method": :delete, turbo_confirm: "Are you sure you want to delete this task?" } %>
     </div>
-  </li>
-</ul>
 
 <% end %>
+  </div>
+
+
+
+
 
 <div class="nav-project mt-3">
-  <%= link_to "Retour au projet", project_path(@tasks) %>
-  <%= link_to "Ajouter une tache", new_project_task_path(@project, @tasks) %>
+  <%= link_to "Retour au projet", project_path(@project) %>
+  <%= link_to "Ajouter une tache", new_project_task_path(@project) %>
 </div>

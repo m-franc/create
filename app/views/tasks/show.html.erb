@@ -1,3 +1,28 @@
 <h1>Tasks#show</h1>
 <p>Find me in app/views/tasks/show.html.erb</p>
-<h2 class="text-danger"><%= @task.name %></h2>
+  <div class="cards">
+    <div class="card-project" id="card-1">
+      <h2 class="text-danger"><%= @task.name %></h2>
+    </div>
+    <div class="card-project" id="card-2">
+      <h2 class="text-danger"><%= @task.description %></h2>
+    </div>
+    <div class="card-project" id="card-3">
+      <h2 class="text-danger"><%= @task.date %></h2>
+    </div>
+    <div class="card-project" id="card-4">
+      <h2 class="text-danger"><%= @task.status %></h2>
+    </div>
+    <div class="card-project" id="card-5">
+      <h2 class="text-danger"><%= @task.priority %></h2>
+    </div>
+    <div class="card-project" id="card-6">
+      <h2 class="text-danger"><%= @task.deadline %></h2>
+    </div>
+  </div>
+
+<div class="nav-project mt-3">
+  <%= link_to "Retour à la liste de tâches", project_tasks_path(@project) %>
+  <%= link_to "Retour au projet", project_path(@project) %>
+  <%= link_to "Ajouter une tache au projet", new_project_task_path(@project) %>
+</div>
