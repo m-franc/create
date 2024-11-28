@@ -17,7 +17,10 @@
       <div id="message_form">
         <%= form_with(model: [@conversation, Message.new], 
                       class: "d-flex align-items-center gap-2",
-                      data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" }) do |f| %>
+                      data: { 
+                        controller: "reset-form",
+                        action: "turbo:submit-end->reset-form#reset"
+                      }) do |f| %>
           <%= f.text_field :content, 
               class: "form-control",
               placeholder: "Type your message...",
@@ -38,35 +41,35 @@
 <% content_for :styles do %>
   <style>
     .message-content {
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-      border-radius: 18px !important;
+      word-wrap: break-word;
+      max-width: 100%;
+    }
+    
+    .message-bubble {
+      max-width: 70%;
+      padding: 8px 12px;
+      border-radius: 12px;
+      background-color: #f0f2f5;
+      position: relative;
     }
 
-    .conversation-messages {
-      background-color: #f8f9fa;
+    .message-right .message-bubble {
+      background-color: #0084ff;
+      color: white;
     }
 
-    .input-group textarea {
-      border-radius: 20px !important;
-      padding: 8px 16px;
+    .message {
+      margin-bottom: 1rem;
     }
 
-    .input-group .btn {
-      border-radius: 20px !important;
-      margin-left: 8px;
+    .message-footer {
+      font-size: 0.75rem;
+      color: #65676b;
+      margin-top: 4px;
     }
 
-    .message-right .message-content {
-      border-bottom-right-radius: 4px !important;
-    }
-
-    .message-left .message-content {
-      border-bottom-left-radius: 4px !important;
-    }
-
-    .message-avatar .avatar {
-      width: 32px;
-      height: 32px;
+    .message-right .message-footer {
+      color: rgba(255, 255, 255, 0.7);
     }
   </style>
 <% end %>

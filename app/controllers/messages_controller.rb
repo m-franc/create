@@ -9,16 +9,22 @@ class MessagesController < ApplicationController
 
     if @message.save
       respond_to do |format|
-        format.turbo_stream
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.append(
+            "messages_conversation_#{@conversation.id}",
+            partial: "messages/message",
+            locals: { message: @message, current_user: current_user }
+          )
+        }
         format.html { redirect_to @conversation }
       end
     else
       respond_to do |format|
         format.turbo_stream {
-          render turbo_stream: turbo_stream.replace(
-            'message_form',
-            partial: 'messages/form',
-            locals: { message: @message, conversation: @conversation }
+          render turbo_stream: turbo_stream.update(
+            "flash",
+            partial: "shared/flash",
+            locals: { flash: { alert: "Message cannot be blank." } }
           )
         }
         format.html { redirect_to @conversation, alert: @message.errors.full_messages.join(", ") }
@@ -34,7 +40,7 @@ class MessagesController < ApplicationController
 
   def authorize_conversation
     unless @conversation.participant?(current_user)
-      redirect_to conversations_path, alert: "You don't have access to this conversation."
+      redirect_to root_path, alert: "You don't have access to this conversation"
     end
   end
 
