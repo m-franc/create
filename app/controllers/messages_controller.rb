@@ -27,10 +27,7 @@ class MessagesController < ApplicationController
             locals: { flash: { alert: "Message cannot be blank." } }
           )
         }
-        format.html {
-          redirect_to @conversation,
-          alert: 'Message cannot be blank.'
-        }
+        format.html { redirect_to @conversation, alert: @message.errors.full_messages.join(", ") }
       end
     end
   end

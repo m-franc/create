@@ -1,22 +1,21 @@
-<div id="message_<%= message.id %>" class="message <%= message.user == current_user ? 'message-right' : 'message-left' %>">
+<%# Ensure current_user is passed as a local variable if not available in view context %>
+<% current_user = current_user if defined?(current_user) %>
+
+<div id="message_<%= message.id %>" class="message <%= message.system_message ? 'system-message' : (message.user == current_user ? 'message-right' : 'message-left') %>">
   <div class="message-wrapper">
-    <div class="d-flex <%= message.user == current_user ? 'flex-row-reverse' : 'flex-row' %> align-items-end gap-2">
-      <div class="message-avatar">
-        <% if message.user.avatar.attached? %>
-          <%= cl_image_tag message.user.avatar.key, class: "avatar", transformation: [{ width: 36, height: 36, crop: :fill }] %>
-        <% else %>
-          <%= image_tag "https://ui-avatars.com/api/?name=#{message.user.username}&size=36&background=random", class: "avatar" %>
-        <% end %>
-      </div>
-      
+    <% if !message.system_message %>
       <div class="message-bubble">
-        <div class="message-content">
-          <%= message.content %>
-        </div>
+        <%= message.content %>
         <div class="message-footer">
-          <small><%= message.created_at.strftime('%H:%M') %></small>
+          <small>
+            <%= message.user.username %> • <%= time_ago_in_words(message.created_at) %> ago
+          </small>
         </div>
       </div>
-    </div>
+    <% else %>
+      <div class="message-bubble system">
+        <%= message.content %>
+      </div>
+    <% end %>
   </div>
 </div>

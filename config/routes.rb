@@ -18,25 +18,15 @@ Rails.application.routes.draw do
     resources :notes
     resources :tasks
     # Project-specific conversations
-    resource :conversations, only: [:index, :new, :create, :show] do
-      resources :messages, only: [:create]
-    end
+    resources :conversations, only: [:index, :new, :create, :show]
   end
 
-  # General conversations (not tied to projects)
+  # General conversations
   resources :conversations do
     resources :messages, only: [:create]
     member do
-      post :add_participant
-      delete :remove_participant
+      post 'add_participant'
+      delete 'remove_participant'
     end
   end
-
-  # Routes pour la recherche globale
-  resources :searches, only: [:index] do
-    collection do
-      get :suggestions
-    end
-  end
-
 end

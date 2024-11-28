@@ -1,17 +1,25 @@
 class Message < ApplicationRecord
   belongs_to :conversation
-  belongs_to :user, optional: true
+  belongs_to :user, optional: true  # Make user optional for system messages
 
   validates :content, presence: true
-
-  after_create_commit -> {
+  validate :user_required_unless_system_message
+  
+  scope :system_messages, -> { where(system_message: true) }
+  scope :user_messages, -> { where(system_message: false) }
+  
+  after_create_commit -> { 
     broadcast_append_later_to conversation,
-      target: "messages_conversation_#{conversation.id}",
-      partial: "messages/message",
-      locals: { message: self, current_user: user }
+                            target: "messages_conversation_#{conversation.id}",
+                            partial: "messages/message",
+                            locals: { current_user: user }
   }
 
-  def system_message?
-    system_message == true
+  private
+
+  def user_required_unless_system_message
+    if !system_message && user.nil?
+      errors.add(:user, "is required for non-system messages")
+    end
   end
 end
