@@ -1,11 +1,8 @@
 class Task < ApplicationRecord
-<<<<<<< HEAD
   belongs_to :user
   belongs_to :project
-=======
   include PgSearch::Model
 
-  belongs_to :project_user
   has_one :project, through: :project_user
   has_one :user, through: :project_user
 
@@ -14,5 +11,4 @@ class Task < ApplicationRecord
 
   multisearchable against: [:name, :description],
                   additional_attributes: ->(task) { { searchable_type: 'Task' } }
->>>>>>> master
 end
