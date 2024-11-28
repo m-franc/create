@@ -5,6 +5,13 @@ class SearchesController < ApplicationController
     if @query.present?
       search_pattern = "%#{@query.split('').join('%')}%"
       
+      # Debug logs pour la recherche d'utilisateurs
+      Rails.logger.debug "Index - Recherche d'utilisateurs avec pattern: #{search_pattern}"
+      @users = User.where("LOWER(email) LIKE LOWER(?) OR LOWER(username) LIKE LOWER(?)", 
+                         search_pattern, search_pattern)
+      Rails.logger.debug "Index - Nombre d'utilisateurs trouvés: #{@users.count}"
+      Rails.logger.debug "Index - SQL généré: #{@users.to_sql}"
+      
       @projects = accessible_projects
         .where("LOWER(projects.name) LIKE LOWER(?) OR LOWER(projects.description) LIKE LOWER(?)", 
                search_pattern, search_pattern)
@@ -20,12 +27,13 @@ class SearchesController < ApplicationController
       @tasks = accessible_tasks
         .where("LOWER(tasks.name) LIKE LOWER(?) OR LOWER(tasks.description) LIKE LOWER(?)", 
                search_pattern, search_pattern)
-      
+
       @grouped_results = {
         "Projet" => @projects,
         "Document" => @documents,
         "Note" => @notes,
-        "Task" => @tasks
+        "Task" => @tasks,
+        "Utilisateur" => @users
       }.reject { |_, items| items.empty? }
     else
       @grouped_results = {}
@@ -54,7 +62,7 @@ class SearchesController < ApplicationController
       end
 
     # Documents
-    accessible_documents
+    Document.where(user_id: current_user.id)
       .where("LOWER(documents.name) LIKE LOWER(?) OR LOWER(documents.folder_name) LIKE LOWER(?)", 
              search_pattern, search_pattern)
       .limit(5)
@@ -74,29 +82,45 @@ class SearchesController < ApplicationController
              search_pattern, search_pattern)
       .limit(5)
       .each do |note|
-        matched_content = find_matching_content(note.content, query)
         suggestions << {
           text: note.title,
           type: 'Note',
           url: project_note_path(note.project, note),
-          context: matched_content || truncate(note.content, length: 50)
+          context: truncate(note.content)
         }
       end
 
-    # Tasks
+    # Tâches
     accessible_tasks
       .where("LOWER(tasks.name) LIKE LOWER(?) OR LOWER(tasks.description) LIKE LOWER(?)", 
              search_pattern, search_pattern)
       .limit(5)
       .each do |task|
-        project = task.project_user.project
+        project = task.project
         suggestions << {
           text: task.name,
           type: 'Tâche',
-          url: project_path(project),  
-          context: truncate(task.description, length: 50)
+          url: project_path(project),
+          context: truncate(task.description)
         }
       end
+
+    # Utilisateurs
+    Rails.logger.debug "Recherche d'utilisateurs avec pattern: #{search_pattern}"
+    users = User.where("LOWER(email) LIKE LOWER(?) OR LOWER(username) LIKE LOWER(?)", 
+                      search_pattern, search_pattern)
+    Rails.logger.debug "Nombre d'utilisateurs trouvés: #{users.count}"
+    Rails.logger.debug "SQL généré: #{users.to_sql}"
+    
+    users.limit(5).each do |user|
+      Rails.logger.debug "Utilisateur trouvé: #{user.email} (#{user.username})"
+      suggestions << {
+        text: user.username.presence || user.email,
+        type: 'Utilisateur',
+        url: user_path(user),
+        context: user.username ? "Email: #{user.email}" : nil
+      }
+    end
 
     # Trier les suggestions par pertinence
     suggestions = sort_suggestions_by_relevance(suggestions, query)
@@ -109,28 +133,28 @@ class SearchesController < ApplicationController
 
   def accessible_projects
     Project.left_joins(:project_users)
-           .where("projects.user_id = ? OR project_users.user_id = ?", current_user.id, current_user.id)
+           .where("projects.user_id = ? OR project_users.user_id = ?", 
+                  current_user.id, current_user.id)
            .distinct
   end
 
   def accessible_documents
-    Document.joins(:project)
-            .joins("LEFT JOIN project_users ON project_users.project_id = projects.id")
-            .where("projects.user_id = ? OR project_users.user_id = ?", current_user.id, current_user.id)
-            .distinct
+    Document.where(user_id: current_user.id)
   end
 
   def accessible_notes
     Note.joins(:project)
         .joins("LEFT JOIN project_users ON project_users.project_id = projects.id")
-        .where("projects.user_id = ? OR project_users.user_id = ?", current_user.id, current_user.id)
+        .where("projects.user_id = ? OR project_users.user_id = ?", 
+               current_user.id, current_user.id)
         .distinct
   end
 
   def accessible_tasks
-    Task.joins(project_user: :project)
+    Task.joins(:project)
         .joins("LEFT JOIN project_users ON project_users.project_id = projects.id")
-        .where("projects.user_id = ? OR project_users.user_id = ?", current_user.id, current_user.id)
+        .where("projects.user_id = ? OR project_users.user_id = ?", 
+               current_user.id, current_user.id)
         .distinct
   end
 
@@ -180,6 +204,8 @@ class SearchesController < ApplicationController
       elsif query.downcase.start_with?('p') && suggestion[:type] == 'Projet'
         score -= 5
       elsif query.downcase.start_with?('t') && suggestion[:type] == 'Tâche'
+        score -= 5
+      elsif query.downcase.start_with?('u') && suggestion[:type] == 'Utilisateur'
         score -= 5
       end
       

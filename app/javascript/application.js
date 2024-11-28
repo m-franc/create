@@ -5,3 +5,5 @@ import "@popperjs/core";
 import "bootstrap";
 import { Turbo } from "@hotwired/turbo-rails"
 //
+
+// import './packs/select2_init';

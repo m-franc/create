@@ -1,11 +1,3 @@
-<%= turbo_stream.append "messages_conversation_#{@conversation.id}" do %>
-  <%= render "messages/message", message: @message %>
-  <script>
-    document.getElementById("messages_conversation_<%= @conversation.id %>").scrollTop = 
-    document.getElementById("messages_conversation_<%= @conversation.id %>").scrollHeight;
-  </script>
-<% end %>
-
 <%= turbo_stream.update "message_form" do %>
   <%= form_with(model: [@conversation, Message.new],
                 class: "d-flex align-items-center gap-2",

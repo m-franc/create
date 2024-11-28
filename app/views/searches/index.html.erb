@@ -64,14 +64,30 @@
                   <% end %>
 
                 <% when "Task" %>
-                  <% project = item.project_user.project %>
-                  <%= link_to project_path(project), class: "list-group-item list-group-item-action" do %>
+                  <%= link_to project_path(item.project), class: "list-group-item list-group-item-action" do %>
                     <div class="d-flex justify-content-between align-items-center">
                       <h5 class="mb-1"><%= item.name %></h5>
                       <small>Tâche</small>
                     </div>
                     <p class="mb-1"><%= truncate(item.description, length: 100) %></p>
-                    <small>Dans le projet: <%= project.name %></small>
+                    <small>Dans le projet: <%= item.project.name %></small>
+                  <% end %>
+
+                <% when "Utilisateur" %>
+                  <%= link_to user_path(item), class: "list-group-item list-group-item-action" do %>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex align-items-center">
+                        <% if item.avatar.attached? %>
+                          <%= image_tag item.avatar.variant(:small), class: "rounded-circle me-2", style: "width: 32px; height: 32px;" %>
+                        <% else %>
+                          <div class="rounded-circle bg-secondary me-2" style="width: 32px; height: 32px;">
+                          </div>
+                        <% end %>
+                        <h5 class="mb-1"><%= item.username %></h5>
+                      </div>
+                      <small>Utilisateur</small>
+                    </div>
+                    <p class="mb-1"><%= item.email %></p>
                   <% end %>
                 <% end %>
               <% end %>
