@@ -32,7 +32,7 @@ class Project < ApplicationRecord
   private
 
   def create_default_conversation
-    conversations.create!(
+    Conversation.create!(
       name: "#{name} - General Discussion",
       project: self
     )
