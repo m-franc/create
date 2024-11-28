@@ -54,10 +54,7 @@ class SearchesController < ApplicationController
       end
 
     # Documents - Filtrer selon les permissions
-    Document.joins(:project)
-      .joins("LEFT JOIN project_users ON project_users.project_id = projects.id")
-      .where("(projects.user_id = ? AND documents.user_id = ?) OR (project_users.user_id = ? AND documents.user_id = ?)", 
-             current_user.id, current_user.id, current_user.id, current_user.id)
+    Document.where(user_id: current_user.id)
       .where("LOWER(documents.name) LIKE LOWER(?) OR LOWER(documents.folder_name) LIKE LOWER(?)", 
              search_pattern, search_pattern)
       .limit(5)
@@ -92,7 +89,7 @@ class SearchesController < ApplicationController
              search_pattern, search_pattern)
       .limit(5)
       .each do |task|
-        project = task.project_user.project
+        project = task.project
         suggestions << {
           text: task.name,
           type: 'Tâche',
@@ -118,11 +115,7 @@ class SearchesController < ApplicationController
   end
 
   def accessible_documents
-    Document.joins(:project)
-            .joins("LEFT JOIN project_users ON project_users.project_id = projects.id")
-            .where("projects.user_id = ? OR project_users.user_id = ?", 
-                   current_user.id, current_user.id)
-            .distinct
+    Document.where(user_id: current_user.id)
   end
 
   def accessible_notes
@@ -134,7 +127,7 @@ class SearchesController < ApplicationController
   end
 
   def accessible_tasks
-    Task.joins(project_user: :project)
+    Task.joins(:project)
         .joins("LEFT JOIN project_users ON project_users.project_id = projects.id")
         .where("projects.user_id = ? OR project_users.user_id = ?", 
                current_user.id, current_user.id)
