@@ -5,11 +5,10 @@
 <h1>Tasks for <%= @project.name %></h1>
 <p>Find me in app/views/tasks/index.html.erb</p>
 
-
 <% @tasks.each do |task| %>
 
 <ul>
-  <li><%= task.description %></li>
+  <li><%= task.description %> <%= link_to "EDIT", edit_project_task_path(@project, task) %> - <%= link_to "DELETE", project_task_path(@project, task), data: { "turbo-method": :delete } %><span></li>
 </ul>
 
 <% end %>
