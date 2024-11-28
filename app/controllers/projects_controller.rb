@@ -9,7 +9,7 @@ class ProjectsController < ApplicationController
   # GET /projects/:id
   def show
     @joined_users = @project.joined_users
-  end
+   end
 
   # GET /projects/new
   def new
