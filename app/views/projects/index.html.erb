@@ -1,33 +1,35 @@
 <h1>Pages#home</h1>
 <p>Find me in app/views/pages/home.html.erb</p>
 
-<%= link_to 'New Project', new_project_path %>
-
-
-<h1>Liste des Projets</h1>
-
-<% if @projects.any? %>
-  <div class="card-container">
-    <% @projects.each do |project| %>
-      <div class="card">
-        <!-- Image du projet -->
-        <%# <% if project.image.present? %>
-          <%# <%= image_tag project.image, class: 'card-image', alt: "#{project.name} Image" %>
-        <%# <% else %>
-          <p class="placeholder-image">No image available</p>
-        <%# <% end %>
-
-        <!-- Détails du projet -->
-        <div class="card-content">
-          <h2><%= link_to project.name, project_path(project.id), class: 'card-title' %></h2>
-          <p><strong>Location:</strong> <%= project.location %></p>
-          <p><strong>Start Date:</strong> <%= project.starting_date %></p>
-          <p><strong>End Date:</strong> <%= project.end_date %></p>
-        </div>
-
-      </div>
-    <% end %>
+<div class="projects-container">
+  <div class="projects-header">
+    <h1>Project List</h1>
+    <%= link_to 'New Project', new_project_path, class: 'btn btn-primary' %>
   </div>
-<% else %>
-  <p>Aucun projet trouvé.</p>
-<% end %>
+
+  <% if @projects.any? %>
+    <div class="card-container">
+      <% @projects.each do |project| %>
+        <div class="card">
+          <% if project.image.attached? %>
+            <%= image_tag project.image, class: 'card-image', alt: "#{project.name} Image" %>
+          <% else %>
+            <div class="placeholder-image">
+              <i class="fa-regular fa-image"></i>
+              <span>No image available</span>
+            </div>
+          <% end %>
+
+          <div class="card-content">
+            <h2><%= link_to project.name, project_path(project.id), class: 'card-title' %></h2>
+            <p><strong>Location:</strong> <%= project.location %></p>
+            <p><strong>Start Date:</strong> <%= project.starting_date %></p>
+            <p><strong>End Date:</strong> <%= project.end_date %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="no-projects">Aucun projet trouvé.</p>
+  <% end %>
+</div>
