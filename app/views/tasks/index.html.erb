@@ -8,7 +8,7 @@
 <% @tasks.each do |task| %>
 
 <ul>
-  <li><%= task.description %> <%= link_to "EDIT", edit_project_task_path(@project, task) %> - <%= link_to "DELETE", project_task_path(@project, task), data: { "turbo-method": :delete } %><span></li>
+  <li><%= task.description %> <%= link_to "EDIT", edit_project_task_path(@project, task) %> - <%= link_to "DELETE", project_task_path(@project, task), data: { "turbo-method": :delete, turbo_confirm: "Are you sure you want to delete this task?" } %><span></li>
 </ul>
 
 <% end %>
