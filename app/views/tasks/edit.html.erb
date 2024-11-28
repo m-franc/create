@@ -1,2 +1,60 @@
 <h1>Tasks#edit</h1>
 <p>Find me in app/views/tasks/edit.html.erb</p>
+
+<h1>Tasks#new</h1>
+<p>Find me in app/views/tasks/new.html.erb</p>
+
+
+<%= form_with(model: [@project, @task], local: true) do |form| %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :location %>
+    <%= form.text_field :location %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.text_field :date,
+      data: {
+        controller: "datepicker",
+        datepicker_date_format: "Y-m-d",
+        datepicker_min_date: Time.zone.now
+      }
+    %>
+  </div>
+
+  <div class="field">
+    <%= form.label :deadline %>
+    <%= form.text_field :deadline,
+      data: {
+        controller: "datepicker",
+        datepicker_date_format: "Y-m-d",
+        datepicker_min_date: Time.zone.now
+      }
+    %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.text_field :status %>
+  </div>
+
+  <div class="field">
+    <%= form.label :priority %>
+    <%= form.text_field :priority %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Modif Task' %>
+  </div>
+<% end %>
