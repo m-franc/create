@@ -26,6 +26,10 @@ Rails.application.routes.draw do
   # General conversations (not tied to projects)
   resources :conversations do
     resources :messages, only: [:create]
+    member do
+      post :add_participant
+      delete :remove_participant
+    end
   end
 
   # Routes pour la recherche globale

@@ -7,6 +7,7 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+Conversation.destroy_all
 User.destroy_all
 Project.destroy_all
 
@@ -16,16 +17,16 @@ member = User.create!(email: "member@test.com", username: 'Member', password: 'c
 
 projects = []# Crée 5 projets avec des noms uniques, associés à cet utilisateur
 5.times do |i|
-  projects.push(Project.create!(name: "Projet #{i + 1}", user: owner))
+  projects.push(Project.create!(name: "Projet #{i + 1}", description: "not blank", user: owner))
 end
 
 puts "5 projets créés avec succès pour l'utilisateur #{owner.username} !"
 
 project_user = ProjectUser.create!(project: projects[0], user: member)
 
-Task.create!(name: "repetition", description: "acte 4 scène 6", project_user: project_user)
-Task.create!(name: "repetition", description: "acte 4 scène 7", project_user: project_user)
-Task.create!(name: "repetition", description: "acte 4 scène 8", project_user: project_user)
-Task.create!(name: "repetition", description: "acte 4 scène 9", project_user: project_user)
-Task.create!(name: "repetition", description: "acte 4 scène 10", project_user: project_user)
-Task.create!(name: "repetition", description: "acte 4 scène 11", project_user: project_user)
+Task.create!(name: "repetition", description: "acte 4 scène 6", project: projects[0], user: [member, owner].sample)
+Task.create!(name: "repetition", description: "acte 4 scène 7", project: projects[0], user: [member, owner].sample)
+Task.create!(name: "repetition", description: "acte 4 scène 8", project: projects[0], user: [member, owner].sample)
+Task.create!(name: "repetition", description: "acte 4 scène 9", project: projects[0], user: [member, owner].sample)
+Task.create!(name: "repetition", description: "acte 4 scène 10", project: projects[0], user: [member, owner].sample)
+Task.create!(name: "repetition", description: "acte 4 scène 11", project: projects[0], user: [member, owner].sample)

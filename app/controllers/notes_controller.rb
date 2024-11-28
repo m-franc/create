@@ -8,12 +8,18 @@ class NotesController < ApplicationController
     @notes = @project.notes
   end
 
+  def dashboard_show
+
+    @project = Project.find(params[:id])
+  end
+
   def show
+    @note = Note.find(params[:id])
   end
 
   def new
     @project = Project.find(params[:project_id])
-    @note = @project.notes.build
+    @note = @project.notes.new
   end
 
   def edit
@@ -21,9 +27,7 @@ class NotesController < ApplicationController
 
   def create
     @project = Project.find(params[:project_id])
-    @note = @project.notes.build(note_params)
-    @note.user = current_user
-
+    @note = @project.notes.new(note_params)
     if @note.save
       redirect_to project_notes_path(@project), notice: 'Note was successfully created.'
     else
@@ -61,4 +65,8 @@ class NotesController < ApplicationController
       redirect_to project_notes_path(@project), alert: 'Only project owner can perform this action.'
     end
   end
+
+
+
+
 end

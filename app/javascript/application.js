@@ -3,4 +3,5 @@ import "@hotwired/turbo-rails";
 import "controllers";
 import "@popperjs/core";
 import "bootstrap";
-// import './packs/select2_init';
+import { Turbo } from "@hotwired/turbo-rails"
+//

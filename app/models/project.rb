@@ -8,10 +8,10 @@ class Project < ApplicationRecord
   has_many :notes, dependent: :destroy
   has_many :tasks, dependent: :destroy
   has_one_attached :image
-  
+
   validates :name, presence: true
   validates :description, presence: true
-  
+
   multisearchable against: [:name, :description],
                   additional_attributes: ->(project) { { searchable_type: 'Project' } }
 
@@ -30,9 +30,9 @@ class Project < ApplicationRecord
   after_create :create_default_conversation
 
   private
-  
+
   def create_default_conversation
-    conversations.create!(
+    Conversation.create!(
       name: "#{name} - General Discussion",
       project: self
     )
