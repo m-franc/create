@@ -1,0 +1,48 @@
+.search-container {
+  position: relative;
+}
+
+.suggestions-container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  margin-top: 4px;
+}
+
+.suggestions-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.suggestion-item {
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #f0f0f0;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+  
+  &:hover {
+    background-color: #f8f9fa;
+  }
+}
+
+.suggestion-title {
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.suggestion-context {
+  font-size: 0.85em;
+  color: #6c757d;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hover-bg-light:hover {
+  background-color: #f8f9fa;
+}

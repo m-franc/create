@@ -1,4 +1,6 @@
 class Document < ApplicationRecord
+  include PgSearch::Model
+
   belongs_to :project
   belongs_to :user
 
@@ -6,6 +8,9 @@ class Document < ApplicationRecord
   validates :cloudinary_id, presence: true, if: -> { file.present? }
 
   attr_accessor :file
+
+  multisearchable against: [:name, :folder_name],
+                  additional_attributes: ->(document) { { searchable_type: 'Document' } }
 
   def image?
     return false unless cloudinary_id.present?
