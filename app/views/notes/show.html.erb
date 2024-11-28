@@ -11,9 +11,9 @@
     <%= link_to 'Back', project_notes_path(@note.project), class: 'btn btn-secondary' %>
     <% if @note.project.user == current_user %>
       <%= link_to 'Edit', edit_project_note_path(@note.project, @note), class: 'btn btn-warning' %>
-      <%= link_to 'Delete', project_note_path(@note.project, @note), 
-          method: :delete, 
-          data: { confirm: 'Are you sure?' }, 
+      <%= link_to 'Delete', project_note_path(@note.project, @note),
+          method: :delete,
+          data: { confirm: 'Are you sure?' },
           class: 'btn btn-danger' %>
     <% end %>
   </div>

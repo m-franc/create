@@ -39,6 +39,11 @@
     %>
   </div>
 
+    <div class="field">
+  <%= form.select :joined_user_ids, User.all.map { |user| [ user.username, user.id ] }, {}, { placeholder: "Rechercher un utilisateur...", multiple: true, data: { controller: "tom-select", tom_select_options_value: { tags: true } } } %>
+  </div>
+
+
  <div class="form-group">
   <%= form.label :image, "Upload Project Image" %>
   <%= form.file_field :image, class: "form-control" %>

@@ -9,6 +9,14 @@ class ProjectsController < ApplicationController
   # GET /projects/:id
   def show
     @joined_users = @project.joined_users
+    @project = Project.find(params[:id])
+    @notes = @project.notes
+
+    if turbo_frame_request?
+      render :show
+    else
+      # Si la requête n'est pas une requête turbo, tu peux rediriger ou afficher une autre vue par défaut
+    end
   end
 
   # GET /projects/new
@@ -61,6 +69,9 @@ class ProjectsController < ApplicationController
     flash[:notice] = "Project deleted 🗑️"
     redirect_to projects_path
   end
+
+
+
 
   private
 
