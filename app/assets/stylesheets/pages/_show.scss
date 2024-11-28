@@ -40,6 +40,11 @@ $red-create: #B93838;
   flex-direction: column;
 }
 
+#infos {
+  text-align: right;
+  color: grey;
+}
+
 .edit-link {
   position: absolute;  /* Positionnement absolu */
   top: 20px;           /* Distance du haut */
@@ -69,11 +74,16 @@ $red-create: #B93838;
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
   justify-content: center;
   text-align: center;
   margin: 10px;
+  transition: transform 0.3s ease;
 
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 4px 4px 10px rgba($red-create, 0.2);
+  }
 }
 
 #card-2 {
@@ -108,8 +118,8 @@ $red-create: #B93838;
 .nav-project {
   display: flex;
   justify-content: center;   /* Centre les éléments enfants (les <a>) horizontalement */
-  margin-bottom: 10px;
-  height: 75px;
+
+  height: px;
 
   a {
     display: flex;             /* Utilisation de flexbox */
