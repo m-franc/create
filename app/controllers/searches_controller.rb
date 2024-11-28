@@ -53,8 +53,11 @@ class SearchesController < ApplicationController
         }
       end
 
-    # Documents
-    accessible_documents
+    # Documents - Filtrer selon les permissions
+    Document.joins(:project)
+      .joins("LEFT JOIN project_users ON project_users.project_id = projects.id")
+      .where("(projects.user_id = ? AND documents.user_id = ?) OR (project_users.user_id = ? AND documents.user_id = ?)", 
+             current_user.id, current_user.id, current_user.id, current_user.id)
       .where("LOWER(documents.name) LIKE LOWER(?) OR LOWER(documents.folder_name) LIKE LOWER(?)", 
              search_pattern, search_pattern)
       .limit(5)
@@ -109,28 +112,32 @@ class SearchesController < ApplicationController
 
   def accessible_projects
     Project.left_joins(:project_users)
-           .where("projects.user_id = ? OR project_users.user_id = ?", current_user.id, current_user.id)
+           .where("projects.user_id = ? OR project_users.user_id = ?", 
+                  current_user.id, current_user.id)
            .distinct
   end
 
   def accessible_documents
     Document.joins(:project)
             .joins("LEFT JOIN project_users ON project_users.project_id = projects.id")
-            .where("projects.user_id = ? OR project_users.user_id = ?", current_user.id, current_user.id)
+            .where("projects.user_id = ? OR project_users.user_id = ?", 
+                   current_user.id, current_user.id)
             .distinct
   end
 
   def accessible_notes
     Note.joins(:project)
         .joins("LEFT JOIN project_users ON project_users.project_id = projects.id")
-        .where("projects.user_id = ? OR project_users.user_id = ?", current_user.id, current_user.id)
+        .where("projects.user_id = ? OR project_users.user_id = ?", 
+               current_user.id, current_user.id)
         .distinct
   end
 
   def accessible_tasks
     Task.joins(project_user: :project)
         .joins("LEFT JOIN project_users ON project_users.project_id = projects.id")
-        .where("projects.user_id = ? OR project_users.user_id = ?", current_user.id, current_user.id)
+        .where("projects.user_id = ? OR project_users.user_id = ?", 
+               current_user.id, current_user.id)
         .distinct
   end
 

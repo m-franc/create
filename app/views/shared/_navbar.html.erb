@@ -21,7 +21,22 @@
             <%= link_to "Conversations", conversations_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Search bar", "#", class: "nav-link" %>
+            <div class="search-container">
+              <%= form_tag searches_path, method: :get, class: "d-flex", data: { controller: "search" } do %>
+                <%= text_field_tag :query,
+                    params[:query],
+                    class: "form-control me-2",
+                    placeholder: "Rechercher...",
+                    data: { 
+                      search_target: "input",
+                      action: "input->search#search"
+                    }
+                %>
+                <div class="suggestions-container d-none" data-search-target="suggestions">
+                  <div class="suggestions-list list-group shadow"></div>
+                </div>
+              <% end %>
+            </div>
           </li>
         <% else %>
           <li class="nav-item">
