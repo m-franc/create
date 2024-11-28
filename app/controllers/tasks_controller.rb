@@ -7,7 +7,6 @@ class TasksController < ApplicationController
     # project_user_ids = @project.project_users.pluck(:id)
     # @tasks = Task.where(project_user_id: project_user_ids)
     @tasks = Task.all
-
   end
 
   def new
@@ -29,10 +28,10 @@ class TasksController < ApplicationController
   end
 
   def show
-    # @user = @task.task_users
   end
 
   def edit
+
   end
 
   def update
