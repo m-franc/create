@@ -82,6 +82,7 @@
 
 // Your CSS partials
 @import "components/index";
+@import "components/search";
 @import "pages/index";
 @import "pages/show";
 @import "components/bottom_menu";
@@ -91,6 +92,7 @@
 
 
 $body-color: #F6EDED;
+$red-create: #B93838;
 
 body {
   background-color: $body-color

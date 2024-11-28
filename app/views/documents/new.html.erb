@@ -1,0 +1,36 @@
+<div class="container mt-4">
+  <h1>Upload New Document</h1>
+
+  <%= form_with(model: [@project, @document], local: true) do |f| %>
+    <% if @document.errors.any? %>
+      <div class="alert alert-danger">
+        <h2><%= pluralize(@document.errors.count, "error") %> prohibited this document from being saved:</h2>
+        <ul>
+          <% @document.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group mb-3">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+
+    <div class="form-group mb-3">
+      <%= f.label :folder_name, 'Folder Name (optional)' %>
+      <%= f.text_field :folder_name, class: 'form-control' %>
+    </div>
+
+    <div class="form-group mb-3">
+      <%= f.label :file %>
+      <%= f.file_field :file, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.submit 'Upload Document', class: 'btn btn-primary' %>
+      <%= link_to 'Back', project_documents_path(@project), class: 'btn btn-secondary' %>
+    </div>
+  <% end %>
+</div>
