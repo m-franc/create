@@ -4,8 +4,10 @@ class TasksController < ApplicationController
   before_action :set_task, except: [:index, :new, :create]
 
   def index
-    project_user_ids = @project.project_users.pluck(:id)
-    @tasks = Task.where(project_user_id: project_user_ids)
+    # project_user_ids = @project.project_users.pluck(:id)
+    # @tasks = Task.where(project_user_id: project_user_ids)
+    @tasks = Task.all
+
   end
 
   def new
@@ -13,21 +15,21 @@ class TasksController < ApplicationController
   end
 
   def create
-    project_user = @project.project_users.find_by(user: current_user)
     @task = Task.new(task_params)
-    @task.project_user = project_user
+    @task.project = @project
+    @task.user = current_user
 
     if @task.save
       flash[:notice] = "Task created ✅"
       redirect_to project_tasks_path(@project)
     else
+      flash[:alert] = "Unable to create the task. Please fix the errors."
       render :new, status: :unprocessable_entity
     end
   end
 
   def show
-    @user = @task.project_user.user
-    @project = @task.project
+    # @user = @task.task_users
   end
 
   def edit
@@ -51,7 +53,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :description, :location, :date, :status, :deadline, :priority)
+    params.require(:task).permit(:name, :description, :location, :date, :deadline, :status, :priority)
   end
 
   def set_task
@@ -59,6 +61,6 @@ class TasksController < ApplicationController
   end
 
   def set_project
-    @project = Project.find(params[:project_id])
+    @project = Project.find(params[:project_id]) if params[:project_id].present?
   end
 end

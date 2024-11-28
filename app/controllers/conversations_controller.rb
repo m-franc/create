@@ -1,6 +1,6 @@
 class ConversationsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_conversation, only: [:show]
+  before_action :set_conversation, only: [:show, :add_participant, :remove_participant]
   before_action :authorize_conversation, only: [:show]
 
   def index
@@ -60,6 +60,54 @@ class ConversationsController < ApplicationController
             "new_conversation_form",
             partial: "conversations/form",
             locals: { conversation: @conversation }
+          )
+        }
+      end
+    end
+  end
+
+  def add_participant
+    user = User.find(params[:user_id])
+    
+    respond_to do |format|
+      if @conversation.add_participant(user)
+        format.turbo_stream { 
+          render turbo_stream: turbo_stream.replace(
+            "conversation_header",
+            partial: "conversations/header",
+            locals: { conversation: @conversation }
+          )
+        }
+      else
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.update(
+            "flash_messages",
+            partial: "shared/flash_messages",
+            locals: { message: @conversation.errors.full_messages.join(", "), type: "error" }
+          )
+        }
+      end
+    end
+  end
+
+  def remove_participant
+    user = User.find(params[:user_id])
+    
+    respond_to do |format|
+      if @conversation.remove_participant(user)
+        format.turbo_stream { 
+          render turbo_stream: turbo_stream.replace(
+            "conversation_header",
+            partial: "conversations/header",
+            locals: { conversation: @conversation }
+          )
+        }
+      else
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.update(
+            "flash_messages",
+            partial: "shared/flash_messages",
+            locals: { message: "Cannot remove participant with existing messages", type: "error" }
           )
         }
       end

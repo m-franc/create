@@ -9,6 +9,17 @@
 
 
 
+<%= link_to "Task", project_tasks_path(@project) %>
+<%= link_to "NEW TASK", new_project_task_path(@project) %>
+
+<%= link_to "Notes", project_notes_path(@project), class: 'btn btn-primary' %>
+<h2><%= @project.notes %></h2>
+<p>document</p>
+<h2>Place: <%= @project.location %></h2>
+<h2>Statue : <%= @project.status %></h2>
+<h2>Starting date: <%= @project.starting_date %></h2>
+<h2>Creation: <%= @project.created_at %></h2>
+<h2>Last update: <h2>Date: <%= @project.updated_at %></h2>
 
     <div class="project-details">
       <h2><%= @project.name %></h2>
