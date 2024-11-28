@@ -82,6 +82,7 @@
 
 // Your CSS partials
 @import "components/index";
+@import "components/search";
 @import "pages/index";
 @import "pages/show";
 @import "components/bottom_menu";
@@ -90,8 +91,13 @@
 @import "components/card_project";
 
 
-$body-color: #F6EDED;
+$body-color: rgb(247, 247, 247);
+$red-create: #B93838;
 
 body {
   background-color: $body-color
+}
+
+.custom-sidebar {
+  background-color: white
 }

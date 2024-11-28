@@ -1,7 +1,5 @@
 <h1>Create a new project</h1>
 
-<h1>Create New Project</h1>
-
 <%= form_with(model: @project, local: true) do |form| %>
 
   <div class="field">
@@ -34,6 +32,10 @@
         datepicker_min_date: Time.zone.now
       }
     %>
+  </div>
+
+  <div class="field">
+  <%= form.select :joined_user_ids, User.all.map { |user| [ user.username, user.id ] }, {}, { placeholder: "Rechercher un utilisateur...", multiple: true, data: { controller: "tom-select", tom_select_options_value: { tags: true } } } %>
   </div>
 
   <div class="field">

@@ -1,0 +1,104 @@
+<div class="container mt-4">
+  <%= link_to project_path(@project), class: 'btn btn-secondary mb-3' do %>
+    <i class="fas fa-arrow-left"></i> Back to Project
+  <% end %>
+
+  <h1>Documents for <%= @project.name %></h1>
+
+  <%= link_to 'Upload New Document', new_project_document_path(@project), class: 'btn btn-primary mb-4' %>
+
+  <% @folders.each do |folder| %>
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">
+          Folder: <%= folder || 'Root' %>
+        </h5>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Uploaded by</th>
+                <th>Actions</th>
+                <th>Preview</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @documents.where(folder_name: folder).each do |document| %>
+                <tr>
+                  <td><%= document.name %></td>
+                  <td><small class="text-muted"><%= document.format&.upcase %></small></td>
+                  <td><%= document.user.username %></td>
+                  <td>
+                    <%= link_to 'Download', download_project_document_path(@project, document), class: 'btn btn-sm btn-success' %>
+                    <% if current_user == @project.user || (current_user == document.user) %>
+                      <%= button_to 'Delete', 
+                          project_document_path(@project, document), 
+                          method: :delete,
+                          form: { data: { turbo_confirm: 'Are you sure?' } },
+                          class: 'btn btn-sm btn-danger' %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% if document.previewable? %>
+                      <% preview_id = "preview-#{document.id}" %>
+                      <% modal_id = "modal-#{document.id}" %>
+                      <%= link_to '#', data: { bs_toggle: 'modal', bs_target: "##{modal_id}" } do %>
+                        <% if document.image? %>
+                          <%= image_tag document.preview_url, class: 'img-thumbnail', style: 'max-width: 100px; cursor: pointer;' %>
+                        <% else %>
+                          <%= image_tag document.preview_url, class: 'img-thumbnail', style: 'max-width: 100px; cursor: pointer;' %>
+                          <small class="d-block text-muted">PDF Preview</small>
+                        <% end %>
+                      <% end %>
+
+                      <!-- Modal pour la prévisualisation -->
+                      <div class="modal fade" id="<%= modal_id %>" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title"><%= document.name %></h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                              <% if document.image? %>
+                                <%= image_tag Cloudinary::Utils.cloudinary_url(document.cloudinary_id, width: 800, crop: :fit), 
+                                    class: 'img-fluid' %>
+                              <% else %>
+                                <%= image_tag Cloudinary::Utils.cloudinary_url(document.cloudinary_id, format: 'jpg', width: 800, crop: :fit, page: 1), 
+                                    class: 'img-fluid' %>
+                                <p class="mt-2 text-muted">PDF Preview (first page)</p>
+                              <% end %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <% else %>
+                      <i class="fas fa-file fa-2x text-muted"></i>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<% content_for :head do %>
+  <style>
+    .modal-lg {
+      max-width: 90% !important;
+    }
+    
+    .img-thumbnail:hover {
+      opacity: 0.8;
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+<% end %>

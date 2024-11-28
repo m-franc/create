@@ -1,0 +1,126 @@
+$red-create: #B93838;
+
+
+
+.project {
+  background-color: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+  position: relative;  /* Nécessaire pour que le positionnement absolu de l'edit-link fonctionne */
+}
+.project {
+  background-color: white;
+  padding-top: 20px;
+  padding-left: 30px;
+  border-radius: 20px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+
+  h2{
+    color: $red-create;
+  }
+}
+
+.project-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+
+}
+
+.project-image {
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.project-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-link {
+  position: absolute;  /* Positionnement absolu */
+  top: 20px;           /* Distance du haut */
+  right: 25px;         /* Distance de la droite */
+  padding: 5px 10px;
+  background-color: #B93838;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* Deux colonnes égales */
+  grid-template-rows: 1fr 1fr ;
+
+}
+
+#task {
+  grid-column: 1 / 2;
+  grid-row: 1 / 4;
+  height: 500px;
+}
+.card-project {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  text-align: center;
+  margin: 10px;
+
+}
+
+#card-2 {
+  grid-column: 2/3;
+  grid-row: 1/2;
+}
+
+#card-3 {
+  grid-column: 3/4;
+  grid-row: 1/2;
+}
+
+#card-4 {
+  grid-column: 2/3;
+  grid-row: 2/3;
+
+}
+
+#card-5 {
+  grid-column: 3/4;
+  grid-row: 2/3;
+}
+
+
+
+
+
+
+
+/////NAV BAR/////
+///
+.nav-project {
+  display: flex;
+  justify-content: center;   /* Centre les éléments enfants (les <a>) horizontalement */
+  margin-bottom: 10px;
+  height: 75px;
+
+  a {
+    display: flex;             /* Utilisation de flexbox */
+    justify-content: center;   /* Centre horizontalement le texte à l'intérieur de chaque <a> */
+    align-items: center;       /* Centre verticalement le texte à l'intérieur de chaque <a> */
+    border: solid 1px;
+    margin-right: 15px;
+    height: 40px;
+    width: 100px;
+    border-radius: 10px;
+    text-align: center;        /* Aligne le texte horizontalement (optionnel, mais peut être utile) */
+    text-decoration: none;     /* Élimine la décoration par défaut (souligné) sur les liens */
+  }
+}
