@@ -1,7 +1,5 @@
 $red-create: #B93838;
 
-
-
 .project {
   background-color: white;
   padding: 30px;
@@ -15,11 +13,89 @@ $red-create: #B93838;
   padding-left: 30px;
   border-radius: 20px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
 
   h2{
     color: $red-create;
   }
 }
+
+.project-red {
+
+  .page{
+    display: none;
+  }
+  background-color: $red-create;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+  position: relative;  /* Nécessaire pour que le positionnement absolu de l'edit-link fonctionne */
+}
+.project-red {
+  background-color: $red-create;
+  padding-top: 30px;
+  padding-left: 30px;
+  border-radius: 20px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 50%;
+  margin: 0 auto;
+  position: relative;
+
+  h2{
+    color: $red-create;
+  }
+
+  h1{
+    color: white;
+  }
+
+  .field {
+    margin-bottom: 1rem; /* Espacement entre les champs */
+
+    label {
+      display: block; /* Met le label sur une nouvelle ligne */
+      margin-bottom: 0.5rem; /* Espacement entre le label et le champ */
+      color: white;
+    }
+
+    input[type="text"] {
+      width: 100%; /* Optionnel : pour que les champs prennent toute la largeur */
+      padding: 0.5rem; /* Optionnel : espacement interne */
+      border: 1px solid #ccc; /* Optionnel : bordure */
+      border-radius: 4px; /* Optionnel : coins arrondis */
+    }
+  }
+
+  .form-group {
+    label {
+      display: block; /* Met le label sur une nouvelle ligne */
+      margin-bottom: 0.5rem; /* Espacement entre le label et le champ */
+      color: white;
+    }
+  }
+
+  .actions {
+    text-align: center;
+    margin-top: 15px;
+
+
+  }
+
+  .actions input[type="submit"] {
+  background-color: white; /* Couleur de fond personnalisée */
+  color: $red-create; /* Couleur du texte */
+  border: none; /* Supprimer la bordure si nécessaire */
+  padding: 10px 20px; /* Espacement interne */
+  border-radius: 5px; /* Coins arrondis */
+  cursor: pointer; /* Change le curseur au survol */
+
+  &:hover {
+    transform: scale(1.03);
+  }
+}
+}
+
+
 
 .project-header {
   display: flex;
@@ -81,7 +157,7 @@ $red-create: #B93838;
   transition: transform 0.3s ease;
 
   &:hover {
-    transform: scale(1.02);
+    transform: translateY(-5px);
     box-shadow: 4px 4px 10px rgba($red-create, 0.2);
   }
 }
@@ -119,7 +195,7 @@ $red-create: #B93838;
   display: flex;
   justify-content: center;   /* Centre les éléments enfants (les <a>) horizontalement */
 
-  height: px;
+  height: 10px;
 
   a {
     display: flex;             /* Utilisation de flexbox */

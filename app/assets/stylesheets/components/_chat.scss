@@ -6,7 +6,7 @@
 .conversation-header {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   z-index: 1;
-  
+
   h4 {
     color: #2c3e50;
     font-weight: 600;
@@ -17,15 +17,15 @@
   background-color: #f8f9fa;
   padding: 20px;
   overflow-y: auto;
-  
+
   &::-webkit-scrollbar {
     width: 6px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: #f1f1f1;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 3px;
@@ -36,14 +36,14 @@
   margin-bottom: 20px;
   width: 100%;
   display: flex;
-  
+
   .message-wrapper {
     max-width: 80%;
   }
-  
+
   &.message-right {
     justify-content: flex-end;
-    
+
     .message-bubble {
       background-color: #B93838;
       color: white;
@@ -54,10 +54,10 @@
       }
     }
   }
-  
+
   &.message-left {
     justify-content: flex-start;
-    
+
     .message-bubble {
       background: white;
       color: #2c3e50;
@@ -69,10 +69,10 @@
       }
     }
   }
-  
+
   &.system-message {
     justify-content: center;
-    
+
     .message-bubble {
       background: rgba(0, 0, 0, 0.05);
       color: #6c757d;
@@ -99,18 +99,18 @@
   background: white;
   border-top: 1px solid #e9ecef;
   padding: 16px;
-  
+
   .form-control {
     border-radius: 20px;
     border: 1px solid #e9ecef;
     padding: 10px 20px;
-    
+
     &:focus {
       box-shadow: none;
       border-color: #B93838;
     }
   }
-  
+
   .btn-send {
     width: 40px;
     height: 40px;
@@ -121,12 +121,12 @@
     justify-content: center;
     background-color: #B93838;
     border-color: #B93838;
-    
+
     &:hover {
       background-color: darken(#B93838, 5%);
       border-color: darken(#B93838, 5%);
     }
-    
+
     i {
       font-size: 1.2rem;
     }
@@ -145,15 +145,15 @@
 .participants-list {
   max-height: 200px;
   overflow-y: auto;
-  
+
   &::-webkit-scrollbar {
     width: 4px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: #f1f1f1;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 2px;
@@ -164,7 +164,7 @@
   padding: 4px 8px;
   border-radius: 4px;
   transition: background-color 0.2s;
-  
+
   &:hover {
     background-color: #f8f9fa;
   }
@@ -187,7 +187,7 @@
   .btn-primary {
     background-color: #B93838;
     border-color: #B93838;
-    
+
     &:hover {
       background-color: darken(#B93838, 5%);
       border-color: darken(#B93838, 5%);
@@ -208,7 +208,7 @@
   display: flex;
   justify-content: center;
   margin: 8px 0;
-  
+
   .system-message-content {
     background-color: #f8f9fa;
     color: #6c757d;
