@@ -5,11 +5,12 @@ class Conversation < ApplicationRecord
   has_many :participants, through: :conversation_users, source: :user
   has_many :users, through: :messages
 
+
   validates :name, presence: true
 
   def add_participant(user)
     return false if participants.include?(user)
-    
+
     conversation_user = conversation_users.new(user: user)
     if conversation_user.save
       true

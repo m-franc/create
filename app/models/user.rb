@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :conversations, through: :messages
   has_one_attached :avatar
   has_many :projects, through: :project_users
+  has_many :tasks, dependent: :destroy
 
   has_one_attached :avatar do |attachable|
     attachable.variant :thumb, resize_to_fill: [100, 100]
