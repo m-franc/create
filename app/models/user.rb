@@ -36,6 +36,14 @@ class User < ApplicationRecord
     end
   end
 
+  def member?(project)
+    project_users.exists?(project: project, role: 'member')
+  end
+
+  def owner?(project)
+    project.user_id == id
+  end
+
   private
 
   def avatar_url=(url)
