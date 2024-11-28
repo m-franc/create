@@ -9,8 +9,7 @@
 
 
 
-<%= link_to "Task", project_tasks_path(@project) %>
-<%= link_to "NEW TASK", new_project_task_path(@project) %>
+
 
 <%= link_to "Notes", project_notes_path(@project), class: 'btn btn-primary' %>
 <p>document</p>
@@ -23,7 +22,7 @@
 
 <div class="nav-project">
   <a href="#member">Member</a>
-  <a href="#tasks">Tasks</a>
+  <%= link_to "Task", project_tasks_path(@project) %>
   <a href="#notes">Notes</a>
   <a href="#documents">Documents</a>
   <a href="#messages">Messages</a>

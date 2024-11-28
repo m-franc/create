@@ -7,11 +7,20 @@
 
 <% @tasks.each do |task| %>
 
-<ul>
-  <li><%= task.description %> <%= link_to "EDIT", edit_project_task_path(@project, task) %> - <%= link_to "DELETE", project_task_path(@project, task), data: { "turbo-method": :delete, turbo_confirm: "Are you sure you want to delete this task?" } %><span></li>
+<ul class="list-group">
+  <li class="list-group-item"><h2> <%= link_to task.name, project_task_path(@project, task) %></h2>
+    <%= task.description %>
+    <div>Se termine le <span class="text-danger"><%= task.deadline %></span>
+    </div>
+    <div class="nav-project">
+      <%= link_to "EDIT", edit_project_task_path(@project, task) %> <%= link_to "DELETE", project_task_path(@project, task), data: { "turbo-method": :delete, turbo_confirm: "Are you sure you want to delete this task?" } %>
+    </div>
+  </li>
 </ul>
 
 <% end %>
 
-<%= link_to "Retour au projet", project_path(@tasks) %>
-<%= link_to "Ajouter une tache", new_project_task_path(@project, @tasks) %>
+<div class="nav-project mt-3">
+  <%= link_to "Retour au projet", project_path(@tasks) %>
+  <%= link_to "Ajouter une tache", new_project_task_path(@project, @tasks) %>
+</div>
