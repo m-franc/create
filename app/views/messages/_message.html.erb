@@ -1,14 +1,22 @@
-<div id="message_<%= message.id %>" class="message">
-  <div class="message-avatar">
-    <% if message.user.avatar.attached? %>
-      <%= image_tag message.user.avatar.variant(:small), class: "avatar" %>
-    <% else %>
-      <%= image_tag "https://ui-avatars.com/api/?name=#{message.user.username}&background=random", class: "avatar" %>
-    <% end %>
-  </div>
-  <div class="message-content">
-    <strong><%= message.user.username || "User" %>:</strong>
-    <%= message.content %>
-    <small><%= message.created_at.strftime('%Y-%m-%d %H:%M') %></small>
+<div id="message_<%= message.id %>" class="message <%= message.user == current_user ? 'message-right' : 'message-left' %>">
+  <div class="message-wrapper">
+    <div class="d-flex <%= message.user == current_user ? 'flex-row-reverse' : 'flex-row' %> align-items-end gap-2">
+      <div class="message-avatar">
+        <% if message.user.avatar.attached? %>
+          <%= cl_image_tag message.user.avatar.key, class: "avatar", transformation: [{ width: 36, height: 36, crop: :fill }] %>
+        <% else %>
+          <%= image_tag "https://ui-avatars.com/api/?name=#{message.user.username}&size=36&background=random", class: "avatar" %>
+        <% end %>
+      </div>
+      
+      <div class="message-bubble">
+        <div class="message-content">
+          <%= message.content %>
+        </div>
+        <div class="message-footer">
+          <small><%= message.created_at.strftime('%H:%M') %></small>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
