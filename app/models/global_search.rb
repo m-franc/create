@@ -1,4 +1,4 @@
-class GlobalSearch
+class GlobalSearch < ApplicationRecord
   include ActiveModel::Model
   include PgSearch::Model
 
