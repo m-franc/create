@@ -8,7 +8,6 @@ class User < ApplicationRecord
   has_many :joined_projects, through: :project_users, source: :project
   has_many :messages, dependent: :destroy
   has_many :conversations, through: :messages
-  has_one_attached :avatar
   has_many :projects, through: :project_users
   has_many :tasks, dependent: :destroy
 
@@ -16,8 +15,6 @@ class User < ApplicationRecord
     attachable.variant :thumb, resize_to_fill: [100, 100]
     attachable.variant :small, resize_to_fill: [32, 32]
   end
-
-  after_commit :process_avatar, on: [:create, :update]
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
@@ -41,11 +38,12 @@ class User < ApplicationRecord
 
   private
 
-  def process_avatar
-    return unless avatar.attached?
-
-    # Ensure avatar is processed through Cloudinary
-    avatar.variant(:thumb).processed
-    avatar.variant(:small).processed
+  def avatar_url=(url)
+    if url.present?
+      downloaded_image = URI.open(url)
+      avatar.attach(io: downloaded_image, filename: "avatar.jpg")
+    end
+  rescue OpenURI::HTTPError, StandardError => e
+    Rails.logger.error("Failed to download avatar: #{e.message}")
   end
 end
