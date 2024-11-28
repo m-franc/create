@@ -1,4 +1,5 @@
 class GlobalSearch
+  include ActiveModel::Model
   include PgSearch::Model
 
   multisearchable against: [:searchable_text]
