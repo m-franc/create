@@ -4,8 +4,10 @@ class TasksController < ApplicationController
   before_action :set_task, except: [:index, :new, :create]
 
   def index
-    project_user_ids = @project.project_users.pluck(:id)
-    @tasks = Task.where(project_user_id: project_user_ids)
+    # project_user_ids = @project.project_users.pluck(:id)
+    # @tasks = Task.where(project_user_id: project_user_ids)
+    @tasks = Task.all
+
   end
 
   def new
