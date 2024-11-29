@@ -1,11 +1,10 @@
 <div class="container mt-4">
-<p>DOCUMENT</p>
+
+  <%= link_to project_path(@project), class: 'back' do %>
+    <i class="fas fa-arrow-left"></i>
+  <% end %>
   <%= render "documents/document_new"%>
 
-
-  <%= link_to project_path(@project), class: 'btn btn-secondary mb-3' do %>
-    <i class="fas fa-arrow-left"></i> Back to Project
-  <% end %>
 
   <h1>Documents for <%= @project.name %></h1>
 

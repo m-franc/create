@@ -1,5 +1,5 @@
 <div class="container mt-4">
-  <h1>Upload New Document</h1>
+  <h2>Upload New Document</h2>
 
   <%= form_with(model: [@project, @document], local: true) do |f| %>
     <% if @document.errors.any? %>
@@ -30,7 +30,7 @@
 
     <div class="form-group">
       <%= f.submit 'Upload Document', class: 'btn btn-primary' %>
-      <%= link_to 'Back', project_documents_path(@project), class: 'btn btn-secondary' %>
+      <%# <%= link_to 'Back', project_documents_path(@project), class: 'btn btn-secondary' %>
     </div>
   <% end %>
 </div>
