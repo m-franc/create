@@ -96,4 +96,8 @@ class ProjectsController < ApplicationController
   def project_params
     params.require(:project).permit(:name, :location, :status, :notes, :date, :description, :image, joined_user_ids: [])
   end
+
+  def note_params
+    params.require(:note).permit(:title, :content)
+  end
 end

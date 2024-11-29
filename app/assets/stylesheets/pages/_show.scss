@@ -29,7 +29,57 @@ $red-create: #B93838;
   padding: 30px;
   border-radius: 20px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
-  position: relative;  /* Nécessaire pour que le positionnement absolu de l'edit-link fonctionne */
+  position: relative;
+
+  .count {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    margin: 0 auto;
+  }
+
+  .page-num {
+    color: white;
+    text-align: center;
+    width: 20px;  /* Fixe la taille du cercle */
+    height: 20px; /* Fixe la taille du cercle */
+    display: flex; /* Active le flexbox */
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    border-radius: 50%; /* Cercle */
+    border: solid 1px white; /* Bordure blanche */
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+
+  }
+
+  .page-num:not(:last-child)::after {
+    content: ''; /* Crée un contenu vide pour la ligne */
+    position: absolute;
+    top: 50%; /* Place la ligne au milieu du cercle */
+    left: 135%; /* Place la ligne à droite du cercle */
+    width: 20px; /* Largeur de la ligne, ajustez si nécessaire */
+    height: 1px; /* Hauteur de la ligne (fine) */
+    background-color: white; /* Couleur de la ligne */
+    margin-left: 10px; /* Espacement entre le cercle et la ligne */
+  }
+
+  .active {
+    background-color: white;
+    color: $red-create; /* Rouge de ton choix */
+    width: 20px;  /* Fixe la taille du cercle */
+    height: 20px; /* Fixe la taille du cercle */
+    border: solid 1px white; /* Bordure blanche */
+    display: flex; /* Active le flexbox */
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    text-align: center; /* Centre le texte à l'intérieur */
+    padding: 20px;
+    transform: translateY(-5px); /* Décale légèrement vers le haut */
+    transition: transform 0.2s ease; /* Ajoute une transition fluide pour l'effet */
+
+  }
 }
 .project-red {
   background-color: $red-create;
@@ -95,9 +145,9 @@ $red-create: #B93838;
 }
 
 .actions {
-  display: flex;            /* Active le flexbox */
-  justify-content: flex-end; /* Aligne le contenu à droite */
-  margin-top: 15px;         /* Espacement optionnel */
+  display: flex;                 /* Active le flexbox */
+  justify-content: space-between; /* Espace les éléments, bouton à gauche, bouton à droite */
+  margin-top: 15px;              /* Espacement optionnel */
 }
 
 .button {
@@ -107,12 +157,32 @@ $red-create: #B93838;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+
 }
 
 .button:hover {
   transform: scale(1.03); /* Zoom léger au survol */
 }
+
+#button-back {
+
+  background-color: $red-create;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-style: normal;
+  font-size: 10px;
 }
+
+#button-back:hover {
+  transform: scale(1.03); /* Zoom léger au survol */
+}
+
+}
+
+
 
 
 
@@ -228,4 +298,8 @@ $red-create: #B93838;
     text-align: center;        /* Aligne le texte horizontalement (optionnel, mais peut être utile) */
     text-decoration: none;     /* Élimine la décoration par défaut (souligné) sur les liens */
   }
+}
+
+.back {
+  color: $red-create;
 }
