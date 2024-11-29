@@ -33,11 +33,27 @@
 
     <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-      <div id="infos">
-        <p>Place: <%= @project.location %>
-        Status: <%= @project.status %>
-        Starting date: <%= @project.starting_date %>
-        Creation: <%= @project.created_at %></p>
+      <div class="project-info-section">
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">Place</span>
+            <span class="info-value"><%= @project.location %></span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Status</span>
+            <span class="info-value <%= @project.status.is_a?(String) ? @project.status.parameterize : @project.status %>">
+              <%= @project.status.is_a?(String) ? @project.status : (@project.status ? "Active" : "Inactive") %>
+            </span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Starting date</span>
+            <span class="info-value"><%= @project.starting_date&.strftime("%B %d, %Y") %></span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Creation</span>
+            <span class="info-value"><%= @project.created_at.strftime("%B %d, %Y") %></span>
+          </div>
+        </div>
       </div>
       <div class="nav-project">
       </div>
