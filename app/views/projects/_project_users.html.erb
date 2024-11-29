@@ -1,0 +1,22 @@
+<div class="project-users">
+  <div class="users-list">
+    <h3>Project Members</h3>
+    <% @joined_users.each do |user| %>
+      <div class="user-card">
+        <div class="user-info">
+          <% if user.avatar.attached? %>
+            <%= image_tag user.avatar, class: "avatar" %>
+          <% else %>
+            <div class="avatar-placeholder">
+              <%= user.username.first.upcase %>
+            </div>
+          <% end %>
+          <div class="user-details">
+            <strong><%= user.username %></strong>
+            <span class="user-email"><%= user.email %></span>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

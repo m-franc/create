@@ -3,7 +3,7 @@
     <% if @project.image.present? %>
       <%= image_tag @project.image, class: 'project-image' %>
     <% else %>
-      <p>add image pls</p>
+      <%= image_tag "unavailable_image.jpg", class: 'project-image' %>
     <% end %>
 
     <div class="project-details">
@@ -33,11 +33,27 @@
 
     <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-      <div id="infos">
-        <p>Place: <%= @project.location %>
-        Status: <%= @project.status %>
-        Starting date: <%= @project.starting_date %>
-        Creation: <%= @project.created_at %></p>
+      <div class="project-info-section">
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">Place</span>
+            <span class="info-value"><%= @project.location %></span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Status</span>
+            <span class="info-value <%= @project.status.is_a?(String) ? @project.status.parameterize : @project.status %>">
+              <%= @project.status.is_a?(String) ? @project.status : (@project.status ? "Active" : "Inactive") %>
+            </span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Starting date</span>
+            <span class="info-value"><%= @project.starting_date&.strftime("%B %d, %Y") %></span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Creation</span>
+            <span class="info-value"><%= @project.created_at.strftime("%B %d, %Y") %></span>
+          </div>
+        </div>
       </div>
       <div class="nav-project">
       </div>
@@ -46,12 +62,28 @@
           <%= link_to "Task", project_tasks_path(@project), class: 'btn btn-primary' %>
         </div>
         <div class="card-project" id="card-2">
-          <% @joined_users.each do |user| %>
-            <li>
-              <strong>Nom :</strong> <%= user.username %> <br>
-            </li>
-          <% end %>
-          <p>members</p>
+          <h4>Team Members</h4>
+          <div class="dashboard-users">
+            <% @joined_users.first(3).each do |user| %>
+              <div class="user-info">
+                <% if user.avatar.attached? %>
+                  <%= image_tag user.avatar, class: "avatar" %>
+                <% else %>
+                  <div class="avatar-placeholder">
+                    <%= user.username.first.upcase %>
+                  </div>
+                <% end %>
+                <div class="user-details">
+                  <strong><%= user.username %></strong>
+                </div>
+              </div>
+            <% end %>
+            <% if @joined_users.size > 3 %>
+              <div class="more-members">
+                +<%= @joined_users.size - 3 %> more
+              </div>
+            <% end %>
+          </div>
         </div>
         <div class="card-project" id="card-3">
           <%= link_to "Notes", project_notes_path(@project), class: 'btn btn-primary' %>
@@ -64,13 +96,15 @@
         </div>
       </div>
     </div>
-    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">Member</div>
+    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+      <%= render 'project_users' %>
+    </div>
     <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">Task</div>
     <div class="tab-pane fade" id="note-tab-pane" role="tabpanel" aria-labelledby="note-tab" tabindex="0">
       <%= render 'notes/dashboard_show', note: @note %>
     </div>
     <div class="tab-pane fade" id="document-tab-pane" role="tabpanel" aria-labelledby="document-tab" tabindex="0">
-      <%= render "documents/dashboard_documents"%>
+      <%= "documents/dashboard_documents"%>
     </div>
 
   </div>

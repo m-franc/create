@@ -1,0 +1,54 @@
+.project-info-section {
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .info-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .info-value {
+    font-size: 1rem;
+    color: #111827;
+    font-weight: 500;
+
+    // Status colors for string values
+    &.en-cours {
+      color: #059669;
+    }
+
+    &.en-attente {
+      color: #d97706;
+    }
+
+    &.termine {
+      color: #6b7280;
+    }
+
+    // Status colors for boolean values
+    &.true {
+      color: #059669;
+    }
+
+    &.false {
+      color: #dc2626;
+    }
+  }
+}

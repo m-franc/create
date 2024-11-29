@@ -23,7 +23,6 @@
                 <th>Type</th>
                 <th>Uploaded by</th>
                 <th>Actions</th>
-                <th>Preview</th>
               </tr>
             </thead>
             <tbody>
@@ -35,49 +34,11 @@
                   <td>
                     <%= link_to 'Download', download_project_document_path(@project, document), class: 'btn btn-sm btn-success' %>
                     <% if current_user == @project.user || (current_user == document.user) %>
-                      <%= button_to 'Delete', 
-                          project_document_path(@project, document), 
+                      <%= button_to 'Delete',
+                          project_document_path(@project, document),
                           method: :delete,
                           form: { data: { turbo_confirm: 'Are you sure?' } },
                           class: 'btn btn-sm btn-danger' %>
-                    <% end %>
-                  </td>
-                  <td>
-                    <% if document.previewable? %>
-                      <% preview_id = "preview-#{document.id}" %>
-                      <% modal_id = "modal-#{document.id}" %>
-                      <%= link_to '#', data: { bs_toggle: 'modal', bs_target: "##{modal_id}" } do %>
-                        <% if document.image? %>
-                          <%= image_tag document.preview_url, class: 'img-thumbnail', style: 'max-width: 100px; cursor: pointer;' %>
-                        <% else %>
-                          <%= image_tag document.preview_url, class: 'img-thumbnail', style: 'max-width: 100px; cursor: pointer;' %>
-                          <small class="d-block text-muted">PDF Preview</small>
-                        <% end %>
-                      <% end %>
-
-                      <!-- Modal pour la prévisualisation -->
-                      <div class="modal fade" id="<%= modal_id %>" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title"><%= document.name %></h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body text-center">
-                              <% if document.image? %>
-                                <%= image_tag Cloudinary::Utils.cloudinary_url(document.cloudinary_id, width: 800, crop: :fit), 
-                                    class: 'img-fluid' %>
-                              <% else %>
-                                <%= image_tag Cloudinary::Utils.cloudinary_url(document.cloudinary_id, format: 'jpg', width: 800, crop: :fit, page: 1), 
-                                    class: 'img-fluid' %>
-                                <p class="mt-2 text-muted">PDF Preview (first page)</p>
-                              <% end %>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    <% else %>
-                      <i class="fas fa-file fa-2x text-muted"></i>
                     <% end %>
                   </td>
                 </tr>
@@ -95,7 +56,7 @@
     .modal-lg {
       max-width: 90% !important;
     }
-    
+
     .img-thumbnail:hover {
       opacity: 0.8;
       transition: opacity 0.2s ease-in-out;
