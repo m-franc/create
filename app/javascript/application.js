@@ -3,8 +3,8 @@ import "@hotwired/turbo-rails";
 import "controllers";
 import "@popperjs/core";
 import "bootstrap";
-// import './form'
+import './form'
 import { Turbo } from "@hotwired/turbo-rails"
-//
+
 
 // import './packs/select2_init';
