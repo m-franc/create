@@ -26,7 +26,6 @@
                 <th>Type</th>
                 <th>Uploaded by</th>
                 <th>Actions</th>
-                <th>Preview</th>
               </tr>
             </thead>
             <tbody>
@@ -43,44 +42,6 @@
                           method: :delete,
                           form: { data: { turbo_confirm: 'Are you sure?' } },
                           class: 'btn btn-sm btn-danger' %>
-                    <% end %>
-                  </td>
-                  <td>
-                    <% if document.previewable? %>
-                      <% preview_id = "preview-#{document.id}" %>
-                      <% modal_id = "modal-#{document.id}" %>
-                      <%= link_to '#', data: { bs_toggle: 'modal', bs_target: "##{modal_id}" } do %>
-                        <% if document.image? %>
-                          <%= image_tag document.preview_url, class: 'img-thumbnail', style: 'max-width: 100px; cursor: pointer;' %>
-                        <% else %>
-                          <%= image_tag document.preview_url, class: 'img-thumbnail', style: 'max-width: 100px; cursor: pointer;' %>
-                          <small class="d-block text-muted">PDF Preview</small>
-                        <% end %>
-                      <% end %>
-
-                      <!-- Modal pour la prévisualisation -->
-                      <div class="modal fade" id="<%= modal_id %>" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title"><%= document.name %></h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body text-center">
-                              <% if document.image? %>
-                                <%= image_tag Cloudinary::Utils.cloudinary_url(document.cloudinary_id, width: 800, crop: :fit),
-                                    class: 'img-fluid' %>
-                              <% else %>
-                                <%= image_tag Cloudinary::Utils.cloudinary_url(document.cloudinary_id, format: 'jpg', width: 800, crop: :fit, page: 1),
-                                    class: 'img-fluid' %>
-                                <p class="mt-2 text-muted">PDF Preview (first page)</p>
-                              <% end %>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    <% else %>
-                      <i class="fas fa-file fa-2x text-muted"></i>
                     <% end %>
                   </td>
                 </tr>
