@@ -22,15 +22,17 @@ document.addEventListener("turbo:load", () => {
   }
 
   // Gérer les boutons
-  const nextButtons = document.querySelectorAll("button.button");
+  const nextButtons = document.querySelectorAll("button#button-n");
   for (const button of nextButtons) {
     button.addEventListener("click", pageSuivante);
   }
 
   // Gérer le bouton précédent
-  const prevButton = document.get("button.button");  // Sélectionne le bouton avec la classe "button-b"
-  if (prevButton) {
-    prevButton.addEventListener("click", pagePrecedente);  // Ajoute l'événement "click" pour la fonction pagePrecedente
+  const prevButtons = document.querySelectorAll("button#button-b");
+  for (const button of prevButtons) {
+    button.addEventListener("click", pagePrecedente);
+    console.log("camarche");
+
   }
 
   function pageSuivante() {
@@ -40,18 +42,21 @@ document.addEventListener("turbo:load", () => {
 
       document.querySelector(".active").classList.remove("active")
       activePage++;
+      console.log(pages[activePage]);
 
       document.querySelector("#num"+activePage).classList.add("active")
     }
   }
 
   function pagePrecedente() {
-    if (activePage > 1) {  // Vérifie qu'on n'est pas déjà à la première page
-      pages[activePage - 1].style.display = "none";  // Cache la page actuelle
-      activePage--;  // Décrémente le numéro de la page active
-      pages[activePage - 1].style.display = "block";  // Affiche la page précédente
+      pages[activePage - 1].style.display = "none"; // Cache la page actuelle
+      pages[activePage - 2].style.display = "block"; // Affiche la suivante
+
+      document.querySelector(".active").classList.remove("active")
+      activePage--;
+      console.log(pages[activePage]);
+
+      document.querySelector("#num"+activePage).classList.add("active")
     }
   }
-
-
-});
+);
