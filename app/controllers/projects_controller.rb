@@ -4,12 +4,24 @@ class ProjectsController < ApplicationController
   # GET /projects
   def index
     @projects = Project.all
+
   end
 
   # GET /projects/:id
   def show
     @joined_users = @project.joined_users
-   end
+    @project = Project.find(params[:id])
+    @notes = @project.notes
+    @note = Note.new
+    @document = Document.new
+    @folders = @project.documents.pluck(:folder_name).uniq
+    @documents = @project.documents
+
+
+    @notes = @project.notes
+
+    @joined_users = @project.joined_users
+  end
 
   # GET /projects/new
   def new
@@ -19,6 +31,7 @@ class ProjectsController < ApplicationController
     else
       @users = User.all
     end
+    @note = @project.notes.new
   end
 
   # POST /projects
@@ -35,10 +48,18 @@ class ProjectsController < ApplicationController
     else
       render :new
     end
+
+    @note = @project.notes.new(note_params)
+  if @note.save
+    redirect_to project_notes_path(@project), notice: 'Note was successfully created.'
+  else
+    render :new
+  end
   end
 
   # GET /projects/:id/edit
   def edit
+    @project = Project.find(params[:id])
   end
 
   # PATCH/PUT /projects/:id
@@ -61,6 +82,10 @@ class ProjectsController < ApplicationController
     flash[:notice] = "Project deleted 🗑️"
     redirect_to projects_path
   end
+
+
+
+
 
   private
 

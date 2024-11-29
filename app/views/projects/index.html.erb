@@ -1,10 +1,9 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="project">
 
 <div class="projects-container">
   <div class="projects-header">
     <h1>Project List</h1>
-    <%= link_to 'New Project', new_project_path, class: 'btn btn-primary' %>
+    <%= link_to ' + New Project', new_project_path, class: 'btn btn-primary' %>
   </div>
 
   <% if @projects.any? %>
@@ -21,7 +20,7 @@
           <% end %>
 
           <div class="card-content">
-            <h2><%= link_to project.name, project_path(project.id), class: 'card-title' %></h2>
+            <h2><%= link_to project.name, project_path(project.id) %></h2>
             <p><strong>Location:</strong> <%= project.location %></p>
             <p><strong>Start Date:</strong> <%= project.starting_date %></p>
             <p><strong>End Date:</strong> <%= project.end_date %></p>
@@ -32,4 +31,5 @@
   <% else %>
     <p class="no-projects">Aucun projet trouvé.</p>
   <% end %>
+</div>
 </div>

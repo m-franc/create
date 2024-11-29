@@ -1,3 +1,5 @@
+$red-create: #B93838;
+
 .projects-container {
   padding: 2rem;
 }
@@ -29,15 +31,13 @@
   overflow: hidden;
   transition: all 0.3s ease;
   border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 
+  box-shadow:
     0 4px 6px rgba(0, 0, 0, 0.02),
     0 1px 3px rgba(0, 0, 0, 0.05);
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 
-      0 8px 12px rgba(0, 0, 0, 0.05),
-      0 3px 6px rgba(0, 0, 0, 0.08);
+    box-shadow: 4px 4px 10px rgba($red-create, 0.2)
   }
 }
 
@@ -58,32 +58,31 @@
   align-items: center;
   justify-content: center;
   color: #adb5bd;
-  
+
   i {
     font-size: 2rem;
     margin-bottom: 0.5rem;
   }
-  
+
   span {
     font-size: 0.9rem;
   }
 }
+
 
 .card-content {
   padding: 1.5rem;
 
   h2 {
     margin: 0 0 1rem 0;
-    
-    .card-title {
-      color: #333;
-      text-decoration: none;
-      font-size: 1.25rem;
-      font-weight: 600;
-      
-      &:hover {
-        color: #007bff;
-      }
+    text-decoration: none;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $red-create;
+
+    a {
+      text-decoration: none; /* Supprime le soulignement */
+      color: inherit; /* Utilise la couleur définie par le h2 */
     }
   }
 
@@ -98,6 +97,8 @@
       font-weight: 600;
     }
   }
+
+
 }
 
 .no-projects {

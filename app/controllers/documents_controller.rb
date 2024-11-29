@@ -5,12 +5,10 @@ class DocumentsController < ApplicationController
   before_action :check_owner, only: [:destroy]
 
   def index
-    @folders = if current_user == @project.user
-                 Document.where(project: @project).pluck(:folder_name).uniq
-               else
-                 Document.where(project: @project, user: current_user).pluck(:folder_name).uniq
-               end
-    
+  @folders = Document.where(project: @projects, user: current_user)
+                     .pluck(:folder_name)
+                     .uniq
+
     @documents = if current_user == @project.user
                   @project.documents
                 else
@@ -29,14 +27,14 @@ class DocumentsController < ApplicationController
     if params[:document][:file].present?
       # Debug logs
       Rails.logger.debug "Original filename: #{params[:document][:file].original_filename}"
-      
+
       # Sauvegarder l'extension du fichier original
       original_filename = params[:document][:file].original_filename
       @document.file_extension = File.extname(original_filename).delete('.')
-      
+
       # Debug logs
       Rails.logger.debug "Extracted extension: #{@document.file_extension}"
-      
+
       folder_path = "projects/#{@project.id}/#{@document.folder_name}"
       upload = Cloudinary::Uploader.upload(
         params[:document][:file],
@@ -68,14 +66,14 @@ class DocumentsController < ApplicationController
       begin
         # Récupérer les informations du fichier depuis Cloudinary
         info = Cloudinary::Api.resource(@document.cloudinary_id)
-        
+
         # Récupérer le fichier
         response = Cloudinary::Downloader.download(@document.cloudinary_id)
-        
+
         # Construire le nom du fichier avec l'extension
         extension = info['format']
         filename = "#{@document.name}.#{extension}"
-        
+
         # Envoyer le fichier au navigateur
         send_data response,
                 filename: filename,
