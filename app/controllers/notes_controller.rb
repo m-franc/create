@@ -9,12 +9,10 @@ class NotesController < ApplicationController
   end
 
   def dashboard_show
-
     @project = Project.find(params[:id])
   end
 
   def show
-    @note = Note.find(params[:id])
   end
 
   def new
@@ -32,17 +30,22 @@ class NotesController < ApplicationController
     @note.project = @project
     @note.user = current_user
     if @note.save
-      redirect_to project_note_path(@project, @note), notice: 'Note was successfully created.'
+      redirect_to project_notes_path(@project, @note), notice: 'Note was successfully created.'
     else
-      render :new, status: :unprocessable_entity
+      flash[:alert] = "Unable to create the note. Please fix the errors."
+      redirect_to project_note_path(@project, @note), notice: 'Note was successfully created.'
     end
   end
 
   def update
+    @project = Project.find(params[:project_id])
+    @note.project = @project
+    @note.user = current_user
     if @note.update(note_params)
-      redirect_to project_note_path(@project, @note), notice: 'Note was successfully updated.'
+      redirect_to project_notes_path(@project, @note), notice: 'Note was successfully updated.'
     else
-      render :new, status: :unprocessable_entity
+      flash[:alert] = "Unable to update the note. Please fix the errors."
+      redirect_to project_note_path(@project, @note), notice: 'Note was successfully updated.'
     end
   end
 
