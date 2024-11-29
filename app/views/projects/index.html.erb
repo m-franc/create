@@ -13,10 +13,7 @@
           <% if project.image.attached? %>
             <%= image_tag project.image, class: 'card-image', alt: "#{project.name} Image" %>
           <% else %>
-            <div class="placeholder-image">
-              <i class="fa-regular fa-image"></i>
-              <span>No image available</span>
-            </div>
+            <%= image_tag "unavailable_image.jpg", class: 'card-image', alt: "No image available" %>
           <% end %>
 
           <div class="card-content">
