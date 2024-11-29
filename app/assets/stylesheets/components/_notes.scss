@@ -1,5 +1,6 @@
 .note {
   overflow: hidden; /* Pour que le conteneur englobe les éléments flottants */
+  margin-top: 15px;
 }
 
 .new-note {
@@ -9,6 +10,7 @@
   margin-right: 20px; /* Espacement entre new-note et all-notes */
   padding: 15px;
   border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   label{
     color: white;
@@ -22,9 +24,25 @@
 .all-notes {
   float: left; /* Fait flotter l'élément à gauche */
   width: 45%; /* Limite la largeur de .all-notes */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* S'assurer que le conteneur prend bien en compte la mise en page flottante */
 .container {
   clear: both; /* Empêche l'élément de se chevaucher avec les éléments flottants */
+}
+
+.btn.btn-warning {
+  background-color: white;
+  border-radius: 10px;
+  color: $red-create;
+  border-color: $red-create;
+}
+
+.btn.btn-danger {
+  border-radius: 10px;
+}
+
+.form-control {
+  margin-bottom: 15px;
 }

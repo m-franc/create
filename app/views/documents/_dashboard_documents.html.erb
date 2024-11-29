@@ -1,9 +1,6 @@
 <div class="container mt-4">
 
-  <%= link_to project_path(@project), class: 'back' do %>
-    <i class="fas fa-arrow-left"></i>
-  <% end %>
-
+<div class="doc">
   <div class="new-doc">
   <%= render "documents/document_new"%>
   </div>
@@ -55,7 +52,7 @@
   <% end %>
 </div>
 </div>
-
+</div>
 <% content_for :head do %>
   <style>
     .modal-lg {

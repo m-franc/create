@@ -1,8 +1,38 @@
-.new-doc {
-  display: flex;
-  width: 30%;
+.doc {
+  overflow: hidden; /* Pour que le conteneur englobe les éléments flottants */
 }
- .all-doc {
-  display: flex;
-  width: 30%;
- }
+
+.new-doc {
+  background-color: $red-create;
+  float: left; /* Fait flotter l'élément à gauche */
+  width: 45%; /* Limite la largeur de .new-note */
+  margin-right: 20px; /* Espacement entre new-note et all-notes */
+  padding: 15px;
+  border-radius: 10px;
+
+  label{
+    color: white;
+  }
+
+  .btn-secondary {
+    background-color: none!important;
+  }
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.all-doc {
+  float: left; /* Fait flotter l'élément à gauche */
+  width: 45%; /* Limite la largeur de .all-notes */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* S'assurer que le conteneur prend bien en compte la mise en page flottante */
+.container {
+  clear: both; /* Empêche l'élément de se chevaucher avec les éléments flottants */
+}
+
+.btn.btn-primary {
+  margin-top: 5px;
+  border: solid 1px white;
+  border-radius: 10px;
+}
