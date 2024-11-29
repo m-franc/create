@@ -22,6 +22,7 @@ $red-create: #B93838;
 
 .project-red {
 
+
   .page{
     display: none;
   }
@@ -73,7 +74,7 @@ $red-create: #B93838;
 
 ////BUTTON///
 #button-n{
-  
+
     margin-left: auto;
 
 }
@@ -211,11 +212,15 @@ $red-create: #B93838;
   top: 20px;           /* Distance du haut */
   right: 25px;         /* Distance de la droite */
   padding: 5px 10px;
-  background-color: #B93838;
-  color: white;
+  color: $red-create;
   border-radius: 5px;
   text-decoration: none;
   width: fit-content;
+
+  &:hover{
+    transition: transform 0.3s ease;
+    transform: scale(1.03);
+  }
 }
 
 .cards {
@@ -298,4 +303,86 @@ $red-create: #B93838;
 
 .back {
   color: $red-create;
+}
+
+.nav-item {
+  border-top: solid 1px $red-create;
+  border-left: solid 1px $red-create;
+  border-right: solid 1px $red-create;
+  border-radius: 11px 11px 0 0;
+  margin-right: 10px;
+  &:hover{
+    border: none!important;
+    transition: transform 0.3s ease;
+    transform: scale(1.1);
+    color: $red-create;
+  }
+}
+
+.nav-link.active {
+  border-radius: 10px 10px 0 0;
+  background-color: $red-create !important; /* Remplace la couleur grise par $red-create */
+  color: white !important; /* Change la couleur du texte (ajuste si nécessaire) */
+  border: none!important;
+  transition: transform 0.3s ease;
+
+}
+
+/* Supprimer la bordure par défaut */
+.nav-tabs {
+  border-bottom: 1px solid $red-create !important;
+
+}
+
+/* Bordure rouge sous l'onglet actif */
+.nav-tabs .nav-link.active {
+  border: none !important;
+}
+
+/* Désactive les bordures sur hover et focus */
+.nav-tabs .nav-link:hover,
+.nav-tabs .nav-link:focus {
+  border: none !important;
+  outline: none !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+
+
+
+.nav-link {
+  color: $red-create; /* Couleur du texte pour les liens non actifs */
+
+
+}
+
+
+.nav nav-tabs {
+  color: $red-create;
+}
+
+/* Supprime le hover et le focus de Bootstrap */
+.nav-tabs .nav-link {
+  border: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  outline: none !important;
+}
+
+.nav-tabs .nav-link:hover,
+.nav-tabs .nav-link:focus {
+  background-color: transparent !important; /* Évite tout changement de couleur */
+  color: inherit !important; /* Préserve la couleur initiale */
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
+}
+
+/* Optionnel : Appliquer votre style personnalisé uniquement pour .active */
+.nav-tabs .nav-link.active {
+  background-color: $red-create !important;
+  color: white !important;
+  border-radius: 10px 10px 0 0;
+
 }

@@ -1,28 +1,33 @@
 .project-info-section {
-  padding: 2rem;
+  padding: 1.5rem;
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
+  margin-top: 0.5rem;
+  height: 20px; /* Ajustez la hauteur si nécessaire */
 
   .info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
+    display: flex;
+
+    align-items: center; /* Centre les éléments verticalement dans la grille */
+    height: 100%; /* Assurez-vous que la grille occupe toute la hauteur du parent */
   }
 
   .info-item {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    flex-direction: row; /* Aligne les éléments sur une ligne */
+    gap: 1rem; /* Espacement entre les éléments */
+    align-items: center; /* Centre verticalement les éléments dans chaque item */
+    margin-left: 30px;
   }
 
   .info-label {
     font-size: 0.875rem;
     color: #6b7280;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+
   }
+}
 
   .info-value {
     font-size: 1rem;
@@ -51,4 +56,3 @@
       color: #dc2626;
     }
   }
-}

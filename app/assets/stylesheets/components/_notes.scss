@@ -1,0 +1,16 @@
+.note {
+  display: flex; /* Utilise Flexbox pour aligner les éléments horizontalement */
+  gap: 20px; /* Espacement entre les éléments */
+  flex-wrap: nowrap; /* Empêche les éléments de s'enrouler et les garde sur la même ligne */
+  align-items: flex-start; /* Aligne les éléments en haut de la ligne */
+}
+
+.new-note {
+  flex: 1; /* La nouvelle note prend l'espace disponible */
+  max-width: 30%; /* Limite la largeur de .new-note à 30% */
+}
+
+.all-notes {
+  flex: 2; /* La section all-notes prend 2 fois plus d'espace que new-note */
+  max-width: 60%; /* Limite la largeur de .all-notes à 60% */
+}
