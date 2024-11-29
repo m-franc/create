@@ -54,17 +54,6 @@ $red-create: #B93838;
 
   }
 
-  .page-num:not(:last-child)::after {
-    content: ''; /* Crée un contenu vide pour la ligne */
-    position: absolute;
-    top: 50%; /* Place la ligne au milieu du cercle */
-    left: 135%; /* Place la ligne à droite du cercle */
-    width: 20px; /* Largeur de la ligne, ajustez si nécessaire */
-    height: 1px; /* Hauteur de la ligne (fine) */
-    background-color: white; /* Couleur de la ligne */
-    margin-left: 10px; /* Espacement entre le cercle et la ligne */
-  }
-
   .active {
     background-color: white;
     color: $red-create; /* Rouge de ton choix */
@@ -80,6 +69,13 @@ $red-create: #B93838;
     transition: transform 0.2s ease; /* Ajoute une transition fluide pour l'effet */
 
   }
+}
+
+////BUTTON///
+#button-n{
+  
+    margin-left: auto;
+
 }
 .project-red {
   background-color: $red-create;
