@@ -3,7 +3,7 @@
 <div class="projects-container">
   <div class="projects-header">
     <h1>Projects List</h1>
-    <%= link_to ' + New Project', new_project_path, class: 'btn btn-primary' %>
+    <%= link_to ' + New Project', new_project_path, class: 'btn btn-primary', data: {turbo: false}%>
   </div>
 
   <% if @projects.any? %>
