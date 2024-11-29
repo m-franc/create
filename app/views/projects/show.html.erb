@@ -46,12 +46,28 @@
           <%= link_to "Task", project_tasks_path(@project), class: 'btn btn-primary' %>
         </div>
         <div class="card-project" id="card-2">
-          <% @joined_users.each do |user| %>
-            <li>
-              <strong>Nom :</strong> <%= user.username %> <br>
-            </li>
-          <% end %>
-          <p>members</p>
+          <h4>Team Members</h4>
+          <div class="dashboard-users">
+            <% @joined_users.first(3).each do |user| %>
+              <div class="user-info">
+                <% if user.avatar.attached? %>
+                  <%= image_tag user.avatar, class: "avatar" %>
+                <% else %>
+                  <div class="avatar-placeholder">
+                    <%= user.username.first.upcase %>
+                  </div>
+                <% end %>
+                <div class="user-details">
+                  <strong><%= user.username %></strong>
+                </div>
+              </div>
+            <% end %>
+            <% if @joined_users.size > 3 %>
+              <div class="more-members">
+                +<%= @joined_users.size - 3 %> more
+              </div>
+            <% end %>
+          </div>
         </div>
         <div class="card-project" id="card-3">
           <%= link_to "Notes", project_notes_path(@project), class: 'btn btn-primary' %>
@@ -64,7 +80,9 @@
         </div>
       </div>
     </div>
-    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">Member</div>
+    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+      <%= render 'project_users' %>
+    </div>
     <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">Task</div>
     <div class="tab-pane fade" id="note-tab-pane" role="tabpanel" aria-labelledby="note-tab" tabindex="0">
       <%= render 'notes/dashboard_show', note: @note %>
