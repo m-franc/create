@@ -3,31 +3,32 @@
     <div class="d-flex flex-column flex-shrink-0 p-3 custom-sidebar" style="width: 250px; height: 100vh;">
 
         <%= link_to "#", class: "navbar-brand mb-3 text-center" do %>
-          <%= image_tag "https://img.over-blog.com/242x200/2/81/29/14/Carapuce_de_Sacha.png", class: "img-fluid" %>
+          <%= link_to projects_path do %>
+  <img src="<%= asset_path('icons/create.svg') %>" alt="Créer un projet" />
+<% end %>
+
+
         <% end %>
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
         <% if user_signed_in? %>
-          <li class="nav-item">
-            <%= link_to "Home", "#", class: "nav-link" %>
-          </li>
-          <li class="nav-item">
+          <li class="nav-item-bar">
             <%= link_to "Dashboard", projects_path, class: "nav-link" %>
           </li>
-          <li class="nav-item">
+          <li class="nav-item-bar">
             <%= link_to "Projects", projects_path, class: "nav-link" %>
           </li>
-          <li class="nav-item">
+          <li class="nav-item-bar">
             <%= link_to "Conversations", conversations_path, class: "nav-link" %>
           </li>
-          <li class="nav-item">
+          <li class="nav-item-bar">
             <div class="search-container">
               <%= form_tag searches_path, method: :get, class: "d-flex", data: { controller: "search" } do %>
                 <%= text_field_tag :query,
                     params[:query],
                     class: "form-control me-2",
                     placeholder: "Rechercher...",
-                    data: { 
+                    data: {
                       search_target: "input",
                       action: "input->search#search"
                     }
@@ -39,7 +40,7 @@
             </div>
           </li>
         <% else %>
-          <li class="nav-item">
+          <li class="nav-item-bar">
             <%= link_to "Login", new_user_session_path, class: "nav-link" %>
           </li>
         <% end %>

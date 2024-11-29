@@ -3,13 +3,14 @@
   <%= link_to project_path(@project), class: 'back' do %>
     <i class="fas fa-arrow-left"></i>
   <% end %>
+
+  <div class="new-doc">
   <%= render "documents/document_new"%>
+  </div>
 
+  <h2>Documents for <%= @project.name %></h2>
 
-  <h1>Documents for <%= @project.name %></h1>
-
-  <%= link_to 'Upload New Document', new_project_document_path(@project), class: 'btn btn-primary mb-4' %>
-
+  <div class="all-doc">
   <% @folders.each do |folder| %>
     <div class="card mb-4">
       <div class="card-header">
@@ -52,6 +53,7 @@
       </div>
     </div>
   <% end %>
+</div>
 </div>
 
 <% content_for :head do %>
