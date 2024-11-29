@@ -5,7 +5,7 @@ class DocumentsController < ApplicationController
   before_action :check_owner, only: [:destroy]
 
   def index
-  @folders = Document.where(project: @projects, user: current_user)
+  @folders = Document.where(project: @project, user: current_user)
                      .pluck(:folder_name)
                      .uniq
 
