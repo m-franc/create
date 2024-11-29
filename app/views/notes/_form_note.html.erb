@@ -1,3 +1,5 @@
+
+<div class="note-form">
 <%= form_with(model: [@project, @note], local: true, data: { turbo: false }) do |f| %>
   <div class="form-group">
     <%= f.label :title %>
@@ -14,3 +16,4 @@
     <%= link_to 'Back', project_notes_path(@project), class: 'btn btn-secondary' %>
   </div>
 <% end %>
+</div>

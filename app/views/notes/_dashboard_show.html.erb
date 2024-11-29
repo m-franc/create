@@ -2,9 +2,7 @@
 <div class="note">
 
 <div class="container mt-4">
-   <%= link_to project_path(@project), class: 'back' do %>
-    <i class="fas fa-arrow-left"></i>
-  <% end %>
+
   <div class="new-note">
   <%= render 'notes/form_note', note: @note %>
   </div>

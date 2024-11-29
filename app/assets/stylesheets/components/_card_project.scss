@@ -49,6 +49,12 @@ $red-create: #B93838;
   background: #f8f9fa;
 }
 
+.card-image-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Assure que l'image est bien rognée pour couvrir l'espace sans distorsion */
+}
+
 .placeholder-image {
   width: 100%;
   height: 200px;
