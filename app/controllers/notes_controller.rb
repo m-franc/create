@@ -16,8 +16,9 @@ class NotesController < ApplicationController
   end
 
   def new
+    @note = Note.new
     @project = Project.find(params[:project_id])
-    @note = @project.notes.new
+    @note.project = @project
   end
 
   def edit
@@ -29,9 +30,14 @@ class NotesController < ApplicationController
     @note.project = @project
     @note.user = current_user
     if @note.save
+<<<<<<< HEAD
       redirect_to project_notes_path(@project, @note), notice: 'Note was successfully created.'
     else
       flash[:alert] = "Unable to create the note. Please fix the errors."
+=======
+      redirect_to project_note_path(@project, @note), notice: 'Note was successfully created.'
+    else
+>>>>>>> master
       render :new, status: :unprocessable_entity
     end
   end
@@ -41,9 +47,14 @@ class NotesController < ApplicationController
     @note.project = @project
     @note.user = current_user
     if @note.update(note_params)
+<<<<<<< HEAD
       redirect_to project_notes_path(@project, @note), notice: 'Note was successfully updated.'
     else
       flash[:alert] = "Unable to update the note. Please fix the errors."
+=======
+      redirect_to project_note_path(@project, @note), notice: 'Note was successfully updated.'
+    else
+>>>>>>> master
       render :new, status: :unprocessable_entity
     end
   end
