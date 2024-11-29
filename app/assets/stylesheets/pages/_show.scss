@@ -93,6 +93,25 @@ $red-create: #B93838;
     transform: scale(1.03);
   }
 }
+
+.actions {
+  display: flex;            /* Active le flexbox */
+  justify-content: flex-end; /* Aligne le contenu à droite */
+  margin-top: 15px;         /* Espacement optionnel */
+}
+
+.button {
+  background-color: $red-create;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover {
+  transform: scale(1.03); /* Zoom léger au survol */
+}
 }
 
 

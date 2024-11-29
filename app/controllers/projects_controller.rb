@@ -49,12 +49,12 @@ class ProjectsController < ApplicationController
       render :new
     end
 
-  #   @note = @project.notes.new(note_params)
-  # if @note.save
-  #   redirect_to project_notes_path(@project), notice: 'Note was successfully created.'
-  # else
-  #   render :new
-  # end
+    @note = @project.notes.new(note_params)
+  if @note.save
+    redirect_to project_notes_path(@project), notice: 'Note was successfully created.'
+  else
+    render :new
+  end
   end
 
   # GET /projects/:id/edit
