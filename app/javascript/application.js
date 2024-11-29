@@ -6,5 +6,5 @@ import "bootstrap";
 
 import { Turbo } from "@hotwired/turbo-rails"
 //
-// import './form'
+import './form'
 // import './packs/select2_init';
