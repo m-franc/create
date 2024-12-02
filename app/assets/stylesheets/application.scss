@@ -85,12 +85,13 @@
 @import "components/search";
 @import "pages/index";
 @import "pages/show";
-@import "components/bottom_menu";
+@import "components/top_menu";
 @import "components/project_menu";
-@import "utilities/visibility";
 @import "components/card_project";
 @import "components/notes";
 @import "components/document";
+@import "components/mobile_navbar";
+@import "components/sidebar_menu";
 
 $body-color: rgb(247, 247, 247);
 $red-create: #B93838;
@@ -113,5 +114,3 @@ h1 {
     color: white ;
     text-align: center;
   }
-
-
