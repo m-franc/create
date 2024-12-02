@@ -1,42 +1,47 @@
 <div class="conversations-container d-flex" style="height: calc(100vh - 100px);">
   <!-- Left Sidebar - Conversations List -->
-  <div class="conversations-sidebar bg-light border-end" style="width: 300px; overflow-y: auto;">
-    <div class="p-3">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="mb-0">Conversations</h4>
-        <%= link_to new_conversation_path, class: "btn btn-sm btn-primary rounded-circle", style: "width: 32px; height: 32px;" do %>
-          <i class="fas fa-plus"></i>
+  <div class="conversations-sidebar bg-light border-end" style="width: 350px; overflow-y: auto;">
+    <div class="px-2 py-3">
+      <div class="d-flex justify-content-between align-items-center mb-3 px-2">
+        <h4 class="mb-0 fw-bold">Conversations</h4>
+        <%= link_to new_conversation_path, class: "btn btn-primary btn-sm rounded-pill px-3" do %>
+          <i class="fas fa-plus me-1"></i> New
         <% end %>
       </div>
 
       <% if @conversations.any? %>
-        <div class="list-group">
+        <div class="list-group list-group-flush">
           <% @conversations.each do |conversation| %>
             <%= link_to conversation_path(conversation),
-                class: "list-group-item list-group-item-action #{'active' if @conversation&.id == conversation.id}",
+                class: "list-group-item list-group-item-action border-0 rounded-2 mb-1 #{'active' if @conversation == conversation}",
                 data: { turbo_frame: "conversation_messages" } do %>
-              <div class="d-flex justify-content-between align-items-center">
-                <div>
-                  <h6 class="mb-1"><%= conversation.name.presence || "Untitled Conversation" %></h6>
-                  <% if conversation.project %>
-                    <small class="text-muted">
-                      <i class="fas fa-folder me-1"></i>
-                      <%= conversation.project.name %>
-                    </small>
-                  <% end %>
+              <div class="d-flex flex-column py-2">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h6 class="mb-0 <%= 'text-white' if @conversation == conversation %>">
+                    <%= conversation.name.presence || "Untitled Conversation" %>
+                  </h6>
+                  <small class="<%= @conversation == conversation ? 'text-white-50' : 'text-muted' %> ms-2 text-nowrap">
+                    <%= time_ago_in_words(conversation.updated_at).gsub(/about |over |almost |less than /, '') %>
+                  </small>
                 </div>
-                <small class="text-muted">
-                  <%= time_ago_in_words(conversation.messages.last&.created_at || conversation.created_at) %> ago
-                </small>
+                
+                <% if conversation.project %>
+                  <small class="<%= @conversation == conversation ? 'text-white-50' : 'text-muted' %>">
+                    <i class="fas fa-folder me-1"></i>
+                    <%= conversation.project.name %>
+                  </small>
+                <% end %>
               </div>
             <% end %>
           <% end %>
         </div>
       <% else %>
-        <div class="text-center text-muted py-4">
-          <i class="fas fa-comments fa-2x mb-2"></i>
-          <p>No conversations yet</p>
-          <%= link_to "Start a new conversation", new_conversation_path, class: "btn btn-primary btn-sm" %>
+        <div class="text-center text-muted py-5">
+          <i class="fas fa-comments fa-3x mb-3"></i>
+          <p class="mb-3">No conversations yet</p>
+          <%= link_to new_conversation_path, class: "btn btn-primary rounded-pill px-4" do %>
+            <i class="fas fa-plus me-1"></i> Start a new conversation
+          <% end %>
         </div>
       <% end %>
     </div>
@@ -44,13 +49,16 @@
 
   <!-- Right Side - Messages Area -->
   <%= turbo_frame_tag "conversation_messages", class: "flex-grow-1" do %>
-    <div class="h-100 d-flex align-items-center justify-content-center bg-light">
-      <div class="text-center text-muted">
-        <i class="fas fa-comments fa-3x mb-3"></i>
-        <h5>Select a conversation</h5>
-        <p class="mb-0">Choose a conversation from the list or start a new one</p>
+    <% if @conversation %>
+      <%= render "conversation", conversation: @conversation %>
+    <% else %>
+      <div class="d-flex align-items-center justify-content-center h-100 text-muted">
+        <div class="text-center">
+          <i class="fas fa-comments fa-3x mb-3"></i>
+          <p>Select a conversation to start chatting</p>
+        </div>
       </div>
-    </div>
+    <% end %>
   <% end %>
 </div>
 

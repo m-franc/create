@@ -7,6 +7,7 @@ class Project < ApplicationRecord
   has_many :documents, dependent: :destroy
   has_many :notes, dependent: :destroy
   has_many :tasks, dependent: :destroy
+  has_many :conversations, dependent: :destroy
   has_one_attached :image
 
   validates :name, presence: true

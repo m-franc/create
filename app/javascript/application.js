@@ -6,5 +6,17 @@ import "bootstrap";
 import "components/form";
 
 import { Turbo } from "@hotwired/turbo-rails"
-//
-// import './packs/select2_init';
+
+// Disable Turbo for specific forms
+document.addEventListener('turbo:load', () => {
+  const forms = document.querySelectorAll('form[data-turbo="false"]')
+  forms.forEach(form => {
+    form.addEventListener('submit', (e) => {
+      const submitButton = form.querySelector('input[type="submit"]')
+      if (submitButton) {
+        submitButton.disabled = true
+        submitButton.value = submitButton.dataset.disableWith || 'Processing...'
+      }
+    })
+  })
+})

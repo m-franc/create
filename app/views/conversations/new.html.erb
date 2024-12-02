@@ -1,28 +1,95 @@
 <h1>New Conversation</h1>
 
-<%= form_with(model: @conversation, url: conversations_path, local: true) do |f| %>
-  <div class="form-group">
-    <%= f.label :name, "Conversation Name" %>
+<%= form_with(model: @conversation, 
+            url: conversations_path, 
+            local: true, 
+            html: { method: :post }, 
+            data: { turbo: false, controller: "disable-form" }) do |f| %>  
+  <div class="form-group mb-3">
+    <%= f.label :name, "Conversation Name", class: "form-label" %>
     <%= f.text_field :name, class: "form-control" %>
   </div>
 
   <!-- Dropdown for Projects -->
-  <div class="form-group mt-3">
-    <%= f.label :project_id, "Link to a Project (optional)" %>
+  <div class="form-group mb-3">
+    <%= f.label :project_id, "Link to a Project (optional)", class: "form-label" %>
     <%= f.select :project_id,
                  options_for_select(
                    (current_user.owned_projects + current_user.joined_projects).uniq.map { |p| [p.name, p.id] },
                    @conversation.project_id
                  ),
                  { include_blank: "No Project" },
-                 class: "form-control" %>
+                 class: "form-select" %>
+  </div>
+
+  <!-- Member Selection -->
+  <div class="form-group mb-3">
+    <%= f.label :participant_ids, "Add Members", class: "form-label" %>
+    <div class="member-select-wrapper">
+      <%= f.select :participant_ids,
+        options_for_select(
+          User.where.not(id: current_user.id).map { |user| 
+            [
+              content_tag(:div, class: "d-flex align-items-center") do
+                avatar = user.avatar.attached? ? 
+                  image_tag(user.avatar, class: "avatar-small rounded-circle me-2", size: "24x24") :
+                  content_tag(:div, (user.first_name.present? ? user.first_name[0] : user.username[0]).upcase, class: "avatar-placeholder me-2")
+                name_info = content_tag(:div) do
+                  full_name = [user.first_name, user.last_name].compact.join(" ")
+                  content_tag(:div, full_name.presence || user.username)
+                end
+                safe_join([avatar, name_info])
+              end,
+              user.id
+            ]
+          }
+        ),
+        {},
+        {
+          class: "form-select member-select",
+          multiple: true,
+          size: 6,
+          data: { placeholder: "Select members..." }
+        }
+      %>
+    </div>
+    <small class="text-muted">Hold Ctrl/Cmd to select multiple members</small>
   </div>
 
   <div class="form-group mt-3">
-    <%= f.submit "Create Conversation", class: "btn btn-primary" %>
+    <%= link_to "Back", conversations_path, class: "btn btn-outline-secondary rounded-pill me-2" %>
+    <%= f.submit "Create Conversation", 
+                class: "btn btn-primary rounded-pill", 
+                data: { 
+                  disable: true,
+                  disable_with: "Creating...",
+                  action: "click->disable-form#submit"
+                } %>  
   </div>
-  <br>
-  <div class="mb-3">
-    <%= link_to "Back to Conversations", conversations_path, class: "btn btn-secondary rounded" %>
-  </div>
+<% end %>
+
+<% content_for :styles do %>
+<style>
+.member-select-wrapper {
+  max-width: 100%;
+}
+.member-select {
+  width: 100%;
+}
+.avatar-placeholder {
+  width: 24px;
+  height: 24px;
+  background-color: #e9ecef;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+.member-select option {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+</style>
 <% end %>

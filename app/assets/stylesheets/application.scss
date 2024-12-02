@@ -97,20 +97,23 @@ $body-color: rgb(247, 247, 247);
 $red-create: #B93838;
 
 body {
-  background-color: $body-color
+  background-color: white
 }
 
 .custom-sidebar {
   background-color: white
 }
 
-
 h1 {
-    color: $red-create !important;
-  }
+  color: white;
+  text-align: center;
+}
 
+h3 {
+  color: white;
+  text-align: center;
+}
 
-  h3{
-    color: white ;
-    text-align: center;
-  }
+p {
+  text-decoration: none;
+}

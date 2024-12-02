@@ -4,6 +4,11 @@ class ConversationsController < ApplicationController
 
   def index
     load_conversations
+    if params[:selected].present?
+      @conversation = @conversations.find_by(id: params[:selected])
+      @messages = @conversation.messages.includes(:user) if @conversation
+      @new_message = Message.new
+    end
   end
 
   def show
@@ -37,34 +42,44 @@ class ConversationsController < ApplicationController
 
   def create
     @conversation = Conversation.new(conversation_params)
-    @conversation.creator = current_user
 
     if @conversation.save
-      # Add creator as participant
-      ConversationUser.create(conversation: @conversation, user: current_user)
+      # Add creator as participant first
+      creator_participant = ConversationUser.create(conversation: @conversation, user: current_user)
+      
+      # Add system message about conversation creation
+      @conversation.messages.create!(
+        content: "#{current_user.username} created the conversation",
+        system_message: true,
+        user: current_user
+      )
       
       # Add selected participants
       if params[:conversation][:participant_ids].present?
         params[:conversation][:participant_ids].reject(&:blank?).each do |user_id|
-          ConversationUser.create(conversation: @conversation, user: User.find(user_id))
+          user = User.find(user_id)
+          ConversationUser.create(conversation: @conversation, user: user)
+          @conversation.messages.create!(
+            content: "#{user.username} was added to the conversation",
+            system_message: true,
+            user: current_user
+          )
         end
       end
 
       respond_to do |format|
-        format.html { redirect_to @conversation, notice: 'Conversation was successfully created.' }
-        format.turbo_stream { 
-          render turbo_stream: [
-            turbo_stream.append("conversations_list", partial: "conversations/conversation", locals: { conversation: @conversation }),
-            turbo_stream.remove("new_conversation_form"),
-            turbo_stream.append("flash", partial: "shared/flashes", locals: { notice: "Conversation created successfully!" })
-          ]
-        }
+        format.html { redirect_to conversations_path(selected: @conversation.id), notice: 'Conversation was successfully created.' }
+        format.turbo_stream { redirect_to conversations_path(selected: @conversation.id), notice: 'Conversation was successfully created.' }
       end
     else
       respond_to do |format|
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
         format.turbo_stream { 
-          render turbo_stream: turbo_stream.replace("new_conversation_form", partial: "conversations/form")
+          render turbo_stream: turbo_stream.update(
+            "flash",
+            partial: "shared/flashes",
+            locals: { alert: @conversation.errors.full_messages.join(", ") }
+          )
         }
       end
     end
@@ -89,7 +104,7 @@ class ConversationsController < ApplicationController
           render turbo_stream: turbo_stream.update(
             "flash",
             partial: "shared/flashes",
-            locals: { flash: { alert: @conversation.errors.full_messages.join(", ") } }
+            locals: { alert: @conversation.errors.full_messages.join(", ") }
           )
         }
       end
@@ -115,7 +130,7 @@ class ConversationsController < ApplicationController
           render turbo_stream: turbo_stream.update(
             "flash",
             partial: "shared/flashes",
-            locals: { flash: { alert: "Cannot remove participant with existing messages" } }
+            locals: { alert: "Cannot remove participant with existing messages" }
           )
         }
       end
@@ -155,7 +170,7 @@ class ConversationsController < ApplicationController
         render turbo_stream: turbo_stream.update(
           "flash",
           partial: "shared/flashes",
-          locals: { flash: { alert: @conversation.errors.full_messages.join(", ") } }
+          locals: { alert: @conversation.errors.full_messages.join(", ") }
         )
       end
     end

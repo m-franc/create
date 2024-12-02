@@ -20,7 +20,7 @@ class TasksController < ApplicationController
 
     if @task.save
       flash[:notice] = "Task created ✅"
-      redirect_to project_tasks_path(@project)
+      redirect_to project_path(@project, anchor: 'contact-tab')
     else
       flash[:alert] = "Unable to create the task. Please fix the errors."
       render :new, status: :unprocessable_entity
@@ -36,7 +36,7 @@ class TasksController < ApplicationController
   def update
     if @task.update(task_params)
       flash[:notice] = "Task successfully updated 💾"
-      redirect_to project_tasks_path(@project)
+      redirect_to project_path(@project, anchor: 'contact-tab')
     else
       flash[:alert] = "Unable to update the task. Please fix the errors."
       render :edit, status: :unprocessable_entity
@@ -45,7 +45,7 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    redirect_to project_tasks_path(@project), notice: 'Task was successfully deleted.'
+    redirect_to project_path(@project, anchor: 'contact-tab'), notice: 'Task was successfully deleted.'
   end
 
   private
