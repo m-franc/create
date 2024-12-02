@@ -25,15 +25,23 @@
     align-items: center;
     position: relative;
 
+    a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      position: relative;
+    }
+
     &:after {
       content: '';
       position: absolute;
-      bottom: -20px;
+      bottom: -30px;
       left: 15px;
       right: 15px;
       height: 1px;
-      background-color: rgba(255, 255, 255, 0.2);
-      opacity: 0;
+      background-color: rgba(255, 255, 255, 0.733);
+      opacity: 1;
       transition: opacity 0.3s ease;
     }
 
@@ -52,6 +60,7 @@
     .logo-collapsed {
       width: 45px;
       opacity: 1;
+      margin-top: -10px;
     }
   }
 
@@ -138,7 +147,7 @@
     }
   }
 
-  &:hover {
+  &.expanded {
     width: 160px;
 
     .logo-container {
@@ -157,6 +166,7 @@
 
     .menu-label {
       opacity: 1;
+      transform: translateX(0);
     }
 
     .username {

@@ -1,7 +1,9 @@
-<div class="sidebar-menu">
+<div class="sidebar-menu" data-controller="sidebar" data-sidebar-target="sidebar">
   <div class="logo-container">
-    <%= image_tag "logo_createv1.png", class: "logo logo-expanded", alt: "Create Logo" %>
-    <%= image_tag "logo_createv2.png", class: "logo logo-collapsed", alt: "Create Logo" %>
+    <%= link_to root_path do %>
+      <%= image_tag "logo_createv1.png", class: "logo logo-expanded", alt: "Create Logo" %>
+      <%= image_tag "logo_createv2.png", class: "logo logo-collapsed", alt: "Create Logo" %>
+    <% end %>
   </div>
 
   <div class="menu-items">
