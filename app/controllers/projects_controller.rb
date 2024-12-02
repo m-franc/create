@@ -11,13 +11,12 @@ class ProjectsController < ApplicationController
   def show
     @joined_users = @project.joined_users
     @project = Project.find(params[:id])
-    @notes = @project.notes
+    @documents = @project.documents
+    @tasks = @project.tasks.includes(:user).order(deadline: :asc)
+    @notes = @project.notes.includes(:user).order(created_at: :desc).limit(3)
     @note = Note.new
     @document = Document.new
     @folders = @project.documents.pluck(:folder_name).uniq
-    @documents = @project.documents
-    @tasks = @project.tasks.includes(:user).order(deadline: :asc)
-    @notes = @project.notes
 
     @joined_users = @project.joined_users
   end

@@ -102,6 +102,44 @@
             </div>
           <% end %>
         </div>
+        <div class="card-project" id="notes">
+          <h4 class="mb-4 text-dark">Notes</h4>
+
+          <% if @notes.any? %>
+            <div class="notes-list">
+              <% @notes.each do |note| %>
+                <div class="note-item py-3 border-bottom" style="border-color: #f0f0f0 !important;">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center gap-3">
+                      <div class="note-dot rounded-circle bg-warning opacity-25" style="width: 6px; height: 6px;"></div>
+                      <div class="fw-medium text-dark" style="font-size: 0.95rem;">
+                        <%= truncate(note.content, length: 50) %>
+                      </div>
+                    </div>
+                    <div class="text-secondary d-flex align-items-center" style="font-size: 0.8rem;">
+                      <i class="bi bi-clock opacity-75 me-1"></i>
+                      <%= time_ago_in_words(note.created_at) %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+            
+            <% if @project.notes.count > 3 %>
+              <div class="mt-3">
+                <%= link_to project_path(@project, anchor: 'notes-tab'), class: "text-decoration-none text-primary d-flex align-items-center gap-1 hover-opacity transition-all", style: "font-size: 0.85rem;" do %>
+                  <span>View all notes</span>
+                  <i class="bi bi-chevron-right"></i>
+                <% end %>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="text-secondary d-flex align-items-center gap-2 py-2" style="font-size: 0.85rem;">
+              <i class="bi bi-sticky"></i>
+              No notes yet
+            </div>
+          <% end %>
+        </div>
         <div class="card-project" id="card-2">
           <h4>Team Members</h4>
           <div class="dashboard-users">
@@ -125,9 +163,6 @@
               </div>
             <% end %>
           </div>
-        </div>
-        <div class="card-project" id="card-3">
-          <%= link_to "Notes", project_notes_path(@project), class: 'btn btn-primary' %>
         </div>
         <div class="card-project" id="card-4">
           <%= link_to "Documents", project_documents_path(@project), class: 'btn btn-info' %>
