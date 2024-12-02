@@ -16,10 +16,7 @@ class ProjectsController < ApplicationController
     @document = Document.new
     @folders = @project.documents.pluck(:folder_name).uniq
     @documents = @project.documents
-
-
     @notes = @project.notes
-
     @joined_users = @project.joined_users
   end
 
@@ -38,7 +35,8 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
     @project.user = current_user
-
+    @project.joined_users.status = "0"
+    raise
     if @project.save
       if params[:project][:image].present?
         @project.image.attach(params[:project][:image])
@@ -49,12 +47,12 @@ class ProjectsController < ApplicationController
       render :new
     end
 
-    @note = @project.notes.new(note_params)
-  if @note.save
-    redirect_to project_notes_path(@project), notice: 'Note was successfully created.'
-  else
-    render :new
-  end
+    # @note = @project.notes.new(note_params)
+  # if @note.save
+  #   redirect_to project_notes_path(@project), notice: 'Note was successfully created.'
+  # else
+  #   render :new
+  # end
   end
 
   # GET /projects/:id/edit
@@ -82,10 +80,6 @@ class ProjectsController < ApplicationController
     flash[:notice] = "Project deleted 🗑️"
     redirect_to projects_path
   end
-
-
-
-
 
   private
 

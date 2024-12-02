@@ -98,7 +98,7 @@ theater_projects.each do |project_data|
   )
 
   # Add member to each project
-  ProjectUser.create!(project: project, user: member)
+  ProjectUser.create!(project: project, user: member, status: "0")
 
   # Create tasks for the project
   project_data[:tasks].each do |task_data|
