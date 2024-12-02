@@ -1,5 +1,10 @@
 $red-create: #B93838;
 
+.project-header{
+   h1 {
+  color: $red-create!important;
+}
+}
 .project {
   background-color: white;
   padding: 30px;
@@ -210,12 +215,13 @@ $red-create: #B93838;
 .edit-link {
   position: absolute;  /* Positionnement absolu */
   top: 20px;           /* Distance du haut */
-  right: 25px;         /* Distance de la droite */
+  right: 40px;         /* Distance de la droite */
   padding: 5px 10px;
   color: $red-create;
   border-radius: 5px;
   text-decoration: none;
   width: fit-content;
+  font-size: 20px;
 
   &:hover{
     transition: transform 0.3s ease;

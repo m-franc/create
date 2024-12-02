@@ -1,16 +1,48 @@
 .note {
-  display: flex; /* Utilise Flexbox pour aligner les éléments horizontalement */
-  gap: 20px; /* Espacement entre les éléments */
-  flex-wrap: nowrap; /* Empêche les éléments de s'enrouler et les garde sur la même ligne */
-  align-items: flex-start; /* Aligne les éléments en haut de la ligne */
+  overflow: hidden; /* Pour que le conteneur englobe les éléments flottants */
+  margin-top: 15px;
 }
 
 .new-note {
-  flex: 1; /* La nouvelle note prend l'espace disponible */
-  max-width: 30%; /* Limite la largeur de .new-note à 30% */
+  background-color: $red-create;
+  float: left; /* Fait flotter l'élément à gauche */
+  width: 45%; /* Limite la largeur de .new-note */
+  margin-right: 20px; /* Espacement entre new-note et all-notes */
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  label{
+    color: white;
+  }
+
+  .btn-secondary {
+    background-color: none!important;
+  }
 }
 
 .all-notes {
-  flex: 2; /* La section all-notes prend 2 fois plus d'espace que new-note */
-  max-width: 60%; /* Limite la largeur de .all-notes à 60% */
+  float: left; /* Fait flotter l'élément à gauche */
+  width: 45%; /* Limite la largeur de .all-notes */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* S'assurer que le conteneur prend bien en compte la mise en page flottante */
+.container {
+  clear: both; /* Empêche l'élément de se chevaucher avec les éléments flottants */
+}
+
+.btn.btn-warning {
+  background-color: white;
+  border-radius: 10px;
+  color: $red-create;
+  border-color: $red-create;
+}
+
+.btn.btn-danger {
+  border-radius: 10px;
+}
+
+.form-control {
+  margin-bottom: 15px;
 }
