@@ -85,6 +85,7 @@
 @import "components/search";
 @import "pages/index";
 @import "pages/show";
+@import "pages/new";
 @import "components/bottom_menu";
 @import "components/project_menu";
 @import "utilities/visibility";
@@ -114,4 +115,6 @@ h1 {
     text-align: center;
   }
 
-
+p {
+  text-decoration: none;
+}
