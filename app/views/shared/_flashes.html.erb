@@ -1,29 +1,63 @@
-<div id="flash">
+<div class="flash-container">
   <% if notice %>
-    <div class="alert alert-success alert-dismissible fade show m-1" role="alert">
-      <%= notice %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <div class="d-flex align-items-center gap-2">
+        <span><%= notice %></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
     </div>
   <% end %>
 
   <% if alert %>
-    <div class="alert alert-warning alert-dismissible fade show m-1" role="alert">
-      <%= alert %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <div class="d-flex align-items-center gap-2">
+        <span><%= alert %></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
     </div>
   <% end %>
 </div>
 
 <style>
-  #flash {
+  .flash-container {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1050;
-    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
   }
 
   .alert {
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.2;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    max-width: 300px;
+  }
+  
+  .alert .btn-close {
+    padding: 0;
+    margin-left: 8px;
+    font-size: 12px;
+    opacity: 0.5;
+  }
+  
+  .alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+  }
+  
+  .alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
   }
 </style>

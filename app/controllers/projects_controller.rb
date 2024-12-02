@@ -10,12 +10,17 @@ class ProjectsController < ApplicationController
   # GET /projects/:id
   def show
     @project = Project.find(params[:id])
-    @notes = @project.notes
+    @documents = @project.documents
+    @tasks = @project.tasks.includes(:user).order(deadline: :asc)
+    @notes = @project.notes.includes(:user).order(created_at: :desc)
     @note = Note.new
     @document = Document.new
     @folders = @project.documents.pluck(:folder_name).uniq
+<<<<<<< HEAD
     @documents = @project.documents
     @notes = @project.notes
+=======
+>>>>>>> master
     @joined_users = @project.joined_users
   end
 

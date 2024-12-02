@@ -1,5 +1,10 @@
 $red-create: #B93838;
 
+.content {
+  margin-top: 5%;
+  padding: 0!important;
+}
+
 .project-header{
    h1 {
   color: $red-create!important;
@@ -26,7 +31,6 @@ $red-create: #B93838;
 }
 
 .project-red {
-
 
   .page{
     display: none;
@@ -85,12 +89,12 @@ $red-create: #B93838;
 }
 .project-red {
   background-color: $red-create;
-  padding-top: 30px;
+
   padding-left: 30px;
   border-radius: 20px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
   width: 50%;
-  margin: 0 auto;
+  margin: auto;
   position: relative;
 
   h2{

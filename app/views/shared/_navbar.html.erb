@@ -1,4 +1,4 @@
-  <div class="nav-bar">
+  <div class="nav-bar" id="navbar">
   <div class="desktop-only">
     <div class="d-flex flex-column flex-shrink-0 p-3 custom-sidebar" style="width: 250px; height: 100vh;">
 
@@ -48,22 +48,29 @@
 
       <% if user_signed_in? %>
         <hr>
-        <div class="dropdown">
+        <div class="dropdown" id="user-profile-dropdown">
           <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-            <% if current_user.avatar.attached? %>
-              <%= cl_image_tag current_user.avatar.key, class: "avatar me-2", height: 40, width: 40, crop: :fill %>
+            <% if current_user.avatar.attached? && current_user.avatar.variable? %>
+              <%= image_tag current_user.avatar.variant(:small), class: "rounded-circle me-2", style: "width: 32px; height: 32px; object-fit: cover;" %>
             <% else %>
-              <%= image_tag "https://ui-avatars.com/api/?name=#{current_user.username}&background=random", class: "avatar me-2" %>
+              <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center text-white me-2" style="width: 32px; height: 32px; font-size: 14px;">
+                <%= current_user.username.first(2).upcase %>
+              </div>
             <% end %>
-            <strong><%= current_user.username || "User" %></strong>
+            <strong><%= current_user.username %></strong>
           </a>
-          <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-            <li><%= link_to "Edit", edit_user_registration_path, class: "dropdown-item" %></li>
-            <li><%= link_to "Another action", "#", class: "dropdown-item" %></li>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="dropdownUser1">
             <li>
-              <hr class="dropdown-divider">
+              <%= link_to edit_user_registration_path, class: "dropdown-item d-flex align-items-center" do %>
+                <i class="bi bi-person-gear me-2"></i> Edit Profile
+              <% end %>
             </li>
-            <li><%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %></li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item d-flex align-items-center text-danger" do %>
+                <i class="bi bi-box-arrow-right me-2"></i> Log out
+              <% end %>
+            </li>
           </ul>
         </div>
       <% end %>

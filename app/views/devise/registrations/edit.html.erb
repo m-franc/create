@@ -1,6 +1,10 @@
 <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+<%= simple_form_for(resource, 
+                    as: resource_name, 
+                    url: registration_path(resource_name), 
+                    html: { method: :put }, 
+                    data: { turbo: false }) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
@@ -9,6 +13,11 @@
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
       <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
     <% end %>
+
+    <%= f.input :avatar,
+                as: :file,
+                label: "Upload Profile Image",
+                input_html: { class: "form-control" } %>
 
     <%= f.input :password,
                 hint: "leave it blank if you don't want to change it",
@@ -21,14 +30,10 @@
                 hint: "we need your current password to confirm your changes",
                 required: true,
                 input_html: { autocomplete: "current-password" } %>
-    <%= f.input :avatar,
-                as: :file,
-                label: "Upload Profile Image",
-                input_html: { class: "form-control" } %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, "Update" %>
+    <%= f.button :submit, "Update", class: "btn btn-primary" %>
   </div>
 <% end %>
 
@@ -37,3 +42,12 @@
 <div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
 
 <%= link_to "Back", :back %>
+
+<% content_for :styles do %>
+  <style>
+    .form-inputs {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  </style>
+<% end %>
