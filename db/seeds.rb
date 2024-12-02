@@ -324,8 +324,10 @@ projects_data.each_with_index do |project_data, index|
   ]
 
   # Create 2-3 conversations per project
+  available_topics = conversation_topics.dup  # Create a copy of the topics array
   rand(2..3).times do
-    conversation_data = conversation_topics.sample
+    break if available_topics.empty?  # Stop if we run out of topics
+    conversation_data = available_topics.delete_at(rand(available_topics.length))  # Remove and return a random topic
     conversation = Conversation.create!(
       name: "#{conversation_data[:name]} - #{project.name}",
       project: project
