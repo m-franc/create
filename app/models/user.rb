@@ -16,6 +16,8 @@ class User < ApplicationRecord
     attachable.variant :small, resize_to_fill: [32, 32]
   end
 
+  after_commit :process_avatar, on: [:create, :update]
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2]
@@ -45,6 +47,13 @@ class User < ApplicationRecord
   end
 
   private
+
+  def process_avatar
+    return unless avatar.attached?
+    # Ensure variants are processed
+    avatar.variant(:thumb).processed
+    avatar.variant(:small).processed
+  end
 
   def avatar_url=(url)
     if url.present?
