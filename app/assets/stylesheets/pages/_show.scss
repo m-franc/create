@@ -1,9 +1,6 @@
 $red-create: #B93838;
 
-.content {
-  margin-top: 5%;
-  padding: 0!important;
-}
+
 
 .project-header{
    h1 {
@@ -225,7 +222,7 @@ $red-create: #B93838;
   border-radius: 5px;
   text-decoration: none;
   width: fit-content;
-  font-size: 20px;
+  font-size: 15px;
 
   &:hover{
     transition: transform 0.3s ease;
@@ -395,4 +392,8 @@ $red-create: #B93838;
   color: white !important;
   border-radius: 10px 10px 0 0;
 
+}
+
+.btn-task {
+  color: $red-create;
 }

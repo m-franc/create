@@ -85,7 +85,13 @@
 @import "components/search";
 @import "pages/index";
 @import "pages/show";
+
+@import "pages/new";
+@import "pages/edit_project";
+@import "components/bottom_menu";
+=======
 @import "components/top_menu";
+
 @import "components/project_menu";
 @import "components/card_project";
 @import "components/notes";

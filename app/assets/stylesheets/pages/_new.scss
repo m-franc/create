@@ -4,13 +4,18 @@
   align-items: flex-start; /* Aligne les éléments en haut */
   flex-wrap: wrap;
   width: 10%;
+  margin-left: 50px;
 }
 
-
+.d-flex.h-100{
+  margin-top: 20px;
+}
 .log-in {
   margin-top: 5%;
   width: 40%!important;
   display: block;
+
+
   /* height: 1000px; Retirer la hauteur fixe, sauf si nécessaire */
 
   .form-label {
@@ -21,6 +26,9 @@
     color: white;
   }
 
+  .end-log {
+    text-align: center;
+  }
   .btn {
     color: white;
     border: solid 1px white;
@@ -40,9 +48,9 @@
   }
 }
 
-.content {
+.type {
   margin-top: 30px;
-  margin-left: 70px;
+  margin-left: 110px;
 }
 #typed {
   display: flex;
@@ -71,10 +79,11 @@
 
 .point {
   font-family: "Lobster", sans-serif;
-  font-weight: 400;
+  font-weight: 100;
   font-style: normal;
   font-size: 40px;
   color: $red-create;
+  transform: scale(1.5, 0.7);
 }
 
 .bold {
@@ -84,9 +93,9 @@
 .details {
   display: block;
   margin-top: 10px;
-  margin-left: 40px; /* Décale le texte à droite */
+  margin-left: 180px; /* Décale le texte à droite */
   text-align: left;  /* Alignement à gauche pour le texte dans details */
-  font-size: 25px;
+  font-size: 22px;
   margin-bottom: 30px;
 }
 
