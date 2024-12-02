@@ -12,21 +12,21 @@
       <% if @conversations.any? %>
         <div class="list-group list-group-flush">
           <% @conversations.each do |conversation| %>
-            <%= link_to conversations_path(selected: conversation.id),
-                class: "list-group-item list-group-item-action border-0 rounded-2 mb-1 #{'active' if @conversation&.id == conversation.id}",
+            <%= link_to conversation_path(conversation),
+                class: "list-group-item list-group-item-action border-0 rounded-2 mb-1 #{'active' if @conversation == conversation}",
                 data: { turbo_frame: "conversation_messages" } do %>
               <div class="d-flex flex-column py-2">
                 <div class="d-flex justify-content-between align-items-center">
-                  <h6 class="mb-0 <%= 'text-white' if @conversation&.id == conversation.id %>">
+                  <h6 class="mb-0 <%= 'text-white' if @conversation == conversation %>">
                     <%= conversation.name.presence || "Untitled Conversation" %>
                   </h6>
-                  <small class="<%= @conversation&.id == conversation.id ? 'text-white-50' : 'text-muted' %> ms-2 text-nowrap">
+                  <small class="<%= @conversation == conversation ? 'text-white-50' : 'text-muted' %> ms-2 text-nowrap">
                     <%= time_ago_in_words(conversation.updated_at).gsub(/about |over |almost |less than /, '') %>
                   </small>
                 </div>
                 
                 <% if conversation.project %>
-                  <small class="<%= @conversation&.id == conversation.id ? 'text-white-50' : 'text-muted' %>">
+                  <small class="<%= @conversation == conversation ? 'text-white-50' : 'text-muted' %>">
                     <i class="fas fa-folder me-1"></i>
                     <%= conversation.project.name %>
                   </small>

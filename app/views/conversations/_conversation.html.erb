@@ -1,59 +1,24 @@
-<div class="conversation-container d-flex flex-column h-100">
-  <!-- Conversation Header -->
-  <div class="conversation-header border-bottom p-3">
-    <div class="d-flex justify-content-between align-items-center">
-      <div>
-        <h4 class="mb-1"><%= conversation.name.presence || "Untitled Conversation" %></h4>
-        <div class="text-muted">
-          <% if conversation.project %>
-            <span class="me-3">
-              <i class="fas fa-folder me-1"></i>
-              <%= conversation.project.name %>
-            </span>
-          <% end %>
-          <span>
-            <i class="fas fa-users me-1"></i>
-            <%= pluralize(conversation.participants.count, 'participant') %>
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Messages Area -->
-  <div class="messages-container flex-grow-1 p-3" style="overflow-y: auto;">
-    <% if conversation.messages.any? %>
-      <% conversation.messages.each do |message| %>
-        <div class="message mb-3 <%= message.user == current_user ? 'text-end' : '' %>">
-          <% if message.system_message? %>
-            <div class="system-message text-center text-muted small my-3">
-              <%= message.content %>
-            </div>
-          <% else %>
-            <div class="message-content <%= message.user == current_user ? 'ms-auto' : 'me-auto' %>" style="max-width: 70%;">
-              <small class="text-muted d-block mb-1">
-                <%= message.user.username %> • <%= time_ago_in_words(message.created_at) %> ago
-              </small>
-              <div class="message-bubble p-3 rounded <%= message.user == current_user ? 'bg-primary text-white' : 'bg-light' %>">
-                <%= message.content %>
-              </div>
-            </div>
-          <% end %>
-        </div>
+<%= link_to conversation_path(conversation),
+    class: "list-group-item list-group-item-action #{'active' if conversation.id == @conversation&.id}",
+    data: { turbo_frame: "conversation_messages" } do %>
+  <div class="d-flex justify-content-between align-items-center">
+    <div>
+      <h6 class="mb-1"><%= conversation.name.presence || "Untitled Conversation" %></h6>
+      <% if conversation.project %>
+        <small class="text-muted">
+          <i class="fas fa-folder me-1"></i>
+          <%= conversation.project.name %>
+        </small>
+      <% else %>
+        <small class="text-muted">
+          <%= pluralize(conversation.participants.count, 'participant') %>
+        </small>
       <% end %>
-    <% else %>
-      <div class="text-center text-muted py-5">
-        <p>No messages yet</p>
-        <p>Be the first to send a message!</p>
-      </div>
+    </div>
+    <% if conversation.messages.any? %>
+      <small class="text-muted">
+        <%= time_ago_in_words(conversation.messages.last.created_at) %> ago
+      </small>
     <% end %>
   </div>
-
-  <!-- Message Input -->
-  <div class="message-input border-top p-3">
-    <%= form_with(model: [conversation, Message.new], local: true, class: "d-flex gap-2") do |f| %>
-      <%= f.text_area :content, class: "form-control", placeholder: "Type your message...", rows: 1 %>
-      <%= f.submit "Send", class: "btn btn-primary" %>
-    <% end %>
-  </div>
-</div>
+<% end %>

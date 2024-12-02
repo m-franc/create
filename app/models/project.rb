@@ -27,4 +27,17 @@ class Project < ApplicationRecord
   def member?(user)
     user == self.user || joined_users.include?(user)
   end
+
+  after_create :create_default_conversation
+
+  private
+
+  def create_default_conversation
+    Conversation.create!(
+      name: "#{name} - General Discussion",
+      project: self
+    )
+  rescue ActiveRecord::RecordInvalid => e
+    Rails.logger.error "Failed to create default conversation for project #{id}: #{e.message}"
+  end
 end

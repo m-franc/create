@@ -2,14 +2,20 @@
 <% current_user = current_user if defined?(current_user) %>
 
 <div id="message_<%= message.id %>" class="message <%= message.system_message ? 'system-message' : (message.user == current_user ? 'message-right' : 'message-left') %>">
-  <div class="message-bubble">
+  <div class="message-wrapper">
     <% if !message.system_message %>
-      <%= message.content %>
-      <div class="message-footer">
-        <%= message.user.username %> • <%= time_ago_in_words(message.created_at) %> ago
+      <div class="message-bubble">
+        <%= message.content %>
+        <div class="message-footer">
+          <small>
+            <%= message.user.username %> • <%= time_ago_in_words(message.created_at) %> ago
+          </small>
+        </div>
       </div>
     <% else %>
-      <%= message.content %>
+      <div class="message-bubble system">
+        <%= message.content %>
+      </div>
     <% end %>
   </div>
 </div>
