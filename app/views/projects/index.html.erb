@@ -17,10 +17,16 @@
           </div>
 
           <div class="card-content">
-            <h2><%= project.name %></h2>
-            <p><strong>Location:</strong> <%= project.location %></p>
-            <p><strong>Start Date:</strong> <%= project.starting_date %></p>
-            <p><strong>End Date:</strong> <%= project.end_date %></p>
+            <%= project_user = ProjectUser.find_by(project: project, user: @user) %>
+            <% if project.joined_users.include?(@user) and project_user.status == "1" %>
+              <h2><%= project.name %></h2>
+              <p><strong>Location:</strong> <%= project.location %></p>
+              <p><strong>Start Date:</strong> <%= project.starting_date %></p>
+              <p><strong>End Date:</strong> <%= project.end_date %></p>
+            <% else %>
+              <% raise %>
+              <p>ACCEPT OR DECLINE</p>
+            <% end %>
           </div>
         <% end %>  <!-- Fin du lien -->
       <% end %>
