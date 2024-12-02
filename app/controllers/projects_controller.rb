@@ -92,13 +92,17 @@ class ProjectsController < ApplicationController
   def accept
     @project = Project.find(params[:id])
     project_user = ProjectUser.find_by(user: current_user, project: @project)
-    project_user.update(status: "1")
-    flash[:notice] = "Project joined !"
-    redirect_to @project
+    if project_user.update(status: "1")
+      flash[:alert] = "Project joined !"
+      redirect_to projects_path
+    else
+      flash[:alert] = "Unable to accept the project. Please fix the errors."
+      render :accept, status: :unprocessable_entity
+    end
   end
 
   def decline
-    flash[:notice] = "Project not joined 🗑️"
+    flash[:alert] = "Project not joined 🗑️"
     redirect_to projects_path
   end
 

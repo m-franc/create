@@ -18,8 +18,8 @@
 
           <div class="card-content">
             <% if project_user.status == "0" %>
-              <%= link_to "accept", accept_path(project_user.project), data: { turbo_confirm: "Are you sure to accept the invitation ?" } %>
-              <%= link_to "decline", decline_path(project_user.project), data: { turbo_confirm: "Are you sure to decline the invitation ?" } %>
+              <%= button_to "accept", project_accept_path(project_user.project), method: :patch %>
+              <%= button_to "decline", project_decline_path(project_user.project), method: :patch %>
             <% else %>
               <h2><%= project_user.project.name %></h2>
               <p><strong>Location:</strong> <%= project_user.project.location %></p>
