@@ -1,26 +1,30 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :accept, :decline]
 
   # GET /projects
   def index
     @projects = Project.all
+    @projects_user = ProjectUser.find_by(user: current_user)
     @user = current_user
   end
 
   # GET /projects/:id
   def show
     @project = Project.find(params[:id])
+    project_user = ProjectUser.find_by(user: current_user, project: @project)
+    if project_user.status == "0"
+      project_user.status = "1"
+      project_user.save!
+      redirect_to @project
+    end
     @documents = @project.documents
     @tasks = @project.tasks.includes(:user).order(deadline: :asc)
     @notes = @project.notes.includes(:user).order(created_at: :desc)
     @note = Note.new
     @document = Document.new
     @folders = @project.documents.pluck(:folder_name).uniq
-<<<<<<< HEAD
     @documents = @project.documents
     @notes = @project.notes
-=======
->>>>>>> master
     @joined_users = @project.joined_users
   end
 
@@ -85,6 +89,19 @@ class ProjectsController < ApplicationController
     redirect_to projects_path
   end
 
+  def accept
+    @project = Project.find(params[:id])
+    project_user = ProjectUser.find_by(user: current_user, project: @project)
+    project_user.update(status: "1")
+    flash[:notice] = "Project joined !"
+    redirect_to @project
+  end
+
+  def decline
+    flash[:notice] = "Project not joined 🗑️"
+    redirect_to projects_path
+  end
+
   private
 
   def set_project
@@ -99,11 +116,10 @@ class ProjectsController < ApplicationController
     params.require(:note).permit(:title, :content)
   end
 
-  def init_status_project_users(project, value)
-    project.joined_users.each do |joined_user|
-      project_user = ProjectUser.find_by(user: joined_user, project: project)
-      project_user.status = value
-      project_user.save
-    end
-  end
+  # def init_status_project_users(project, value)
+  #   project.joined_users.each do |joined_user|
+  #     project_user = ProjectUser.find_by(user: joined_user, project: project)
+  #     project_user.update!(status: value)
+  #   end
+  # end
 end

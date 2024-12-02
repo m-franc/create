@@ -6,26 +6,25 @@
 
   <% if @projects.any? %>
     <div class="card-container">
-      <% @projects.each do |project| %>
-        <%= link_to project_path(project.id), class: 'card' do %>  <!-- Le lien englobe toute la carte -->
+      <% Array(@projects_user).each do |project_user| %>
+        <%= link_to project_path(project_user.project.id), class: 'card' do %>  <!-- Le lien englobe toute la carte -->
           <div class="card-image">
-            <% if project.image.attached? %>
-              <%= image_tag project.image, class: 'card-image', alt: "#{project.name} Image" %>
+            <% if project_user.project.image.attached? %>
+              <%= image_tag project_user.project.image, class: 'card-image', alt: "#{project_user.project.name} Image" %>
             <% else %>
               <%= image_tag "unavailable_image.jpg", class: 'card-image', alt: "No image available" %>
             <% end %>
           </div>
 
           <div class="card-content">
-            <%= project_user = ProjectUser.find_by(project: project, user: @user) %>
-            <% if project.joined_users.include?(@user) and project_user.status == "1" %>
-              <h2><%= project.name %></h2>
-              <p><strong>Location:</strong> <%= project.location %></p>
-              <p><strong>Start Date:</strong> <%= project.starting_date %></p>
-              <p><strong>End Date:</strong> <%= project.end_date %></p>
+            <% if project_user.status == "0" %>
+              <%= link_to "accept", accept_path(project_user.project), data: { turbo_confirm: "Are you sure to accept the invitation ?" } %>
+              <%= link_to "decline", decline_path(project_user.project), data: { turbo_confirm: "Are you sure to decline the invitation ?" } %>
             <% else %>
-              <% raise %>
-              <p>ACCEPT OR DECLINE</p>
+              <h2><%= project_user.project.name %></h2>
+              <p><strong>Location:</strong> <%= project_user.project.location %></p>
+              <p><strong>Start Date:</strong> <%= project_user.project.starting_date %></p>
+              <p><strong>End Date:</strong> <%= project_user.project.end_date %></p>
             <% end %>
           </div>
         <% end %>  <!-- Fin du lien -->

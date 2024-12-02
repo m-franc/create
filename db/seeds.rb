@@ -260,7 +260,7 @@ projects_data.each_with_index do |project_data, index|
   # Add 2-3 random members to each project
   team_members = created_users.sample(rand(2..3))
   team_members.each do |member|
-    ProjectUser.create!(project: project, user: member) unless member == project.user
+    ProjectUser.create!(project: project, user: member, status: "0") unless member == project.user
   end
 
   # Create 1-2 notes for each project
