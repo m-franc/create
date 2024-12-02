@@ -34,7 +34,12 @@
 
   <body class="min-vh-100">
     <div class="d-flex h-100">
-      <%= render "shared/navbar" %>
+
+<% unless (controller_name == 'sessions' && action_name == 'new') ||
+          (controller_name == 'registrations' && action_name == 'new') %>
+  <%= render "shared/navbar" %>
+<% end %>
+
       <%= render "shared/flashes" %>
 
       <div class="content" style="flex-grow: 1; padding: 20px;">
