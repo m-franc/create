@@ -66,16 +66,12 @@
 
           <% if @tasks.any? %>
             <div class="task-list">
-
               <% @tasks.first(6).each do |task| %>
-
                 <div class="task-item py-3 border-bottom" style="border-color: #f0f0f0 !important;">
                   <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex align-items-center gap-3">
                       <div class="task-dot rounded-circle bg-secondary opacity-25" style="width: 6px; height: 6px;"></div>
-                      <div class="fw-medium text-dark" style="font-size: 0.95rem;">
-
-                        <%= task.name %></div>
+                      <div class="fw-medium text-dark" style="font-size: 0.95rem;"><%= task.name %></div>
                     </div>
                     <% if task.deadline %>
                       <% deadline_date = Date.parse(task.deadline) rescue nil %>
@@ -90,7 +86,7 @@
                 </div>
               <% end %>
             </div>
-
+            
             <% if @tasks.count > 6 %>
               <div class="mt-3">
                 <a href="#" onclick="document.querySelector('#contact-tab').click(); return false;" class="text-decoration-none text-primary d-flex align-items-center gap-1 hover-opacity transition-all" style="font-size: 0.85rem;">
@@ -128,7 +124,7 @@
                 </div>
               <% end %>
             </div>
-
+            
             <% if @project.notes.count > 3 %>
               <div class="mt-3">
                 <a href="#" onclick="document.querySelector('#note-tab').click(); return false;" class="text-decoration-none text-primary d-flex align-items-center gap-1 hover-opacity transition-all" style="font-size: 0.85rem;">
