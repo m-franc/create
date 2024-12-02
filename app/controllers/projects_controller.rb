@@ -4,12 +4,10 @@ class ProjectsController < ApplicationController
   # GET /projects
   def index
     @projects = Project.all
-
   end
 
   # GET /projects/:id
   def show
-    @joined_users = @project.joined_users
     @project = Project.find(params[:id])
     @notes = @project.notes
     @note = Note.new
@@ -35,9 +33,9 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
     @project.user = current_user
-    @project.joined_users.status = "0"
-    raise
+    @joined_users = @project.joined_users
     if @project.save
+      init_status_project_users(@project)
       if params[:project][:image].present?
         @project.image.attach(params[:project][:image])
       end
@@ -93,5 +91,12 @@ class ProjectsController < ApplicationController
 
   def note_params
     params.require(:note).permit(:title, :content)
+  end
+
+  def init_status_project_users(project)
+    project.joined_users.each do |joined_user|
+      project_user = ProjectUser.find_by(user: joined_user, project: project)
+      project_user.status = "0"
+    end
   end
 end
