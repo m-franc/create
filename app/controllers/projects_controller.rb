@@ -17,14 +17,6 @@ class ProjectsController < ApplicationController
     @document = Document.new
     @folders = @project.documents.pluck(:folder_name).uniq
     @joined_users = @project.joined_users
-    
-    # Load project conversations with eager loading
-    @project_conversations = @project.conversations
-                                   .joins(:conversation_users)
-                                   .where(conversation_users: { user_id: current_user.id })
-                                   .includes(:participants, messages: :user)
-                                   .distinct
-                                   .order(updated_at: :desc)
   end
 
   # GET /projects/new

@@ -9,15 +9,6 @@ class ConversationsController < ApplicationController
       @messages = @conversation.messages.includes(:user) if @conversation
       @new_message = Message.new
     end
-
-    respond_to do |format|
-      format.html
-      format.turbo_stream do
-        if params[:selected].present? && @conversation
-          render turbo_stream: turbo_stream.update("conversation_messages", partial: "conversation", locals: { conversation: @conversation })
-        end
-      end
-    end
   end
 
   def show
@@ -157,9 +148,14 @@ class ConversationsController < ApplicationController
   end
 
   def load_conversations
-    @conversations = current_user.conversations
-                               .includes(:project, messages: :user)
-                               .order(updated_at: :desc)
+    @conversations = if params[:project_id]
+      project = current_user.projects.find_by(id: params[:project_id])
+      project ? project.conversations : Conversation.none
+    else
+      Conversation.joins(:conversation_users)
+                 .where(conversation_users: { user_id: current_user.id })
+                 .distinct
+    end
   end
 
   def build_project_conversation

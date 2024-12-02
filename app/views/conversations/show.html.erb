@@ -1,12 +1,12 @@
 <%= turbo_frame_tag "conversation_messages" do %>
-  <div class="conversation-container d-flex flex-column h-100">
+  <div class="conversation-container d-flex flex-column">
     <!-- Conversation Header -->
     <%= render 'header', conversation: @conversation %>
 
     <!-- Messages Area -->
     <%= turbo_stream_from @conversation %>
     <div id="messages_conversation_<%= @conversation.id %>" 
-         class="conversation-messages flex-grow-1 px-4 py-3"
+         class="conversation-messages flex-grow-1"
          data-controller="chat-scroll"
          data-action="turbo:frame-render->chat-scroll#scrollToBottom">
       <%= render @messages || [], current_user: current_user %>
@@ -14,7 +14,7 @@
 
     <!-- Message Input -->
     <div class="message-input-container">
-      <div id="message_form" class="px-4 py-3">
+      <div id="message_form">
         <%= form_with(model: [@conversation, Message.new], 
                       class: "d-flex align-items-center gap-2",
                       data: { 
@@ -29,11 +29,47 @@
                 controller: "textarea-autogrow",
                 action: "keydown->textarea-autogrow#submit"
               } %>
-          <%= f.button class: "btn btn-primary" do %>
-            <i class="fas fa-paper-plane"></i>
+          <%= f.button class: "btn btn-send" do %>
+            <i class="fas fa-paper-plane text-white"></i>
           <% end %>
         <% end %>
       </div>
     </div>
   </div>
+<% end %>
+
+<% content_for :styles do %>
+  <style>
+    .message-content {
+      word-wrap: break-word;
+      max-width: 100%;
+    }
+    
+    .message-bubble {
+      max-width: 70%;
+      padding: 8px 12px;
+      border-radius: 12px;
+      background-color: #f0f2f5;
+      position: relative;
+    }
+
+    .message-right .message-bubble {
+      background-color: #0084ff;
+      color: white;
+    }
+
+    .message {
+      margin-bottom: 1rem;
+    }
+
+    .message-footer {
+      font-size: 0.75rem;
+      color: #65676b;
+      margin-top: 4px;
+    }
+
+    .message-right .message-footer {
+      color: rgba(255, 255, 255, 0.7);
+    }
+  </style>
 <% end %>
