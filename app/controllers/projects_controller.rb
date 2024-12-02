@@ -16,8 +16,7 @@ class ProjectsController < ApplicationController
     @document = Document.new
     @folders = @project.documents.pluck(:folder_name).uniq
     @documents = @project.documents
-
-
+    @tasks = @project.tasks.includes(:user).order(deadline: :asc)
     @notes = @project.notes
 
     @joined_users = @project.joined_users

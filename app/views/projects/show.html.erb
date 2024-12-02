@@ -102,7 +102,38 @@
     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
       <%= render 'project_users' %>
     </div>
-    <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">Tasks</div>
+    <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+      <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3>Tasks</h3>
+          <%= link_to new_project_task_path(@project), class: "btn btn-primary rounded-pill" do %>
+            <i class="bi bi-plus-lg"></i> Add Task
+          <% end %>
+        </div>
+
+        <% if @tasks.any? %>
+          <div class="list-group">
+            <% @tasks.each do |task| %>
+              <div class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h5 class="mb-1"><%= task.name %></h5>
+                    <p class="mb-1 text-muted"><%= task.description %></p>
+                  </div>
+                  <div>
+                    <%= link_to "Edit", edit_project_task_path(@project, task), class: "btn btn-sm btn-outline-primary" %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="text-center py-5">
+            <p class="text-muted">No tasks yet. Click the button above to create your first task!</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
     <div class="tab-pane fade" id="note-tab-pane" role="tabpanel" aria-labelledby="note-tab" tabindex="0">
       <%= render 'notes/dashboard_show', note: @note %>
     </div>
