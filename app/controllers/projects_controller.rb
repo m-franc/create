@@ -9,7 +9,6 @@ class ProjectsController < ApplicationController
 
   # GET /projects/:id
   def show
-    @joined_users = @project.joined_users
     @project = Project.find(params[:id])
     @documents = @project.documents
     @tasks = @project.tasks.includes(:user).order(deadline: :asc)
@@ -17,7 +16,6 @@ class ProjectsController < ApplicationController
     @note = Note.new
     @document = Document.new
     @folders = @project.documents.pluck(:folder_name).uniq
-
     @joined_users = @project.joined_users
   end
 

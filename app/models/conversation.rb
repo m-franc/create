@@ -1,5 +1,5 @@
 class Conversation < ApplicationRecord
-  belongs_to :project, optional: true
+  belongs_to :project
   has_many :messages, dependent: :destroy
   has_many :conversation_users, dependent: :destroy
   has_many :participants, through: :conversation_users, source: :user

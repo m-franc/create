@@ -4,6 +4,11 @@ class ConversationsController < ApplicationController
 
   def index
     load_conversations
+    if params[:selected].present?
+      @conversation = @conversations.find_by(id: params[:selected])
+      @messages = @conversation.messages.includes(:user) if @conversation
+      @new_message = Message.new
+    end
   end
 
   def show
