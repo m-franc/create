@@ -28,26 +28,45 @@ class ConversationsController < ApplicationController
     else
       @conversation = Conversation.new
     end
-    # Store the referrer URL for redirect after creation
-    session[:return_to] = request.referrer
+    
+    respond_to do |format|
+      format.html
+      format.turbo_stream { render turbo_stream: turbo_stream.replace("new_conversation_form", partial: "conversations/form") }
+    end
   end
 
   def create
-    @conversation = params[:project_id] ? build_project_conversation : Conversation.new(conversation_params)
-    return redirect_to projects_path, alert: "Project not found." if @conversation.nil?
-  
+    @conversation = Conversation.new(conversation_params)
+    @conversation.creator = current_user
+
     if @conversation.save
-      @conversation.add_participant(current_user)
-      @conversation.messages.create!(
-        content: "#{current_user.username} has joined the conversation",
-        system_message: true,
-        user: current_user
-      )
+      # Add creator as participant
+      ConversationUser.create(conversation: @conversation, user: current_user)
       
-      # Redirect back to the stored URL or default to conversations path
-      redirect_to session.delete(:return_to) || conversations_path
+      # Add selected participants
+      if params[:conversation][:participant_ids].present?
+        params[:conversation][:participant_ids].reject(&:blank?).each do |user_id|
+          ConversationUser.create(conversation: @conversation, user: User.find(user_id))
+        end
+      end
+
+      respond_to do |format|
+        format.html { redirect_to @conversation, notice: 'Conversation was successfully created.' }
+        format.turbo_stream { 
+          render turbo_stream: [
+            turbo_stream.append("conversations_list", partial: "conversations/conversation", locals: { conversation: @conversation }),
+            turbo_stream.remove("new_conversation_form"),
+            turbo_stream.append("flash", partial: "shared/flashes", locals: { notice: "Conversation created successfully!" })
+          ]
+        }
+      end
     else
-      render_failure_response
+      respond_to do |format|
+        format.html { render :new }
+        format.turbo_stream { 
+          render turbo_stream: turbo_stream.replace("new_conversation_form", partial: "conversations/form")
+        }
+      end
     end
   end
 
@@ -110,7 +129,7 @@ class ConversationsController < ApplicationController
   end
 
   def conversation_params
-    params.require(:conversation).permit(:name, :project_id)
+    params.require(:conversation).permit(:name, :project_id, participant_ids: [])
   end
 
   def load_conversations

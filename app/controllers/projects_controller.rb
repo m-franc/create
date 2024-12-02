@@ -4,6 +4,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   def index
     @projects = Project.all
+
   end
 
   # GET /projects/:id
@@ -45,9 +46,15 @@ class ProjectsController < ApplicationController
       flash[:notice] = "Project created ✅"
       redirect_to @project
     else
-      flash[:alert] = "Unable to create the project. Please fix the errors."
-      render :new, status: :unprocessable_entity
+      render :new
     end
+
+    @note = @project.notes.new(note_params)
+  if @note.save
+    redirect_to project_notes_path(@project), notice: 'Note was successfully created.'
+  else
+    render :new
+  end
   end
 
   # GET /projects/:id/edit
@@ -75,6 +82,10 @@ class ProjectsController < ApplicationController
     flash[:notice] = "Project deleted 🗑️"
     redirect_to projects_path
   end
+
+
+
+
 
   private
 
