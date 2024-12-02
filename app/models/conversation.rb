@@ -6,6 +6,7 @@ class Conversation < ApplicationRecord
   has_many :users, through: :messages
 
   validates :name, presence: true
+  validates :name, uniqueness: { scope: :project_id, message: "already exists in this project" }, if: :project_id?
 
   def add_participant(user)
     return false if participants.include?(user)

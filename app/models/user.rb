@@ -7,7 +7,8 @@ class User < ApplicationRecord
   has_many :project_users, dependent: :destroy
   has_many :joined_projects, through: :project_users, source: :project
   has_many :messages, dependent: :destroy
-  has_many :conversations, through: :messages
+  has_many :conversation_users, dependent: :destroy
+  has_many :conversations, through: :conversation_users
   has_many :projects, through: :project_users
   has_many :tasks, dependent: :destroy
 

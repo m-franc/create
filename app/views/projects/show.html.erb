@@ -32,6 +32,9 @@
      <li class="nav-item" role="presentation">
       <button class="nav-link" id="document-tab" data-bs-toggle="tab" data-bs-target="#document-tab-pane" type="button" role="tab" aria-controls="document-tab-pane" aria-selected="false">Documents</button>
     </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="conversations-tab" data-bs-toggle="tab" data-bs-target="#conversations-tab-pane" type="button" role="tab" aria-controls="conversations-tab-pane" aria-selected="false">Conversations</button>
+    </li>
   </ul>
 
     <div class="tab-content flex-grow-1" id="myTabContent">
@@ -176,7 +179,9 @@
           <% if @project.conversations.any? %>
             <div class="conversation-list">
               <% @project.conversations.first(3).each do |conversation| %>
-                <%= link_to conversations_path(selected: conversation.id), data: { turbo: false }, class: "conversation-card text-decoration-none mb-3" do %>
+                <%= link_to conversations_path(selected: conversation.id), 
+                    class: "conversation-card text-decoration-none mb-3",
+                    data: { turbo_frame: "conversation_messages" } do %>
                   <div class="d-flex align-items-center gap-3">
                     <div class="conversation-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="fas fa-comments"></i>
@@ -287,6 +292,54 @@
     </div>
     <div class="tab-pane fade h-100" id="document-tab-pane" role="tabpanel" aria-labelledby="document-tab" tabindex="0">
       <%= render "documents/dashboard_documents"%>
+    </div>
+    <div class="tab-pane fade h-100" id="conversations-tab-pane" role="tabpanel" aria-labelledby="conversations-tab" tabindex="0">
+      <div class="conversations-container p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3>Project Conversations</h3>
+          <%= link_to new_conversation_path(project_id: @project.id), class: "btn btn-primary" do %>
+            <i class="fas fa-plus me-2"></i>New Conversation
+          <% end %>
+        </div>
+
+        <% if @project_conversations.any? %>
+          <div class="list-group">
+            <% @project_conversations.each do |conversation| %>
+              <%= link_to conversations_path(selected: conversation.id), 
+                  class: "list-group-item list-group-item-action",
+                  data: { turbo_frame: "conversation_messages" } do %>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h5 class="mb-1"><%= conversation.name.presence || "Untitled Conversation" %></h5>
+                    <div class="d-flex align-items-center text-muted">
+                      <small class="me-3">
+                        <i class="fas fa-users me-1"></i>
+                        <%= pluralize(conversation.participants.count, 'participant') %>
+                      </small>
+                      <% if conversation.messages.any? %>
+                        <small>
+                          <i class="fas fa-clock me-1"></i>
+                          Last message <%= time_ago_in_words(conversation.messages.last.created_at) %> ago
+                        </small>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="text-center py-5">
+            <div class="text-muted mb-4">
+              <i class="fas fa-comments fa-3x mb-3 d-block"></i>
+              <p>No conversations in this project yet</p>
+            </div>
+            <%= link_to new_conversation_path(project_id: @project.id), class: "btn btn-primary" do %>
+              <i class="fas fa-plus me-2"></i>Start a new conversation
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
 
   </div>
