@@ -1,52 +1,41 @@
-<div class="top-menu-container">
-  <nav class="top-menu d-flex justify-content-between align-items-center px-3" data-controller="bottom-menu">
-    <div class="d-flex align-items-center">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create | Let's create !</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="mobile-only">
+    <nav class="bottom-menu" data-controller="bottom-menu">
       <div class="menu-item active" data-menu="home" data-action="click->bottom-menu#selectMenu" data-bottom-menu-target="menuItem">
         <div class="icon-container">
           <%= inline_svg_tag "icons/home.svg", class: "icon" %>
-          <span class="menu-label">Home</span>
         </div>
+        <span class="menu-label">Home</span>
       </div>
       <div class="menu-item" data-menu="create" data-action="click->bottom-menu#selectMenu" data-bottom-menu-target="menuItem">
         <div class="icon-container">
           <%= inline_svg_tag "icons/create.svg", class: "icon" %>
-          <span class="menu-label">Create</span>
         </div>
+        <span class="menu-label">Create</span>
       </div>
       <div class="menu-item" data-menu="search" data-action="click->bottom-menu#selectMenu" data-bottom-menu-target="menuItem">
         <div class="icon-container">
           <%= inline_svg_tag "icons/search.svg", class: "icon" %>
-          <span class="menu-label">Search</span>
         </div>
+        <span class="menu-label">Search</span>
       </div>
       <div class="menu-item" data-menu="inbox" data-action="click->bottom-menu#selectMenu" data-bottom-menu-target="menuItem">
         <div class="icon-container">
           <%= inline_svg_tag "icons/inbox.svg", class: "icon" %>
-          <span class="menu-label">Inbox</span>
         </div>
+        <span class="menu-label">Inbox</span>
       </div>
-    </div>
-
-    <div class="user-menu">
-      <% if user_signed_in? %>
-        <div class="dropdown">
-          <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-            <% if current_user.avatar.attached? %>
-              <%= cl_image_tag current_user.avatar.key, class: "avatar me-2", height: 40, width: 40, crop: :fill %>
-            <% else %>
-              <%= image_tag "https://ui-avatars.com/api/?name=#{current_user.username}&background=random", class: "avatar me-2" %>
-            <% end %>
-            <strong><%= current_user.username || "User" %></strong>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser1">
-            <li><%= link_to "Edit Profile", edit_user_registration_path, class: "dropdown-item" %></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %></li>
-          </ul>
-        </div>
-      <% else %>
-        <%= link_to "Login", new_user_session_path, class: "btn btn-outline-light" %>
-      <% end %>
-    </div>
-  </nav>
-</div>
+      <div class="active-ellipse" data-bottom-menu-target="ellipse"></div>
+    </nav>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
