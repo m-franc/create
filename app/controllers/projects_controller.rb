@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     @documents = @project.documents
     @tasks = @project.tasks.includes(:user).order(deadline: :asc)
-    @notes = @project.notes.includes(:user).order(created_at: :desc).limit(3)
+    @notes = @project.notes.includes(:user).order(created_at: :desc)
     @note = Note.new
     @document = Document.new
     @folders = @project.documents.pluck(:folder_name).uniq
