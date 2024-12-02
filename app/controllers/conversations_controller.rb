@@ -68,8 +68,8 @@ class ConversationsController < ApplicationController
       end
 
       respond_to do |format|
-        format.html { redirect_to conversations_path, notice: 'Conversation was successfully created.' }
-        format.turbo_stream { redirect_to conversations_path, notice: 'Conversation was successfully created.' }
+        format.html { redirect_to conversations_path(selected: @conversation.id), notice: 'Conversation was successfully created.' }
+        format.turbo_stream { redirect_to conversations_path(selected: @conversation.id), notice: 'Conversation was successfully created.' }
       end
     else
       respond_to do |format|
