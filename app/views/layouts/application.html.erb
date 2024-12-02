@@ -22,16 +22,9 @@
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
   </head>
 
-
-  <body class="min-vh-100">
-    <div class="d-flex h-100">
-
-<% unless (controller_name == 'sessions' && action_name == 'new') ||
-          (controller_name == 'registrations' && action_name == 'new') %>
-  <%= render "shared/navbar" %>
-<% end %>
-
-
+  <body>
+    <%= render "shared/sidebar_menu" %>
+    <%= render "shared/mobile_navbar" %>
 
     <main style="margin-left: 160px;">
       <%= render "shared/flashes" %>
