@@ -35,7 +35,7 @@ class ProjectsController < ApplicationController
     @project.user = current_user
     @joined_users = @project.joined_users
     if @project.save
-      init_status_project_users(@project)
+      init_status_project_users(@project, "0")
       if params[:project][:image].present?
         @project.image.attach(params[:project][:image])
       end
@@ -93,10 +93,11 @@ class ProjectsController < ApplicationController
     params.require(:note).permit(:title, :content)
   end
 
-  def init_status_project_users(project)
+  def init_status_project_users(project, value)
     project.joined_users.each do |joined_user|
       project_user = ProjectUser.find_by(user: joined_user, project: project)
-      project_user.status = "0"
+      project_user.status = value
+      project_user.save
     end
   end
 end
