@@ -7,7 +7,7 @@
   <% if @projects.any? %>
     <div class="card-container">
       <% @projects.each do |project| %>
-        <%= link_to project_path(project.id), class: 'card' do %>  <!-- Le lien englobe toute la carte -->
+        <%= link_to project_path(project.id), class: 'card text-decoration-none' do %>  <!-- Le lien englobe toute la carte -->
           <div class="card-image">
             <% if project.image.attached? %>
               <%= image_tag project.image, class: 'card-image', alt: "#{project.name} Image" %>

@@ -152,11 +152,11 @@
                   <%= image_tag user.avatar, class: "avatar" %>
                 <% else %>
                   <div class="avatar-placeholder">
-                    <%= user.username.first.upcase %>
+                    <%= user.first_name&.first || user.email.first %>
                   </div>
                 <% end %>
                 <div class="user-details">
-                  <strong><%= user.username %></strong>
+                  <strong><%= "#{user.first_name} #{user.last_name}" %></strong>
                 </div>
               </div>
             <% end %>
@@ -215,35 +215,39 @@
         <div class="list-group">
           <%# Show owner first %>
           <% owner = @project.user %>
-          <div class="list-group-item d-flex justify-content-between align-items-center">
+          <div class="list-group-item d-flex justify-content-between align-items-center p-3 border-start border-primary border-3">
             <div class="d-flex align-items-center gap-3">
-              <div class="avatar-placeholder rounded-circle d-flex align-items-center justify-content-center bg-primary text-white" style="width: 40px; height: 40px;">
-                <%= owner.username.first.upcase %>
+              <div class="avatar-placeholder rounded-circle d-flex align-items-center justify-content-center bg-primary text-white" style="width: 42px; height: 42px; font-size: 1.1rem;">
+                <%= owner.first_name&.first || owner.email.first %>
               </div>
               <div>
-                <div class="d-flex align-items-center">
-                  <%= owner.username %>
-                  <span class="badge rounded-pill bg-primary ms-2">
-                    <i class="bi bi-star-fill me-1"></i>Project Owner
+                <div class="d-flex align-items-center gap-2">
+                  <span class="fw-medium"><%= "#{owner.first_name} #{owner.last_name}" %></span>
+                  <span class="badge rounded-pill bg-primary">
+                    <i class="fas fa-crown me-1"></i>Owner
                   </span>
                 </div>
-                <div class="text-muted small"><%= owner.job %></div>
+                <div class="text-muted small">@<%= owner.username %></div>
+                <% if owner.job.present? %>
+                  <div class="text-muted small"><%= owner.job %></div>
+                <% end %>
               </div>
             </div>
           </div>
 
           <%# Show other members %>
           <% @joined_users.reject { |u| u == owner }.each do |user| %>
-            <div class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="list-group-item d-flex justify-content-between align-items-center p-3">
               <div class="d-flex align-items-center gap-3">
-                <div class="avatar-placeholder rounded-circle d-flex align-items-center justify-content-center bg-secondary text-white" style="width: 40px; height: 40px;">
-                  <%= user.username.first.upcase %>
+                <div class="avatar-placeholder rounded-circle d-flex align-items-center justify-content-center bg-secondary text-white" style="width: 42px; height: 42px; font-size: 1.1rem;">
+                  <%= user.first_name&.first || user.email.first %>
                 </div>
                 <div>
-                  <div class="d-flex align-items-center">
-                    <%= user.username %>
-                  </div>
-                  <div class="text-muted small"><%= user.job %></div>
+                  <div class="fw-medium"><%= "#{user.first_name} #{user.last_name}" %></div>
+                  <div class="text-muted small">@<%= user.username %></div>
+                  <% if user.job.present? %>
+                    <div class="text-muted small"><%= user.job %></div>
+                  <% end %>
                 </div>
               </div>
             </div>
