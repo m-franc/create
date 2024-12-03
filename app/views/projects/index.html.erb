@@ -5,10 +5,10 @@
   </div>
 
   <%# PROJECTS REJOINTS %>
+<div class="card-container"> <!-- Le lien englobe toute la carte -->
   <% Array(@projects_user).each do |project_user| %>
     <%= link_to project_path(project_user.project.id), class: 'text-decoration-none' do %>
-      <div class="card-container"> <!-- Le lien englobe toute la carte -->
-        <div class="card">
+      <div class="card">
           <div class="card-image">
             <% if project_user.project.image.attached? %>
               <%= image_tag project_user.project.image, class: 'card-image', alt: "#{project_user.project.name} Image" %>
@@ -27,9 +27,10 @@
             <% end %>
           </div>
         </div>
-      </div>
-    <% end %>  <!-- Fin du lien -->
-  <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
     <%# PROJECTS CREES %>
 
   <div class="projects-header">

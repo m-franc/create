@@ -3,8 +3,8 @@ class ProjectsController < ApplicationController
 
   # GET /projects
   def index
-    @projects_user = ProjectUser.find_by(user: current_user)
-    @projects = Project.find_by(user: current_user)
+    @projects_user = ProjectUser.where(user: current_user)
+    @projects = Project.where(user: current_user)
     @user = current_user
   end
 
