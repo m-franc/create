@@ -32,6 +32,9 @@
      <li class="nav-item" role="presentation">
       <button class="nav-link" id="document-tab" data-bs-toggle="tab" data-bs-target="#document-tab-pane" type="button" role="tab" aria-controls="document-tab-pane" aria-selected="false">Documents</button>
     </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="conversations-tab" data-bs-toggle="tab" data-bs-target="#conversations-tab-pane" type="button" role="tab" aria-controls="conversations-tab-pane" aria-selected="false">Conversations</button>
+    </li>
   </ul>
 
     <div class="tab-content flex-grow-1" id="myTabContent">
@@ -172,7 +175,9 @@
           <% if @project.conversations.any? %>
             <div class="conversation-list">
               <% @project.conversations.first(3).each do |conversation| %>
-                <%= link_to conversations_path(selected: conversation.id), data: { turbo: false }, class: "conversation-card text-decoration-none mb-3" do %>
+                <%= link_to conversation_path(conversation), 
+                    data: { turbo_frame: "conversation_messages" }, 
+                    class: "conversation-card text-decoration-none mb-3" do %>
                   <div class="d-flex align-items-center gap-3">
                     <div class="conversation-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="fas fa-comments"></i>
@@ -201,7 +206,50 @@
       </div>
     </div>
     <div class="tab-pane fade h-100" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-      <%= render 'project_users' %>
+      <div class="members-container p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3>Project Members</h3>
+          <%# TODO: Add member functionality %>
+        </div>
+
+        <div class="list-group">
+          <%# Show owner first %>
+          <% owner = @project.user %>
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-3">
+              <div class="avatar-placeholder rounded-circle d-flex align-items-center justify-content-center bg-primary text-white" style="width: 40px; height: 40px;">
+                <%= owner.username.first.upcase %>
+              </div>
+              <div>
+                <div class="d-flex align-items-center">
+                  <%= owner.username %>
+                  <span class="badge rounded-pill bg-primary ms-2">
+                    <i class="bi bi-star-fill me-1"></i>Project Owner
+                  </span>
+                </div>
+                <div class="text-muted small"><%= owner.job %></div>
+              </div>
+            </div>
+          </div>
+
+          <%# Show other members %>
+          <% @joined_users.reject { |u| u == owner }.each do |user| %>
+            <div class="list-group-item d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center gap-3">
+                <div class="avatar-placeholder rounded-circle d-flex align-items-center justify-content-center bg-secondary text-white" style="width: 40px; height: 40px;">
+                  <%= user.username.first.upcase %>
+                </div>
+                <div>
+                  <div class="d-flex align-items-center">
+                    <%= user.username %>
+                  </div>
+                  <div class="text-muted small"><%= user.job %></div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
     <div class="tab-pane fade h-100" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
       <div class="container mt-4">
@@ -239,7 +287,60 @@
       <%= render 'notes/dashboard_show', note: @note %>
     </div>
     <div class="tab-pane fade h-100" id="document-tab-pane" role="tabpanel" aria-labelledby="document-tab" tabindex="0">
-      <%= render "documents/dashboard_documents"%>
+      <div class="p-4">
+        <div class="d-flex justify-content-between align-items-center">
+          <h3>Project Documents</h3>
+          <%= link_to project_documents_path(@project), class: "btn btn-primary" do %>
+            <i class="fas fa-folder-open me-2"></i>View All Documents
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade h-100" id="conversations-tab-pane" role="tabpanel" aria-labelledby="conversations-tab" tabindex="0">
+      <div class="conversations-container p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3>Project Conversations</h3>
+          <%= link_to new_project_conversation_path(@project), class: "btn btn-primary" do %>
+            <i class="fas fa-plus me-2"></i>New Conversation
+          <% end %>
+        </div>
+
+        <div class="conversations-list">
+          <% if @project.conversations.any? %>
+            <% @project.conversations.each do |conversation| %>
+              <%= link_to conversation_path(conversation), 
+                  data: { turbo_frame: "conversation_messages" }, 
+                  class: "conversation-card text-decoration-none mb-3" do %>
+                <div class="d-flex align-items-center gap-3">
+                  <div class="conversation-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="fas fa-comments"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <h6 class="mb-0 text-dark"><%= conversation.name %></h6>
+                      <% if conversation.messages.any? %>
+                        <small class="text-muted">
+                          <%= time_ago_in_words(conversation.messages.last.created_at) %> ago
+                        </small>
+                      <% end %>
+                    </div>
+                    <% if conversation.messages.any? %>
+                      <small class="text-muted">
+                        <%= truncate(conversation.messages.last.content, length: 50) %>
+                      </small>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          <% else %>
+            <div class="text-secondary d-flex align-items-center gap-2">
+              <i class="bi bi-chat"></i>
+              <span>No conversations yet</span>
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
 
   </div>
