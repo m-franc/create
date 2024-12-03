@@ -53,3 +53,13 @@ input.btn-task {
   padding-top: 0 !important; /* Annule le padding-top de 3rem */
   padding-bottom: 3rem !important; /* Garde le padding-bottom si nécessaire */
 }
+
+input.btn-edit-p {
+  background-color: $red-create;
+
+  &:hover {
+    background-color: white;
+    color: $red-create;
+    border: solid 1px $red-create;
+  }
+}
