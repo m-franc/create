@@ -1,11 +1,18 @@
 <div class="container mt-4">
-  <h2>Résultats de recherche</h2>
-
-  <div class="search-form mb-4">
-    <%= form_tag searches_path, method: :get, class: "d-flex" do %>
-      <%= text_field_tag :query, @query, class: "form-control me-2", placeholder: "Rechercher..." %>
-      <%= submit_tag "Rechercher", class: "btn btn-primary" %>
-    <% end %>
+  <div class="logo-container mb-4">
+    <%= image_tag "logo_createv1.png", class: "logo", alt: "Create Logo" %>
+  </div>
+  <div class="search-container">
+    <div class="search-form mb-4">
+      <%= form_tag searches_path, method: :get, class: "d-flex" do %>
+        <div class="search-input-container">
+          <%= text_field_tag :query, @query, class: "form-control search-input", placeholder: "Rechercher..." %>
+          <%= button_tag type: 'submit', class: "search-button" do %>
+            <%= inline_svg_tag "icons/search.svg", class: "search-icon" %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
   <% if @query.present? %>

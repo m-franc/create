@@ -1,5 +1,76 @@
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+
+  .logo {
+    width: 200px;
+    height: auto;
+  }
+}
+
 .search-container {
   position: relative;
+  width: 100%;
+  padding: 0 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.search-form {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.search-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 600px;
+}
+
+.search-input {
+  height: 45px;
+  border-radius: 25px !important;
+  padding-right: 50px !important;
+  padding-left: 20px !important;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  width: 100%;
+
+  &:focus {
+    box-shadow: none;
+    border-color: #B91C1C;
+    background-color: white;
+  }
+}
+
+.search-button {
+  position: absolute;
+  top: 38%;
+  right: 5px;
+  transform: translateY(-50%);
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  border: none;
+  background-color: #B91C1C;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+
+  .search-icon {
+    path {
+      fill: white;
+    }
+  }
+
+  &:hover {
+    background-color: darken(#B91C1C, 10%);
+  }
 }
 
 .suggestions-container {
@@ -19,11 +90,11 @@
 .suggestion-item {
   transition: background-color 0.2s ease;
   border-bottom: 1px solid #f0f0f0;
-  
+
   &:last-child {
     border-bottom: none;
   }
-  
+
   &:hover {
     background-color: #f8f9fa;
   }
