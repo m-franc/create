@@ -52,14 +52,16 @@
 }
 
 input.btn-note {
-  border: solid 1px white;
-  background-color: $red-create;
+  border: solid 1px white !important;
+  background-color: $red-create !important;
 
   &:hover {
-    background-color: white;
-    color: $red-create;
+    background-color: white!important;
+    color: $red-create !important;
   }
 }
+
+
 
 .new-note {
   p {
