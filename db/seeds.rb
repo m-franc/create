@@ -1,3 +1,5 @@
+require 'open-uri'
+
 # This file should ensure the existence of records required to run the application in every environment (production,
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
@@ -119,6 +121,20 @@ created_users = users.map do |user_data|
 end
 
 puts "Created #{created_users.length} users!"
+
+# Project images mapping
+CLOUDINARY_IMAGES = {
+  "Les Misérables - Modern Adaptation" => "https://res.cloudinary.com/dj2sxqm1w/image/upload/v1733216788/Les_Mise%CC%81rables_-_Modern_Adaptation_l1fxfl.jpg",
+  "A Midsummer Night's Dream" => "https://res.cloudinary.com/dj2sxqm1w/image/upload/v1733216786/A_Midsummer_Night_s_Dream_gdsgfd.webp",
+  "Cyrano Digital" => "https://res.cloudinary.com/dj2sxqm1w/image/upload/v1733216787/Cyrano_Digital_gpzai9.webp",
+  "The Imaginary Invalid Reimagined" => "https://res.cloudinary.com/dj2sxqm1w/image/upload/v1733216789/The_Imaginary_Invalid_Reimagined_jy8zha.jpg",
+  "Don Juan - Electric Nights" => "https://res.cloudinary.com/dj2sxqm1w/image/upload/v1733216787/Don_Juan_-_Electric_Nights_qidgbu.jpg",
+  "Antigone of the Streets" => "https://res.cloudinary.com/dj2sxqm1w/image/upload/v1733216787/Antigone_of_the_Streets_jxuuhe.jpg",
+  "Three Sisters Live" => "https://res.cloudinary.com/dj2sxqm1w/image/upload/v1733216790/Three_Sisters_Live_floiuu.jpg",
+  "Romeo and Juliet - Silent Disco" => "https://res.cloudinary.com/dj2sxqm1w/image/upload/v1733216789/Romeo_and_Juliet_-_Silent_Disco_a0dw73.jpg",
+  "The Miser 2.0" => "https://res.cloudinary.com/dj2sxqm1w/image/upload/v1733216790/The_Miser_znp9eq.jpg",
+  "Phaedra VR" => "https://res.cloudinary.com/dj2sxqm1w/image/upload/v1733216788/Phaedra_VR_ubvq84.webp"
+}
 
 # Theater projects data
 projects_data = [
@@ -245,16 +261,29 @@ projects_data = [
 ]
 
 # Create projects and tasks
-projects_data.each_with_index do |project_data, index|
+projects_data.each do |project_data|
   project = Project.create!(
     name: project_data[:name],
     description: project_data[:description],
     location: project_data[:location],
     starting_date: project_data[:starting_date],
     end_date: project_data[:end_date],
-    user: created_users[index % created_users.length],
+    user: created_users[rand(created_users.length)],
     status: ["In Progress", "Pending", "Completed"].sample
   )
+
+  # Attach Cloudinary image if available
+  if CLOUDINARY_IMAGES[project.name]
+    begin
+      file = URI.open(CLOUDINARY_IMAGES[project.name])
+      project.image.attach(
+        io: file,
+        filename: "#{project.name.parameterize}.#{CLOUDINARY_IMAGES[project.name].split('.').last}"
+      )
+    rescue => e
+      puts "Failed to attach image for #{project.name}: #{e.message}"
+    end
+  end
 
   # Add 2-3 random members to each project
   team_members = created_users.sample(rand(2..3))
