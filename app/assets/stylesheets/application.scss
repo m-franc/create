@@ -82,19 +82,8 @@
 
 // Your CSS partials
 @import "components/index";
-@import "components/search";
 @import "pages/index";
-@import "pages/show";
-@import "pages/new";
-@import "pages/edit_project";
-@import "pages/edit_task";
-@import "components/bottom_menu";
-@import "components/project_menu";
 @import "utilities/visibility";
-@import "components/card_project";
-@import "components/notes";
-@import "components/document";
-@import "components/modals";
 
 $body-color: rgb(247, 247, 247);
 $red-create: #B93838;
@@ -104,9 +93,8 @@ body {
 }
 
 .custom-sidebar {
-  background-color: white
+  background-color: white;
 }
-
 
 h1 {
     color: $red-create !important;

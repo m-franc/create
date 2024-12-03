@@ -68,7 +68,7 @@ $red-create: #B93838;
 
   }
 
-  .active {
+  .active-num {
     background-color: white;
     color: $red-create; /* Rouge de ton choix */
     width: 20px;  /* Fixe la taille du cercle */
@@ -81,8 +81,6 @@ $red-create: #B93838;
     padding: 20px;
     transform: translateY(-5px); /* Décale légèrement vers le haut */
     transition: transform 0.2s ease; /* Ajoute une transition fluide pour l'effet */
-
-
   }
 }
 
@@ -328,26 +326,34 @@ $red-create: #B93838;
   border-left: solid 1px $red-create;
   border-right: solid 1px $red-create;
   border-radius: 11px 11px 0 0;
-  margin-right: 10px;
-  &:hover{
-    border: none!important;
-    transition: transform 0.3s ease;
+  margin-right: 20px;
+  transition: transform 0.3s ease, border-radius 0.3s ease;
+
+  &:hover {
+    border: none !important;
     transform: scale(1.1);
     color: $red-create;
+    border-radius: 11px; /* Applique le rayon sur tous les coins */
   }
 }
 
 .nav-link.active {
   border-radius: 10px 10px 0 0;
-  background-color: $red-create !important; /* Remplace la couleur grise par $red-create */
-  color: white !important; /* Change la couleur du texte (ajuste si nécessaire) */
-  border: none!important;
-  transition: transform 0.3s ease;
+  background-color: $red-create !important;
+  color: white !important;
+  border: none !important;
+  transition: transform 0.3s ease, border-radius 0.3s ease;
 
-  &:hover{
-    transform: scale(1.1)!important;
+  &:hover {
+    border-radius: 11px 11px 11px 11px; /* Applique aussi en bas à droite et en bas à gauche */
   }
 }
+
+.nav-tabs .nav-link.active{
+  border-radius: 11px 11px 11px 11px!important;
+  transform: scale(1.15);
+}
+
 
 /* Supprimer la bordure par défaut */
 .nav-tabs {
@@ -416,4 +422,11 @@ $red-create: #B93838;
 
 .projects-container{
   padding-top: 0!important;
+}
+
+.btn-edit{
+  text-decoration: none;
+  padding: 5px;
+  border: solid 1px $red-create;
+  border-radius: 6px;
 }

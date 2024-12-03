@@ -97,7 +97,7 @@
 
       <!-- Modal pour cette tâche -->
       <div class="modal fade" id="taskModal_<%= task.id %>" tabindex="-1" aria-labelledby="taskModalLabel_<%= task.id %>" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-scrollable">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title custom-modal-title" id="taskModalLabel_<%= task.id %>"><%= task.name %></h5>
@@ -305,7 +305,7 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h3>Tasks</h3>
           <%= link_to new_project_task_path(@project), class: "btn btn-primary rounded-pill" do %>
-            <i class="bi bi-plus-lg"></i> Add Task
+            <i class="bi bi-plus-lg"></i> + Add Task
           <% end %>
         </div>
 
@@ -319,7 +319,7 @@
                     <p class="mb-1 text-muted"><%= task.description %></p>
                   </div>
                   <div>
-                    <%= link_to "Edit", edit_project_task_path(@project, task), class: "btn btn-sm btn-outline-primary" %>
+                    <%= link_to "Edit", edit_project_task_path(@project, task), class: "btn-edit" %>
                   </div>
                 </div>
               </div>

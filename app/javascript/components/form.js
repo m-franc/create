@@ -14,7 +14,7 @@ document.addEventListener("turbo:load", () => {
       element.id = "num" + (index + 1);
       element.classList.add("page-num");
       if (activePage === index + 1) {
-        element.classList.add("active");
+        element.classList.add("active-num");
       }
       element.innerHTML = index + 1;
       header.appendChild(element);
@@ -40,11 +40,11 @@ document.addEventListener("turbo:load", () => {
       pages[activePage - 1].style.display = "none"; // Cache la page actuelle
       pages[activePage].style.display = "block"; // Affiche la suivante
 
-      document.querySelector(".active").classList.remove("active")
+      document.querySelector(".active-num").classList.remove("active-num")
       activePage++;
       console.log(pages[activePage]);
 
-      document.querySelector("#num"+activePage).classList.add("active")
+      document.querySelector("#num"+activePage).classList.add("active-num")
     }
   }
 
@@ -52,11 +52,11 @@ document.addEventListener("turbo:load", () => {
       pages[activePage - 1].style.display = "none"; // Cache la page actuelle
       pages[activePage - 2].style.display = "block"; // Affiche la suivante
 
-      document.querySelector(".active").classList.remove("active")
+      document.querySelector(".active-num").classList.remove("active-num")
       activePage--;
       console.log(pages[activePage]);
 
-      document.querySelector("#num"+activePage).classList.add("active")
+      document.querySelector("#num"+activePage).classList.add("active-num")
     }
   }
 );

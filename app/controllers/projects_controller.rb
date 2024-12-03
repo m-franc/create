@@ -45,7 +45,7 @@ class ProjectsController < ApplicationController
         @project.image.attach(params[:project][:image])
       end
       flash[:notice] = "Project created ✅"
-      redirect_to @project
+      redirect_to project_path(@project)
     else
       render :new
     end
@@ -70,7 +70,7 @@ class ProjectsController < ApplicationController
         @project.image.attach(params[:project][:image])
       end
       flash[:notice] = "Project successfully updated 💾"
-      redirect_to @project
+      redirect_to project_path(@project)
     else
       flash[:alert] = "Unable to update the project. Please fix the errors."
       render :edit, status: :unprocessable_entity

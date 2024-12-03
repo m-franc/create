@@ -125,3 +125,9 @@ textarea.is-invalid,
 select.is-invalid {
   border-color: transparent !important; /* Supprimer la bordure rouge */
 }
+
+.ts-wrapper.multi .ts-control > div {
+  background-color: $red-create !important;
+  color: white!important;
+  border-radius: 8px;
+}

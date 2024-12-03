@@ -1,5 +1,9 @@
 // Import page-specific CSS files here.
 @import "home";
+@import "edit_project";
+@import "edit_task";
+@import "new";
+@import "show";
 
 .project-container{
   padding-top: 0;
