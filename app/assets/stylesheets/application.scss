@@ -96,11 +96,13 @@
 @import "components/document";
 @import "components/modals";
 
-$body-color: rgb(247, 247, 247);
+$body-color: rgb(240, 240, 240);
 $red-create: #B93838;
 
 body {
-  background-color: $body-color
+  background-color: $body-color;
+  backdrop-filter: blur(10px); /* Applique un flou de 10px sur l'arrière-plan */
+  color: black; /* Le texte reste lisible */
 }
 
 .custom-sidebar {

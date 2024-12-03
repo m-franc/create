@@ -2,7 +2,8 @@
             <%= link_to project_path(@project, anchor: 'contact-tab') do %>
               <i class="fa-solid fa-arrow-left"></i>
             <% end %>
-<div class="container py-5">
+<div class="container py-5 no-padding-top">
+
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card shadow">
@@ -54,23 +55,34 @@
                 %>
               </div>
             </div>
+      <div class="d-flex mb-4">
+  <div class="col-6 pe-3"> <!-- "col-6" pour occuper la moitié de l'espace, "pe-3" pour ajouter de l'espace à droite -->
+    <%= form.label :status, class: "form-label-red" %>
+    <%= form.select :status,
+      ['pending', 'in_progress', 'completed'],
+      { selected: 'pending' },
+      {
+        class: "form-select",
+        data: { controller: "tom-select" }
+      }
+    %>
+  </div>
 
-            <div class="mb-4">
-              <%= form.label :status, class: "form-label-red" %>
-              <%= form.select :status,
-                  ['pending', 'in_progress', 'completed'],
-                  { selected: 'pending' },
-                  {
-                    class: "form-select",
-                    data: { controller: "tom-select" }
-                  }
-              %>
-            </div>
+  <div class="col-6"> <!-- "col-6" pour occuper la moitié de l'espace -->
+    <%= form.label :priority, class: "form-label-red" %>
+    <%= form.select :priority,
+      ['High', 'Medium', 'Low'],
+      { selected: 'pending' },
+      {
+        placeholder: "Enter task priority",
+        class: "form-select",
+        data: { controller: "tom-select" }
+      }
+    %>
+  </div>
+</div>
 
-            <div class="mb-4">
-              <%= form.label :priority, class: "form-label-red" %>
-              <%= form.text_field :priority, class: "form-control", placeholder: "Enter task priority" %>
-            </div>
+
 
             <div class="d-flex justify-content-end gap-2">
 
