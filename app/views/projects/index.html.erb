@@ -7,7 +7,8 @@
   <% if @projects.any? %>
     <div class="card-container">
       <% Array(@projects_user).each do |project_user| %>
-        <%= link_to project_path(project_user.project.id), class: 'card text-decoration-none' do %>  <!-- Le lien englobe toute la carte -->
+        <%= link_to project_path(project_user.project.id), class: 'text-decoration-none' do %> <!-- Le lien englobe toute la carte -->
+        <div class="card">
           <div class="card-image">
             <% if project_user.project.image.attached? %>
               <%= image_tag project_user.project.image, class: 'card-image', alt: "#{project_user.project.name} Image" %>
@@ -17,16 +18,16 @@
           </div>
 
           <div class="card-content">
-            <% if project_user.status == "0" %>
-              <%= link_to "accept", accept_path(project_user.project) %>
-              <%= link_to "decline", decline_path(project_user.project) %>
-            <% else %>
               <h2><%= project_user.project.name %></h2>
               <p><strong>Location:</strong> <%= project_user.project.location %></p>
               <p><strong>Start Date:</strong> <%= project_user.project.starting_date %></p>
               <p><strong>End Date:</strong> <%= project_user.project.end_date %></p>
+              <% if project_user.status == "0" %>
+                <%= link_to "accept", accept_path(project_user.project), class: "btn btn-primary" %>
+                <%= link_to "decline", decline_path(project_user.project), class: "btn btn-primary" %>
             <% end %>
           </div>
+        </div>
         <% end %>  <!-- Fin du lien -->
       <% end %>
     </div>
