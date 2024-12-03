@@ -14,8 +14,6 @@ Rails.application.routes.draw do
   root 'projects#index'
 
   resources :projects do
-    patch :decline
-    patch :accept
     resources :documents do
       member do
         get :download
@@ -27,8 +25,8 @@ Rails.application.routes.draw do
     resources :conversations, only: [:index, :new, :create, :show]
   end
 
-  # get 'projects/:id/accept', to: "projects#accept", as: "accept"
-  # get 'projects/:id/decline', to: "projects#decline", as: "decline"
+  get 'projects/:id/accept', to: "projects#accept", as: "accept"
+  get 'projects/:id/decline', to: "projects#decline", as: "decline"
 
   resources :searches, only: [:index]
 

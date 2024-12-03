@@ -18,8 +18,8 @@
 
           <div class="card-content">
             <% if project_user.status == "0" %>
-              <%= button_to "accept", project_accept_path(project_user.project), method: :patch %>
-              <%= button_to "decline", project_decline_path(project_user.project), method: :patch %>
+              <%= link_to "accept", accept_path(project_user.project) %>
+              <%= link_to "decline", decline_path(project_user.project) %>
             <% else %>
               <h2><%= project_user.project.name %></h2>
               <p><strong>Location:</strong> <%= project_user.project.location %></p>
