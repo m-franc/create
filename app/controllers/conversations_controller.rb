@@ -19,13 +19,11 @@ class ConversationsController < ApplicationController
 
     @messages = @conversation.messages.includes(:user)
     @new_message = Message.new
+    @project = @conversation.project
 
-    if turbo_frame_request?
-      render :show, layout: false
-    else
-      @conversations = current_user.conversations.includes(:messages)
-      render :show
-    end
+    # Always render the full page for project conversations
+    @conversations = current_user.conversations.includes(:messages)
+    render :show
   end
 
   def new
@@ -44,47 +42,36 @@ class ConversationsController < ApplicationController
   end
 
   def create
-    @conversation = Conversation.new(conversation_params)
+    @conversation = if params[:project_id].present?
+      project = current_user.projects.find(params[:project_id])
+      project.conversations.build(conversation_params)
+    else
+      Conversation.new(conversation_params)
+    end
 
     if @conversation.save
-      # Add creator as participant first
-      creator_participant = ConversationUser.create(conversation: @conversation, user: current_user)
-      
-      # Add system message about conversation creation
-      @conversation.messages.create!(
-        content: "#{current_user.username} created the conversation",
-        system_message: true,
-        user: current_user
-      )
+      # Add creator as participant
+      ConversationUser.create(conversation: @conversation, user: current_user)
       
       # Add selected participants
       if params[:conversation][:participant_ids].present?
-        params[:conversation][:participant_ids].reject(&:blank?).each do |user_id|
+        params[:conversation][:participant_ids].each do |user_id|
+          next if user_id.blank?
           user = User.find(user_id)
           ConversationUser.create(conversation: @conversation, user: user)
-          @conversation.messages.create!(
-            content: "#{user.username} was added to the conversation",
-            system_message: true,
-            user: current_user
-          )
         end
       end
 
-      respond_to do |format|
-        format.html { redirect_to conversations_path(selected: @conversation.id), notice: 'Conversation was successfully created.' }
-        format.turbo_stream { redirect_to conversations_path(selected: @conversation.id), notice: 'Conversation was successfully created.' }
+      if @conversation.project
+        redirect_to project_path(@conversation.project, anchor: 'conversations-tab'), 
+                    notice: 'Conversation was successfully created.'
+      else
+        redirect_to conversation_path(@conversation), 
+                    notice: 'Conversation was successfully created.'
       end
     else
-      respond_to do |format|
-        format.html { render :new, status: :unprocessable_entity }
-        format.turbo_stream { 
-          render turbo_stream: turbo_stream.update(
-            "flash",
-            partial: "shared/flashes",
-            locals: { alert: @conversation.errors.full_messages.join(", ") }
-          )
-        }
-      end
+      flash.now[:alert] = @conversation.errors.full_messages.join(", ")
+      render :new, status: :unprocessable_entity
     end
   end
 
