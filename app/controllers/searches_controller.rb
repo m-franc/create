@@ -1,9 +1,11 @@
 class SearchesController < ApplicationController
+  MIN_SEARCH_LENGTH = 2
+
   def index
     @query = params[:query].to_s.strip
     
-    if @query.present?
-      search_pattern = "%#{@query.split('').join('%')}%"
+    if @query.present? && @query.length >= MIN_SEARCH_LENGTH
+      search_pattern = "%#{@query}%"
       
       # Debug logs pour la recherche d'utilisateurs
       Rails.logger.debug "Index - Recherche d'utilisateurs avec pattern: #{search_pattern}"
@@ -42,10 +44,10 @@ class SearchesController < ApplicationController
 
   def suggestions
     query = params[:query].to_s.strip
-    return render json: { suggestions: [] } if query.empty?
+    return render json: { suggestions: [] } if query.empty? || query.length < MIN_SEARCH_LENGTH
 
     suggestions = []
-    search_pattern = "%#{query.split('').join('%')}%"
+    search_pattern = "%#{query}%"
 
     # Projets
     accessible_projects
