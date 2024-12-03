@@ -198,7 +198,7 @@
           <div class="text-center mb-4">
             <h4 class="mb-0 text-dark">Documents</h4>
           </div>
-          
+
           <% if @project.documents.any? %>
             <div class="list-group border-0">
               <% @project.documents.first(3).each do |document| %>
@@ -220,7 +220,7 @@
           <% if @project.conversations.any? %>
             <div class="conversation-list">
               <% @project.conversations.first(3).each do |conversation| %>
-                <%= link_to project_conversation_path(@project, conversation), 
+                <%= link_to project_conversation_path(@project, conversation),
                     data: { turbo: false },
                     class: "conversation-card text-decoration-none mb-3" do %>
                   <div class="d-flex align-items-center gap-3">
@@ -355,7 +355,7 @@
           <div class="conversations-list">
             <% if @project.conversations.any? %>
               <% @project.conversations.each do |conversation| %>
-                <%= link_to project_conversation_path(@project, conversation), 
+                <%= link_to project_conversation_path(@project, conversation),
                     data: { turbo: false },
                     class: "conversation-card text-decoration-none mb-3" do %>
                   <div class="d-flex align-items-center gap-3">

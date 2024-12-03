@@ -1,34 +1,35 @@
+            <div class="back">
+            <%= link_to project_path(@project, anchor: 'contact-tab') do %>
+              <i class="fa-solid fa-arrow-left"></i>
+            <% end %>
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card shadow">
         <div class="card-body p-4">
           <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="mb-0">New Task</h2>
-            <%= link_to project_path(@project, anchor: 'contact-tab'), class: "text-decoration-none" do %>
-              <i class="bi bi-arrow-left"></i> Back to Tasks
-            <% end %>
+            <h1 class="mb-0">New Task</h1>
           </div>
 
           <%= form_with(model: [@project, @task], local: true) do |form| %>
             <div class="mb-4">
-              <%= form.label :name, class: "form-label fw-bold" %>
+              <%= form.label :name, class: "form-label-red" %>
               <%= form.text_field :name, class: "form-control form-control-lg", placeholder: "Enter task name" %>
             </div>
 
             <div class="mb-4">
-              <%= form.label :description, class: "form-label fw-bold" %>
+              <%= form.label :description, class: "form-label-red" %>
               <%= form.text_area :description, class: "form-control", rows: 4, placeholder: "Describe the task..." %>
             </div>
 
             <div class="mb-4">
-              <%= form.label :location, class: "form-label fw-bold" %>
+              <%= form.label :location, class: "form-label-red" %>
               <%= form.text_field :location, class: "form-control", placeholder: "Enter task location" %>
             </div>
 
             <div class="row mb-4">
               <div class="col-md-6">
-                <%= form.label :date, class: "form-label fw-bold" %>
+                <%= form.label :date, class: "form-label-red" %>
                 <%= form.text_field :date,
                   class: "form-control",
                   placeholder: "Select date",
@@ -41,7 +42,7 @@
               </div>
 
               <div class="col-md-6">
-                <%= form.label :deadline, class: "form-label fw-bold" %>
+                <%= form.label :deadline, class: "form-label-red" %>
                 <%= form.text_field :deadline,
                   class: "form-control",
                   placeholder: "Select deadline",
@@ -55,11 +56,11 @@
             </div>
 
             <div class="mb-4">
-              <%= form.label :status, class: "form-label fw-bold" %>
+              <%= form.label :status, class: "form-label-red" %>
               <%= form.select :status,
                   ['pending', 'in_progress', 'completed'],
                   { selected: 'pending' },
-                  { 
+                  {
                     class: "form-select",
                     data: { controller: "tom-select" }
                   }
@@ -67,13 +68,13 @@
             </div>
 
             <div class="mb-4">
-              <%= form.label :priority, class: "form-label fw-bold" %>
+              <%= form.label :priority, class: "form-label-red" %>
               <%= form.text_field :priority, class: "form-control", placeholder: "Enter task priority" %>
             </div>
 
             <div class="d-flex justify-content-end gap-2">
-              <%= link_to "Cancel", project_path(@project, anchor: 'contact-tab'), class: "btn btn-outline-secondary px-4" %>
-              <%= form.submit "Create Task", class: "btn btn-primary px-4" %>
+
+              <%= form.submit "Create Task", class: "btn-task" %>
             </div>
           <% end %>
         </div>
