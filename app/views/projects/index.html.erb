@@ -5,8 +5,8 @@
   </div>
 
   <% if @projects.any? %>
+  <% Array(@projects_user).each do |project_user| %>
     <div class="card-container">
-      <% Array(@projects_user).each do |project_user| %>
         <%= link_to project_path(project_user.project.id), class: 'text-decoration-none' do %> <!-- Le lien englobe toute la carte -->
         <div class="card">
           <div class="card-image">
@@ -29,8 +29,8 @@
           </div>
         </div>
         <% end %>  <!-- Fin du lien -->
-      <% end %>
     </div>
+  <% end %>
   <% else %>
     <p class="no-projects">Aucun projet trouvé.</p>
   <% end %>
