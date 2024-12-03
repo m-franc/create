@@ -167,8 +167,26 @@
             <% end %>
           </div>
         </div>
-        <div class="card-project" id="card-4">
-          <%= link_to "Documents", project_documents_path(@project), class: 'btn btn-info' %>
+        <div class="card-project" id="card-3">
+          <div class="text-center mb-4">
+            <h4 class="mb-0 text-dark">Documents</h4>
+          </div>
+          
+          <% if @project.documents.any? %>
+            <div class="list-group border-0">
+              <% @project.documents.first(3).each do |document| %>
+                <div class="d-flex align-items-center mb-3">
+                  <i class="fas fa-file-alt text-primary me-3"></i>
+                  <span class="text-dark"><%= document.name %></span>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="text-secondary d-flex align-items-center">
+              <i class="fas fa-file me-2"></i>
+              <span>No documents yet</span>
+            </div>
+          <% end %>
         </div>
         <div class="card-project" id="card-5">
           <h4 class="mb-4 text-dark">Conversations</h4>
