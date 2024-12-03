@@ -1,5 +1,9 @@
 $red-create: #B93838;
 
+
+.project.h-100.d-flex.flex-column {
+  margin: 0!important;
+}
 .content {
   margin-top: 5%;
   padding: 0!important;
@@ -313,6 +317,7 @@ $red-create: #B93838;
 
 .back {
   color: $red-create;
+  font-size: 20px;
 }
 
 .nav-item {
@@ -395,4 +400,10 @@ $red-create: #B93838;
   color: white !important;
   border-radius: 10px 10px 0 0;
 
+}
+
+.btn-view {
+  color: $red-create;
+  background-color: white;
+  border: none
 }
