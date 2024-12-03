@@ -18,13 +18,16 @@
   <% if @notes.present? %>
 
     <% @notes.each do |note| %>
-      <div class="card">
-        <div class="card-body">
+      <div class="card-note">
+        <div class="card-body-note">
           <h1 class="card-title"><%= note.title %></h1>
           <p class="card-text"><%= note.content %></p>
           <small class="text-muted">Created by: <%= note.user.username %></small>
                   <% if note.project.user == current_user %>
-          <%= link_to 'Edit', edit_project_note_path(note.project, note), class: 'btn btn-warning' %>
+<%= link_to edit_project_note_path(note.project, note), class: 'btn-edit-note' do %>
+  <i class="fa-regular fa-pen-to-square"></i> Edit
+<% end %>
+
           <%= link_to 'Delete', project_note_path(note.project, note),
               method: :delete,
               data: { confirm: 'Are you sure?' },
