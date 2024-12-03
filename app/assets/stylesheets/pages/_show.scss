@@ -1,7 +1,11 @@
 $red-create: #B93838;
 
+
+.project.h-100.d-flex.flex-column {
+  margin: 0!important;
+}
 .content {
-  margin-top: 5%;
+  margin: 5%;
   padding: 0!important;
 }
 
@@ -31,7 +35,7 @@ $red-create: #B93838;
 }
 
 .project-red {
-
+    margin-top: 50px!important;
   .page{
     display: none;
   }
@@ -77,6 +81,7 @@ $red-create: #B93838;
     padding: 20px;
     transform: translateY(-5px); /* Décale légèrement vers le haut */
     transition: transform 0.2s ease; /* Ajoute une transition fluide pour l'effet */
+
 
   }
 }
@@ -313,6 +318,9 @@ $red-create: #B93838;
 
 .back {
   color: $red-create;
+  font-size: 25px;
+
+
 }
 
 .nav-item {
@@ -336,6 +344,9 @@ $red-create: #B93838;
   border: none!important;
   transition: transform 0.3s ease;
 
+  &:hover{
+    transform: scale(1.1)!important;
+  }
 }
 
 /* Supprimer la bordure par défaut */
@@ -395,4 +406,14 @@ $red-create: #B93838;
   color: white !important;
   border-radius: 10px 10px 0 0;
 
+}
+
+.btn-view {
+  color: $red-create;
+  background-color: white;
+  border: none
+}
+
+.projects-container{
+  padding-top: 0!important;
 }

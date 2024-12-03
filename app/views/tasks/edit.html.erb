@@ -1,29 +1,33 @@
+
+            <div class="back">
+            <%= link_to project_path(@project, anchor: 'contact-tab') do %>
+              <i class="fa-solid fa-arrow-left"></i>
+            <% end %>
+            </div>
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card shadow">
         <div class="card-body p-4">
           <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="mb-0">Edit Task</h2>
-            <%= link_to project_path(@project, anchor: 'contact-tab'), class: "text-decoration-none" do %>
-              <i class="bi bi-arrow-left"></i> Back to Tasks
-            <% end %>
+            <h1>Edit Task</h1>
           </div>
 
           <%= form_with(model: [@project, @task], local: true) do |form| %>
+
             <div class="mb-4">
-              <%= form.label :name, class: "form-label fw-bold" %>
-              <%= form.text_field :name, class: "form-control form-control-lg", placeholder: "Enter task name" %>
+              <%= form.label :name, class: "form-label-red" %>
+              <%= form.text_field :name, class: "form-control ", placeholder: "Enter task name" %>
             </div>
 
             <div class="mb-4">
-              <%= form.label :description, class: "form-label fw-bold" %>
+              <%= form.label :description, class: "form-label-red" %>
               <%= form.text_area :description, class: "form-control", rows: 4, placeholder: "Describe the task..." %>
             </div>
 
             <div class="row mb-4">
               <div class="col-md-6">
-                <%= form.label :deadline, class: "form-label fw-bold" %>
+                <%= form.label :deadline, class: "form-label-red" %>
                 <%= form.text_field :deadline,
                   class: "form-control",
                   placeholder: "Select deadline",
@@ -35,37 +39,37 @@
                 %>
               </div>
 
-              <div class="col-md-6">
-                <%= form.label :user_id, "Assign to", class: "form-label fw-bold" %>
-                <%= form.select :user_id, 
-                    @project.joined_users.map { |user| [user.username, user.id] }, 
-                    { include_blank: "Select team member" }, 
-                    { 
-                      class: "form-select",
-                      data: { 
-                        controller: "tom-select",
-                        placeholder: "Choose assignee..."
-                      } 
-                    } 
-                %>
-              </div>
-            </div>
 
-            <div class="mb-4">
-              <%= form.label :status, class: "form-label fw-bold" %>
+            <div class="col-md-6">
+              <%= form.label :status, class: "form-label-red" %>
               <%= form.select :status,
                   ['pending', 'in_progress', 'completed'],
                   {},
-                  { 
+                  {
                     class: "form-select",
                     data: { controller: "tom-select" }
                   }
               %>
             </div>
 
+              <div class="mb-4">
+                <%= form.label :user_id, "Assign to", class: "form-label-red" %>
+                <%= form.select :user_id,
+                    @project.joined_users.map { |user| [user.username, user.id] },
+                    { include_blank: "Select team member" },
+                    {
+                      class: "form-select",
+                      data: {
+                        controller: "tom-select",
+                        placeholder: "Choose assignee..."
+                      }
+                    }
+                %>
+              </div>
+            </div>
+
             <div class="d-flex justify-content-end gap-2">
-              <%= link_to "Cancel", project_path(@project, anchor: 'contact-tab'), class: "btn btn-outline-secondary px-4" %>
-              <%= form.submit "Update Task", class: "btn btn-primary px-4" %>
+              <%= form.submit "Update Task", class: "btn-task" %>
             </div>
           <% end %>
         </div>

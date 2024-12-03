@@ -4,7 +4,7 @@ import "controllers";
 import "@popperjs/core";
 import "bootstrap";
 import "components/form";
-
+import "components/modals";
 import { Turbo } from "@hotwired/turbo-rails"
 
 // Disable Turbo for specific forms

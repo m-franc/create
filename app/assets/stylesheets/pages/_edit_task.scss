@@ -1,0 +1,40 @@
+.form-control {
+  background-color: white;
+  border-color: gray;
+  border-radius: 5px;
+}
+
+.select {
+  background-color: $red-create;
+}
+
+.container py-5 {
+  padding: 0;
+}
+
+
+.mb-1 {
+  color: $red-create;
+}
+
+.list-group-item{
+  background-color: white;
+  margin-bottom: 10px;
+  border: solid 1 $red-create;
+
+}
+
+.form-label-red{
+  color: $red-create;
+  font-size: 20px;
+}
+
+input.btn-task {
+  background-color: $red-create;
+
+  &:hover {
+    background-color: white;
+    color: $red-create;
+    border: solid 1px $red-create;
+  }
+}

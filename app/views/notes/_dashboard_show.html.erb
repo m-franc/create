@@ -2,10 +2,17 @@
 <div class="note">
 
 
-
+<% if @project.user == current_user %>
   <div class="new-note">
-  <%= render 'notes/form_note', note: @note %>
+    <%= render 'notes/form_note', note: @note %>
   </div>
+<% else %>
+  <div class="new-note">
+    <p>Only <%= @project.user.username %> can add notes.</p>
+  </div>
+<% end %>
+
+
 
   <div class="all-notes">
   <% if @notes.present? %>
@@ -21,10 +28,10 @@
           <%= link_to 'Delete', project_note_path(note.project, note),
               method: :delete,
               data: { confirm: 'Are you sure?' },
-              class: 'btn btn-danger' %>
+              class: 'btn' %>
         <% end %>
         </div>
-   
+
 
     <% end %>
   <% else %>

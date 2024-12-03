@@ -1,95 +1,126 @@
-<h1>New Conversation</h1>
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center mb-4">
+            <div class="conversation-icon rounded-circle d-flex align-items-center justify-content-center bg-primary bg-opacity-10 me-3">
+              <i class="fas fa-comments text-primary"></i>
+            </div>
+            <h2 class="mb-0">New Conversation</h2>
+          </div>
 
-<%= form_with(model: @conversation, 
-            url: conversations_path, 
-            local: true, 
-            html: { method: :post }, 
-            data: { turbo: false, controller: "disable-form" }) do |f| %>  
-  <div class="form-group mb-3">
-    <%= f.label :name, "Conversation Name", class: "form-label" %>
-    <%= f.text_field :name, class: "form-control" %>
-  </div>
+          <%= form_with(model: @conversation, 
+                      url: @project ? project_conversations_path(@project) : conversations_path, 
+                      method: :post,
+                      data: { turbo: false },
+                      local: true) do |f| %>  
+            
+            <% if flash[:alert].present? %>
+              <div class="alert alert-danger">
+                <%= flash[:alert] %>
+              </div>
+            <% end %>
 
-  <!-- Dropdown for Projects -->
-  <div class="form-group mb-3">
-    <%= f.label :project_id, "Link to a Project (optional)", class: "form-label" %>
-    <%= f.select :project_id,
-                 options_for_select(
-                   (current_user.owned_projects + current_user.joined_projects).uniq.map { |p| [p.name, p.id] },
-                   @conversation.project_id
-                 ),
-                 { include_blank: "No Project" },
-                 class: "form-select" %>
-  </div>
+            <div class="form-group mb-4">
+              <%= f.label :name, "Give your conversation a name", class: "form-label fw-bold" %>
+              <%= f.text_field :name, 
+                             class: "form-control form-control-lg", 
+                             placeholder: "e.g., Project Planning, Team Updates...",
+                             autofocus: true %>
+            </div>
 
-  <!-- Member Selection -->
-  <div class="form-group mb-3">
-    <%= f.label :participant_ids, "Add Members", class: "form-label" %>
-    <div class="member-select-wrapper">
-      <%= f.select :participant_ids,
-        options_for_select(
-          User.where.not(id: current_user.id).map { |user| 
-            [
-              content_tag(:div, class: "d-flex align-items-center") do
-                avatar = user.avatar.attached? ? 
-                  image_tag(user.avatar, class: "avatar-small rounded-circle me-2", size: "24x24") :
-                  content_tag(:div, (user.first_name.present? ? user.first_name[0] : user.username[0]).upcase, class: "avatar-placeholder me-2")
-                name_info = content_tag(:div) do
-                  full_name = [user.first_name, user.last_name].compact.join(" ")
-                  content_tag(:div, full_name.presence || user.username)
-                end
-                safe_join([avatar, name_info])
-              end,
-              user.id
-            ]
-          }
-        ),
-        {},
-        {
-          class: "form-select member-select",
-          multiple: true,
-          size: 6,
-          data: { placeholder: "Select members..." }
-        }
-      %>
+            <% if @project %>
+              <%= f.hidden_field :project_id, value: @project.id %>
+              <div class="alert alert-info d-flex align-items-center mb-4">
+                <i class="fas fa-info-circle me-2"></i>
+                <div>This conversation will be created in <strong><%= @project.name %></strong></div>
+              </div>
+            <% else %>
+              <div class="form-group mb-4">
+                <%= f.label :project_id, "Link to a Project (optional)", class: "form-label fw-bold" %>
+                <%= f.select :project_id,
+                           options_for_select(
+                             (current_user.owned_projects + current_user.joined_projects).uniq.map { |p| [p.name, p.id] },
+                             @conversation.project_id
+                           ),
+                           { include_blank: "No Project" },
+                           class: "form-select form-select-lg" %>
+              </div>
+            <% end %>
+
+            <div class="form-group mb-4">
+              <%= f.label :participant_ids, "Add Members", class: "form-label fw-bold d-flex justify-content-between align-items-center" %>
+              <small class="text-muted">Select multiple members to add to the conversation</small>
+              <div class="member-select-wrapper mt-2">
+                <%= f.select :participant_ids,
+                  options_for_select(
+                    User.where.not(id: current_user.id).map { |user| 
+                      [
+                        content_tag(:div, class: "d-flex align-items-center") do
+                          name = [user.first_name, user.last_name].compact.join(" ")
+                          job = content_tag(:i, " - #{user.job}", class: "text-muted")
+                          safe_join([name, job])
+                        end,
+                        user.id
+                      ]
+                    }
+                  ),
+                  {},
+                  {
+                    class: "form-select member-select",
+                    multiple: true,
+                    size: 6,
+                    data: {
+                      placeholder: "Click to select members..."
+                    }
+                  }
+                %>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+              <%= link_to "Cancel", :back, class: "btn btn-light btn-lg" %>
+              <%= f.submit "Create Conversation", class: "btn btn-primary btn-lg", data: { "disable-with": "Creating..." } %>
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
-    <small class="text-muted">Hold Ctrl/Cmd to select multiple members</small>
   </div>
-
-  <div class="form-group mt-3">
-    <%= link_to "Back", conversations_path, class: "btn btn-outline-secondary rounded-pill me-2" %>
-    <%= f.submit "Create Conversation", 
-                class: "btn btn-primary rounded-pill", 
-                data: { 
-                  disable: true,
-                  disable_with: "Creating...",
-                  action: "click->disable-form#submit"
-                } %>  
-  </div>
-<% end %>
+</div>
 
 <% content_for :styles do %>
-<style>
-.member-select-wrapper {
-  max-width: 100%;
-}
-.member-select {
-  width: 100%;
-}
-.avatar-placeholder {
-  width: 24px;
-  height: 24px;
-  background-color: #e9ecef;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: bold;
-}
-.member-select option {
-  padding: 8px;
-  border-bottom: 1px solid #eee;
-}
-</style>
+  <style>
+    .conversation-icon {
+      width: 48px;
+      height: 48px;
+      font-size: 1.5rem;
+    }
+    
+    .member-select {
+      border: 1px solid #dee2e6;
+      border-radius: 0.5rem;
+    }
+    
+    .member-select option {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #f8f9fa;
+    }
+    
+    .member-select option:hover {
+      background-color: #f8f9fa;
+    }
+    
+    .avatar-placeholder {
+      width: 24px;
+      height: 24px;
+      background-color: #e9ecef;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+  </style>
 <% end %>

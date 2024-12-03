@@ -3,11 +3,12 @@ class DocumentsController < ApplicationController
   before_action :set_document, only: [:destroy, :download]
   before_action :check_project_member
   before_action :check_owner, only: [:destroy]
+  before_action :store_return_to, only: [:destroy]
 
   def index
-  @folders = Document.where(project: @project, user: current_user)
-                     .pluck(:folder_name)
-                     .uniq
+    @folders = Document.where(project: @project, user: current_user)
+                       .pluck(:folder_name)
+                       .uniq
 
     @documents = if current_user == @project.user
                   @project.documents
@@ -47,7 +48,11 @@ class DocumentsController < ApplicationController
     if @document.save
       # Debug logs
       Rails.logger.debug "Saved document with extension: #{@document.file_extension}"
-      redirect_to project_documents_path(@project), notice: 'Document was successfully uploaded.'
+      if params[:redirect_tab] == 'document'
+        redirect_to project_path(@project, tab: 'document'), notice: 'Document was successfully uploaded.'
+      else
+        redirect_to project_documents_path(@project), notice: 'Document was successfully uploaded.'
+      end
     else
       render :new
     end
@@ -58,33 +63,34 @@ class DocumentsController < ApplicationController
       Cloudinary::Uploader.destroy(@document.cloudinary_id)
     end
     @document.destroy
-    redirect_to project_documents_path(@project), notice: 'Document was successfully deleted.'
+    redirect_to project_path(@project, anchor: 'document-tab-pane'), notice: 'Document was successfully deleted.'
   end
 
   def download
     if @document.cloudinary_id.present?
       begin
-        # Récupérer les informations du fichier depuis Cloudinary
+        # Get file info from Cloudinary
         info = Cloudinary::Api.resource(@document.cloudinary_id)
-
-        # Récupérer le fichier
+        
+        # Get the file
         response = Cloudinary::Downloader.download(@document.cloudinary_id)
-
-        # Construire le nom du fichier avec l'extension
+        
+        # Build filename with extension
         extension = info['format']
         filename = "#{@document.name}.#{extension}"
-
-        # Envoyer le fichier au navigateur
+        
+        # Send file to browser without redirecting
         send_data response,
                 filename: filename,
                 disposition: 'attachment',
                 type: info['resource_type']
+        return
       rescue => e
         Rails.logger.error "Cloudinary error: #{e.message}"
-        redirect_to project_documents_path(@project), alert: 'Error downloading the document.'
+        redirect_to project_path(@project, anchor: 'document-tab-pane'), alert: 'Error downloading the document.'
       end
     else
-      redirect_to project_documents_path(@project), alert: 'Document not found.'
+      redirect_to project_path(@project, anchor: 'document-tab-pane'), alert: 'Document not found.'
     end
   end
 
@@ -108,6 +114,10 @@ class DocumentsController < ApplicationController
     unless @project.user == current_user
       redirect_to project_documents_path(@project), alert: 'Only project owner can perform this action.'
     end
+  end
+
+  def store_return_to
+    session[:return_to] = params[:return_to] if params[:return_to].present?
   end
 
   def document_params
