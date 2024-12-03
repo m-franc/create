@@ -39,14 +39,13 @@
   <div class="user-menu">
     <% if user_signed_in? %>
       <div class="dropdown">
-        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+        <div class="avatar-container" data-bs-toggle="dropdown" aria-expanded="false">
           <% if current_user.avatar.attached? %>
-            <%= cl_image_tag current_user.avatar.key, class: "avatar me-1", height: 40, width: 40, crop: :fill %>
+            <%= cl_image_tag current_user.avatar.key, class: "avatar", height: 40, width: 40, crop: :fill %>
           <% else %>
-            <%= image_tag "https://ui-avatars.com/api/?name=#{current_user.username}&background=random", class: "avatar me-1" %>
+            <%= image_tag "https://ui-avatars.com/api/?name=#{current_user.username}&background=random", class: "avatar" %>
           <% end %>
-          <strong class="username"><%= current_user.username || "User" %></strong>
-        </a>
+        </div>
         <ul class="dropdown-menu" aria-labelledby="dropdownUser1">
           <%= link_to "New project", new_project_path, class: "dropdown-item" %>
           <%= link_to "Edit Profile", edit_user_registration_path, class: "dropdown-item" %>
