@@ -8,7 +8,10 @@
         <div class="search-input-container">
           <%= text_field_tag :query, @query, class: "form-control search-input", placeholder: "Rechercher..." %>
           <%= button_tag type: 'submit', class: "search-button" do %>
-            <%= inline_svg_tag "icons/search.svg", class: "search-icon" %>
+            <span class="search-icon-wrapper">
+              <%= inline_svg_tag "icons/search.svg", class: "search-icon" %>
+            </span>
+            <span class="search-text">SEARCH !</span>
           <% end %>
         </div>
       <% end %>
@@ -17,91 +20,98 @@
 
   <% if @query.present? %>
     <% if @grouped_results.empty? %>
-      <div class="alert alert-info">
-        Aucun résultat trouvé pour "<%= @query %>"
+      <div class="alert alert-info rounded-3 shadow-sm">
+        <i class="fas fa-info-circle me-2"></i>Aucun résultat trouvé pour "<%= @query %>"
       </div>
     <% else %>
-      <% @grouped_results.each do |model, items| %>
-        <div class="card mb-4">
-          <div class="card-header">
-            <h3 class="mb-0"><%= model.pluralize %></h3>
-          </div>
-          <div class="card-body">
-            <div class="list-group">
+      <div class="search-results">
+        <% @grouped_results.each do |model, items| %>
+          <div class="search-category mb-4">
+            <div class="category-header">
+              <h3 class="mb-0"><%= model.pluralize %></h3>
+              <span class="result-count"><%= items.count %> résultat<%= items.count > 1 ? 's' : '' %></span>
+            </div>
+            <div class="results-container">
               <% items.each do |item| %>
                 <% case model %>
                 <% when "Project" %>
-                  <%= link_to project_path(item), class: "list-group-item list-group-item-action" do %>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <h5 class="mb-1"><%= item.name %></h5>
-                      <small>Projet</small>
+                  <%= link_to project_path(item), class: "result-card" do %>
+                    <div class="result-content">
+                      <h5 class="result-title"><%= item.name %></h5>
+                      <p class="result-description"><%= truncate(item.description, length: 100) %></p>
+                      <div class="result-meta">
+                        <span class="result-type">Projet</span>
+                        <span class="result-date"><%= l(item.updated_at, format: :short) %></span>
+                      </div>
                     </div>
-                    <p class="mb-1"><%= truncate(item.description, length: 100) %></p>
                   <% end %>
 
                 <% when "Document" %>
-                  <%= link_to project_documents_path(item.project), class: "list-group-item list-group-item-action" do %>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <h5 class="mb-1"><%= item.name %></h5>
-                      <div>
+                  <%= link_to project_documents_path(item.project), class: "result-card" do %>
+                    <div class="result-content">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="result-title"><%= item.name %></h5>
                         <%= link_to download_project_document_path(item.project, item),
-                                  class: "btn btn-sm btn-outline-primary ms-2",
+                                  class: "download-btn",
                                   title: "Télécharger" do %>
                           <i class="fas fa-download"></i>
                         <% end %>
-                        <small class="ms-2">Document</small>
+                      </div>
+                      <div class="result-meta">
+                        <% if item.folder_name.present? %>
+                          <span class="folder-name"><i class="fas fa-folder me-1"></i><%= item.folder_name %></span>
+                        <% end %>
+                        <span class="project-name"><i class="fas fa-project-diagram me-1"></i><%= item.project.name %></span>
                       </div>
                     </div>
-                    <p class="mb-1">
-                      <% if item.folder_name.present? %>
-                        Dans le dossier: <%= item.folder_name %><br>
-                      <% end %>
-                      Dans le projet: <%= item.project.name %>
-                    </p>
                   <% end %>
 
                 <% when "Note" %>
-                  <%= link_to project_note_path(item.project, item), class: "list-group-item list-group-item-action" do %>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <h5 class="mb-1"><%= item.title %></h5>
-                      <small>Note</small>
+                  <%= link_to project_note_path(item.project, item), class: "result-card" do %>
+                    <div class="result-content">
+                      <h5 class="result-title"><%= item.title %></h5>
+                      <p class="result-description"><%= truncate(item.content, length: 100) %></p>
+                      <div class="result-meta">
+                        <span class="result-type">Note</span>
+                        <span class="project-name"><i class="fas fa-project-diagram me-1"></i><%= item.project.name %></span>
+                      </div>
                     </div>
-                    <p class="mb-1"><%= truncate(item.content, length: 100) %></p>
-                    <small>Dans le projet: <%= item.project.name %></small>
                   <% end %>
 
                 <% when "Task" %>
-                  <%= link_to project_path(item.project), class: "list-group-item list-group-item-action" do %>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <h5 class="mb-1"><%= item.name %></h5>
-                      <small>Tâche</small>
+                  <%= link_to project_path(item.project), class: "result-card" do %>
+                    <div class="result-content">
+                      <h5 class="result-title"><%= item.name %></h5>
+                      <p class="result-description"><%= truncate(item.description, length: 100) %></p>
+                      <div class="result-meta">
+                        <span class="result-type">Tâche</span>
+                        <span class="project-name"><i class="fas fa-project-diagram me-1"></i><%= item.project.name %></span>
+                      </div>
                     </div>
-                    <p class="mb-1"><%= truncate(item.description, length: 100) %></p>
-                    <small>Dans le projet: <%= item.project.name %></small>
                   <% end %>
 
                 <% when "Utilisateur" %>
-                  <%= link_to user_path(item), class: "list-group-item list-group-item-action" do %>
-                    <div class="d-flex justify-content-between align-items-center">
+                  <%= link_to user_path(item), class: "result-card" do %>
+                    <div class="result-content">
                       <div class="d-flex align-items-center">
                         <% if item.avatar.attached? %>
-                          <%= image_tag item.avatar.variant(:small), class: "rounded-circle me-2", style: "width: 32px; height: 32px;" %>
+                          <%= image_tag item.avatar.variant(:small), class: "avatar-small" %>
                         <% else %>
-                          <div class="rounded-circle bg-secondary me-2" style="width: 32px; height: 32px;">
-                          </div>
+                          <div class="avatar-placeholder"></div>
                         <% end %>
-                        <h5 class="mb-1"><%= item.username %></h5>
+                        <div class="ms-3">
+                          <h5 class="result-title"><%= item.username %></h5>
+                          <p class="result-description"><%= item.email %></p>
+                        </div>
                       </div>
-                      <small>Utilisateur</small>
                     </div>
-                    <p class="mb-1"><%= item.email %></p>
                   <% end %>
                 <% end %>
               <% end %>
             </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     <% end %>
   <% end %>
 </div>
