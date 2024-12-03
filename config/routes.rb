@@ -13,6 +13,10 @@ Rails.application.routes.draw do
   # General project routes
   root 'projects#index'
   resources :projects do
+    resources :notes, only: [:create]
+  end
+  
+  resources :projects do
     resources :documents do
       member do
         get :download

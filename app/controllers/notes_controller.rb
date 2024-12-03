@@ -30,10 +30,10 @@ class NotesController < ApplicationController
     @note.project = @project
     @note.user = current_user
     if @note.save
-      redirect_to project_notes_path(@project, @note), notice: 'Note was successfully created.'
+      redirect_to project_path(@project, @note), notice: 'Note was successfully created.'
     else
       flash[:alert] = "Unable to create the note. Please fix the errors."
-      redirect_to project_note_path(@project, @note), notice: 'Note was successfully created.'
+      redirect_to project_path(@project, @note), notice: 'Note was successfully created.'
     end
   end
 

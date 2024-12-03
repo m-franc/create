@@ -1,19 +1,18 @@
-
 <div class="note-form">
-<%= form_with(model: [@project, @note], local: true, data: { turbo: false }) do |f| %>
-  <div class="form-group">
-    <h3>New note</h3>
-    <%= f.label :title %>
-    <%= f.text_field :title, class: 'form-control' %>
-  </div>
+  <%= form_with(model: [@project, @note], local: true, data: { turbo: false }) do |f| %>
+    <div class="form-group">
+      <h3>New note</h3>
+      <%= f.label :title %>
+      <%= f.text_field :title, class: 'form-control' %>
+    </div>
 
-  <div class="form-group">
-    <%= f.label :content %>
-    <%= f.text_area :content, class: 'form-control', rows: 5 %>
-  </div>
+    <div class="form-group">
+      <%= f.label :content %>
+      <%= f.text_area :content, class: 'form-control', rows: 5 %>
+    </div>
 
-  <div class="form-group">
-    <%= f.submit class: 'btn btn-primary' %>
-  </div>
-<% end %>
+    <div class="form-group">
+      <%= f.submit class: 'btn-note' %>
+    </div>
+  <% end %>
 </div>
