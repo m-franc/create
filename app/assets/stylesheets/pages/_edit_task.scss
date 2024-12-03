@@ -1,6 +1,6 @@
 .form-control {
   background-color: white;
-  border-color: gray;
+  border-color: $red-create;
   border-radius: 5px;
 }
 
@@ -9,7 +9,7 @@
 }
 
 .container py-5 {
-  padding: 0;
+  padding-top: 0 !important;
 }
 
 
@@ -37,4 +37,19 @@ input.btn-task {
     color: $red-create;
     border: solid 1px $red-create;
   }
+}
+
+.form-select {
+  background-color: white;
+  padding: 0 50px 0 0;
+  border: none;
+}
+
+.ts-control {
+  border: solid 1px $red-create !important;
+}
+
+.no-padding-top {
+  padding-top: 0 !important; /* Annule le padding-top de 3rem */
+  padding-bottom: 3rem !important; /* Garde le padding-bottom si nécessaire */
 }

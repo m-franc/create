@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resources :projects do
     resources :notes, only: [:create]
   end
-  
+
   resources :projects do
     resources :documents do
       member do
@@ -27,6 +27,9 @@ Rails.application.routes.draw do
     # Project-specific conversations
     resources :conversations, only: [:index, :new, :create, :show]
   end
+
+  resources :projects
+
 
   resources :searches, only: [:index]
 
