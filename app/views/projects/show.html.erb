@@ -148,22 +148,12 @@
         <div class="card-project" id="notes">
           <h4 class="mb-4 text-dark">Notes</h4>
 
-          <% if @notes.any? %>
-            <div class="notes-list">
-              <% @notes.each do |note| %>
-                <div class="note-item py-3 border-bottom" style="border-color: #f0f0f0 !important;">
-                  <div class="d-flex align-items-center justify-content-between">
-                    <div class="d-flex align-items-center gap-3">
-                      <div class="note-dot rounded-circle bg-warning opacity-25" style="width: 6px; height: 6px;"></div>
-                      <div class="fw-medium text-dark" style="font-size: 0.95rem;">
-                        <%= truncate(note.content, length: 50) %>
-                      </div>
-                    </div>
-                    <div class="text-secondary d-flex align-items-center" style="font-size: 0.8rem;">
-                      <i class="bi bi-clock opacity-75 me-1"></i>
-                      <%= time_ago_in_words(note.created_at) %>
-                    </div>
-                  </div>
+          <% if @project.notes.any? %>
+            <div class="list-group border-0">
+              <% @project.notes.first(3).each do |note| %>
+                <div class="d-flex align-items-center mb-3">
+                  <i class="fas fa-sticky-note text-primary me-3"></i>
+                  <span class="text-dark"><%= note.title %></span>
                 </div>
               <% end %>
             </div>
@@ -177,35 +167,32 @@
               </div>
             <% end %>
           <% else %>
-            <div class="text-secondary d-flex align-items-center gap-2 py-2" style="font-size: 0.85rem;">
-              <i class="bi bi-sticky"></i>
-              No notes yet
+            <div class="text-secondary d-flex align-items-center">
+              <i class="fas fa-sticky-note me-2"></i>
+              <span>No notes yet</span>
             </div>
           <% end %>
         </div>
-        <div class="card-project" id="card-2">
-          <h4>Team Members</h4>
-          <div class="dashboard-users">
-            <% @joined_users.first(3).each do |user| %>
-              <div class="user-info">
-                <% if user.avatar.attached? %>
-                  <%= image_tag user.avatar, class: "avatar" %>
-                <% else %>
-                  <div class="avatar-placeholder">
-                    <%= user.first_name&.first || user.email.first %>
-                  </div>
-                <% end %>
-                <div class="user-details">
-                  <strong><%= "#{user.first_name} #{user.last_name}" %></strong>
-                </div>
-              </div>
-            <% end %>
-            <% if @joined_users.size > 3 %>
-              <div class="more-members">
-                +<%= @joined_users.size - 3 %> more
-              </div>
-            <% end %>
+        <div class="card-project" id="card-4">
+          <div class="text-center mb-4">
+            <h4 class="mb-0 text-dark">Members</h4>
           </div>
+
+          <% if @project.project_users.any? %>
+            <div class="list-group border-0">
+              <% @project.project_users.first(3).each do |project_user| %>
+                <div class="d-flex align-items-center mb-3">
+                  <i class="fas fa-user text-primary me-3"></i>
+                  <span class="text-dark"><%= "#{project_user.user.first_name} #{project_user.user.last_name}" %></span>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="text-secondary d-flex align-items-center">
+              <i class="fas fa-user me-2"></i>
+              <span>No members yet</span>
+            </div>
+          <% end %>
         </div>
         <div class="card-project" id="card-3">
           <div class="text-center mb-4">
@@ -242,7 +229,7 @@
                     </div>
                     <div class="flex-grow-1">
                       <div class="d-flex justify-content-between align-items-center">
-                        <h6 class="mb-0 text-dark"><%= conversation.name %></h6>
+                        <h6 class="mb-0 text-dark"><%= conversation.name.split(' - ').first %></h6>
                         <% if conversation.messages.any? %>
                           <small class="text-muted">
                             <%= time_ago_in_words(conversation.messages.last.created_at) %> ago
@@ -377,7 +364,7 @@
                     </div>
                     <div class="flex-grow-1">
                       <div class="d-flex justify-content-between align-items-center">
-                        <h6 class="mb-0 text-dark"><%= conversation.name %></h6>
+                        <h6 class="mb-0 text-dark"><%= conversation.name.split(' - ').first %></h6>
                         <% if conversation.messages.any? %>
                           <small class="text-muted">
                             <%= time_ago_in_words(conversation.messages.last.created_at) %> ago
