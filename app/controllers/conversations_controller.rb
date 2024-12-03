@@ -16,12 +16,15 @@ class ConversationsController < ApplicationController
       redirect_to root_path, alert: "You don't have access to this conversation"
       return
     end
+
     @messages = @conversation.messages.includes(:user)
     @new_message = Message.new
-    
-    respond_to do |format|
-      format.html
-      format.turbo_stream
+
+    if turbo_frame_request?
+      render :show, layout: false
+    else
+      @conversations = current_user.conversations.includes(:messages)
+      render :show
     end
   end
 
