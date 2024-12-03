@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["sidebar"]
-  
+
   connect() {
     // Garder l'état du hover entre les navigations
     if (localStorage.getItem('sidebarExpanded') === 'true') {
@@ -31,7 +31,7 @@ export default class extends Controller {
     const rect = this.sidebarTarget.getBoundingClientRect();
     const x = event.clientX;
     const y = event.clientY;
-    
+
     return (
       x >= rect.left &&
       x <= rect.right &&

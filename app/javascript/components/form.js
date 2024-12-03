@@ -1,6 +1,4 @@
 document.addEventListener("turbo:load", () => {
-  console.log("HRLLLOOOO");
-
   const pages = document.querySelectorAll(".page");
   const header = document.querySelector(".count");
   let activePage = 1;
@@ -31,8 +29,6 @@ document.addEventListener("turbo:load", () => {
   const prevButtons = document.querySelectorAll("button#button-b");
   for (const button of prevButtons) {
     button.addEventListener("click", pagePrecedente);
-    console.log("camarche");
-
   }
 
   function pageSuivante() {

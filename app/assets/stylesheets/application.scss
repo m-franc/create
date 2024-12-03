@@ -1,9 +1,3 @@
-.roboto-thin {
-  font-family: "Roboto", serif;
-  font-weight: 100;
-  font-style: normal;
-}
-
 .roboto-light {
   font-family: "Roboto", serif;
   font-weight: 300;
@@ -97,16 +91,15 @@ $body-color: rgb(247, 247, 247);
 $red-create: #B93838;
 
 body {
-  background-color: white
+  background-color: white;
 }
 
 .custom-sidebar {
-  background-color: white
+  background-color: white;
 }
 
 h1 {
-  color: white;
-  text-align: center;
+  color: $red-create !important;
 }
 
 h3 {

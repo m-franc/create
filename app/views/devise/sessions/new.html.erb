@@ -1,62 +1,59 @@
-<div class="logo-log-in">
-<h2>Create<span class="point">.</span></h2>
-</div>
-<div class="main-container">
-  <div class="type-writing">
-    <!-- Container cible pour l'animation -->
-    <span id="typed">
-      <h2></h2>
-    </span>
+<div class="login-page">
+  <div class="logo-container">
+    <%= image_tag "logo_createv1.png", class: "logo-image" %>
+  </div>
+  
+  <div class="content-container">
+    <!-- Colonne de gauche pour le texte animé -->
+    <div class="animated-text-column">
+      <div class="main-container">
+        <div class="type-writing">
+          <div id="typed">
+            <h2></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colonne de droite pour le login -->
+    <div class="login-column">
+      <div class="log-in">
+        <div class="project-red">
+          <h3>Log in</h3>
+          <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <div class="form-inputs">
+              <%= f.input :email,
+                          required: false,
+                          autofocus: true,
+                          input_html: { autocomplete: "email" } %>
+              <%= f.input :password,
+                          required: false,
+                          input_html: { autocomplete: "current-password" } %>
+              <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+            </div>
+
+            <div class="form-actions">
+              <%= f.button :submit, "Log in" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- Inclure le script de Typed.js -->
+<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-
 <script>
   // Initialisation de Typed.js avec un retour à la ligne et un curseur
   var typed = new Typed("#typed h2", {
     strings: [
-  "<span class='bold'>Simplify</span> the organization</span> of <br> your <span class='bold'>creations</span> thanks to <span class='create'>Create</span><span class='point'>.</span> <br> <span class='details'><br><span class='point'>.</span> All in one <span class='bold'>Dashboard</span><br><span class='point'>.</span> Custom <span class='bold'>Group Chats</span><br><span class='point'>.</span> Manage and Share your <span class='bold'>Tasks</span><br><span class='point'>.</span> Share your <span class='bold'>Notes</span><br> <span class='create'>Create</span><span class='point'>.</span></span> "
-],
-
-    typeSpeed: 30,
+      "<span class='bold'>Simplify</span> the organization</span> of <br> your <span class='bold'>creations</span> thanks to <span class='create'>Create</span><span class='point'>.</span> <br> <span class='details'><br><span class='point'>.</span> All in one <span class='bold'>Dashboard</span><br><span class='point'>.</span> Custom <span class='bold'>Group Chats</span><br><span class='point'>.</span> Manage and Share your <span class='bold'>Tasks</span><br><span class='point'>.</span> Share your <span class='bold'>Notes</span><br>"
+    ],
+    typeSpeed: 60,
     startDelay: 500,
-    loop: true,
-    smartBackspace: true,
+    loop: false,
     showCursor: false,
-    contentType: 'html'    // Permet d'interpréter les balises HTML (comme <br>)
+    contentType: 'html'
   });
 </script>
-
-
-
-</div>
-
-
-
-
-<div class="log-in">
-
-<div class="project-red">
-<h3>Log in</h3>
-
-<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: false,
-                autofocus: true,
-                input_html: { autocomplete: "email" } %>
-    <%= f.input :password,
-                required: false,
-                input_html: { autocomplete: "current-password" } %>
-    <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
-  </div>
-  <%= link_to "Create an account", new_user_registration_path(@user), class: "signup-link" %>
-  <div class="form-actions">
-    <%= f.button :submit, "Log in" %>
-  </div>
-<% end %>
-
-</div>
-</div>

@@ -30,23 +30,11 @@
     <div class="page" id="page-2">
       <div class="field">
         <%= form.label :starting_date %>
-        <%= form.text_field :starting_date,
-          data: {
-            controller: "datepicker",
-            datepicker_date_format: "Y-m-d",
-            datepicker_min_date: Time.zone.now
-          }
-        %>
+        <%= form.text_field :starting_date, data: { controller: "datepicker" } %>
       </div>
       <div class="field">
         <%= form.label :end_date %>
-        <%= form.text_field :end_date,
-          data: {
-            controller: "datepicker",
-            datepicker_date_format: "Y-m-d",
-            datepicker_min_date: Time.zone.now
-          }
-        %>
+        <%= form.text_field :end_date, data: { controller: "datepicker" } %>
       </div>
       <div class="actions">
              <button type="button" class="button" id="button-b">
