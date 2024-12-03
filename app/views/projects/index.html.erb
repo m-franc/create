@@ -9,27 +9,27 @@
   <% Array(@projects_user).each do |project_user| %>
     <%= link_to project_path(project_user.project.id), class: 'text-decoration-none' do %>
       <div class="card">
-          <div class="card-image">
-            <% if project_user.project.image.attached? %>
-              <%= image_tag project_user.project.image, class: 'card-image', alt: "#{project_user.project.name} Image" %>
-            <% else %>
-              <%= image_tag "unavailable_image.jpg", class: 'card-image', alt: "No image available" %>
-            <% end %>
-          </div>
-          <div class="card-content">
-            <h2><%= project_user.project.name %></h2>
-            <p><strong>Location:</strong> <%= project_user.project.location %></p>
-            <p><strong>Start Date:</strong> <%= project_user.project.starting_date %></p>
-            <p><strong>End Date:</strong> <%= project_user.project.end_date %></p>
-            <% if project_user.status == "0" %>
-              <%= link_to "accept", accept_path(project_user.project), class: "btn btn-primary" %>
-              <%= link_to "decline", decline_path(project_user.project), class: "btn btn-primary" %>
-            <% end %>
-          </div>
+        <div class="card-image">
+          <% if project_user.project.image.attached? %>
+            <%= image_tag project_user.project.image, class: 'card-image', alt: "#{project_user.project.name} Image" %>
+          <% else %>
+            <%= image_tag "unavailable_image.jpg", class: 'card-image', alt: "No image available" %>
+          <% end %>
         </div>
-      <% end %>
+        <div class="card-content">
+          <h2><%= project_user.project.name %></h2>
+          <p><strong>Location:</strong> <%= project_user.project.location %></p>
+          <p><strong>Start Date:</strong> <%= project_user.project.starting_date %></p>
+          <p><strong>End Date:</strong> <%= project_user.project.end_date %></p>
+          <% if project_user.status == "0" %>
+            <%= link_to "accept", accept_path(project_user.project), class: "btn btn-primary" %>
+            <%= link_to "decline", decline_path(project_user.project), class: "btn btn-primary" %>
+          <% end %>
+        </div>
+      </div>
     <% end %>
-  </div>
+  <% end %>
+</div>
 
     <%# PROJECTS CREES %>
 

@@ -38,6 +38,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     @project.user = current_user
     @joined_users = @project.joined_users
+
     if @project.save
       init_status_project_users(@project, "0")
       if params[:project][:image].present?
