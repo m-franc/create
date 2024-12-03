@@ -3,8 +3,8 @@ class ProjectsController < ApplicationController
 
   # GET /projects
   def index
-    @projects = Project.all
     @projects_user = ProjectUser.find_by(user: current_user)
+    @projects = Project.find_by(user: current_user)
     @user = current_user
   end
 
@@ -110,10 +110,10 @@ class ProjectsController < ApplicationController
     params.require(:note).permit(:title, :content)
   end
 
-  # def init_status_project_users(project, value)
-  #   project.joined_users.each do |joined_user|
-  #     project_user = ProjectUser.find_by(user: joined_user, project: project)
-  #     project_user.update!(status: value)
-  #   end
-  # end
+  def init_status_project_users(project, value)
+    project.joined_users.each do |joined_user|
+      project_user = ProjectUser.find_by(user: joined_user, project: project)
+      project_user.update!(status: value)
+    end
+  end
 end
