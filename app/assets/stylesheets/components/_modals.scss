@@ -1,0 +1,35 @@
+.modal-content {
+  border-radius: 10px;
+  border: solid 2px $red-create;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+
+}
+
+.modal-header {
+  color: $red-create;
+  h5 {
+    font-size: 20px;
+  }
+}
+
+.modal-title.custom-modal-title {
+  font-size: 2rem; /* Change la taille selon tes besoins */
+}
+
+.modal-body{
+  strong {
+    font-weight: normal;  /* Modifie le poids de la police */
+    font-size: 1.1rem;     /* Change la taille de la police */
+    color: $red-create ;     /* Change la couleur du texte */
+    font-size: 1.4rem;
+  }
+
+  p{
+    font-size: 1.3rem;
+  }
+}
+
+.edit-task {
+  background-color: none;
+  color: $red-create;
+}
