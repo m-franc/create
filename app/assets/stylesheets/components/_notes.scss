@@ -4,6 +4,7 @@
 }
 
 .new-note {
+  margin-top: 10px;
   background-color: $red-create;
   float: left; /* Fait flotter l'élément à gauche */
   width: 45%; /* Limite la largeur de .new-note */
@@ -11,6 +12,7 @@
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
 
   label{
     color: white;
@@ -22,9 +24,11 @@
 }
 
 .all-notes {
+  padding: 10px;
   float: left; /* Fait flotter l'élément à gauche */
   width: 45%; /* Limite la largeur de .all-notes */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+
 }
 
 /* S'assurer que le conteneur prend bien en compte la mise en page flottante */
@@ -45,4 +49,24 @@
 
 .form-control {
   margin-bottom: 15px;
+}
+
+input.btn-note {
+  border: solid 1px white;
+  background-color: $red-create;
+
+  &:hover {
+    background-color: white;
+    color: $red-create;
+  }
+}
+
+.new-note {
+  p {
+    color: white;
+  }
+}
+
+.card-body{
+  margin-bottom: 5px;
 }

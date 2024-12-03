@@ -4,6 +4,22 @@ $red-create: #B93838;
   padding: 2rem;
 }
 
+.new-link {
+  top: 20px;           /* Distance du haut */
+  right: 40px;         /* Distance de la droite */
+  padding: 5px 10px;
+  color: $red-create;
+  border-radius: 5px;
+  text-decoration: none;
+  width: fit-content;
+  font-size: 20px;
+
+  &:hover{
+    transition: transform 0.3s ease;
+    transform: scale(1.03);
+  }
+}
+
 .projects-header {
   display: flex;
   justify-content: space-between;
@@ -15,6 +31,7 @@ $red-create: #B93838;
     font-size: 2rem;
     color: #333;
   }
+
 }
 
 .card-container {
