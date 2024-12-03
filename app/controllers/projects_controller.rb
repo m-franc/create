@@ -11,12 +11,6 @@ class ProjectsController < ApplicationController
   # GET /projects/:id
   def show
     @project = Project.find(params[:id])
-    project_user = ProjectUser.find_by(user: current_user, project: @project)
-    if project_user.status == "0"
-      project_user.status = "1"
-      project_user.save!
-      redirect_to @project
-    end
     @documents = @project.documents
     @tasks = @project.tasks.includes(:user).order(deadline: :asc)
     @notes = @project.notes.includes(:user).order(created_at: :desc)
@@ -93,12 +87,12 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     project_user = ProjectUser.find_by(user: current_user, project: @project)
     project_user.update(status: "1")
-    flash[:alert] = "Project joined !"
-    redirect_to root_path
+    flash[:notice] = "Project joined !"
+    redirect_to projects_path
   end
 
   def decline
-    flash[:alert] = "Project not joined 🗑️"
+    flash[:notice] = "Project not joined 🗑️"
     redirect_to projects_path
   end
 
