@@ -5,6 +5,14 @@
   &.show {
     background: rgba(0, 0, 0, 0.5);
   }
+
+  &.fade {
+    .modal-dialog {
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+  }
 }
 
 .modal-dialog {
@@ -15,12 +23,12 @@
   margin: 1rem auto;
   max-width: 500px !important;
   width: 90%;
-  transform: scale(0.95);
+  transform: translateY(-20px);
   opacity: 0;
   transition: all 0.3s ease;
 
   .modal.show & {
-    transform: scale(1);
+    transform: translateY(0);
     opacity: 1;
   }
 }
