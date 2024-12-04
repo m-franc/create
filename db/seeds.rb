@@ -27,7 +27,7 @@ puts "Database cleaned!"
 puts "Creating users..."
 
 users = [
-  { 
+  {
     email: "sarah.anderson@theater.com",
     password: "password123",
     first_name: "Sarah",
@@ -35,7 +35,7 @@ users = [
     username: "sarah_anderson",
     job: "Artistic Director"
   },
-  { 
+  {
     email: "michael.thompson@theater.com",
     password: "password123",
     first_name: "Michael",
@@ -43,7 +43,7 @@ users = [
     username: "michael_thompson",
     job: "Stage Manager"
   },
-  { 
+  {
     email: "emma.rodriguez@theater.com",
     password: "password123",
     first_name: "Emma",
@@ -51,7 +51,7 @@ users = [
     username: "emma_rodriguez",
     job: "Lighting Designer"
   },
-  { 
+  {
     email: "david.chen@theater.com",
     password: "password123",
     first_name: "David",
@@ -59,7 +59,7 @@ users = [
     username: "david_chen",
     job: "Sound Engineer"
   },
-  { 
+  {
     email: "lisa.patel@theater.com",
     password: "password123",
     first_name: "Lisa",
@@ -67,7 +67,7 @@ users = [
     username: "lisa_patel",
     job: "Costume Designer"
   },
-  { 
+  {
     email: "james.murphy@theater.com",
     password: "password123",
     first_name: "James",
@@ -75,7 +75,7 @@ users = [
     username: "james_murphy",
     job: "Props Master"
   },
-  { 
+  {
     email: "anna.schmidt@theater.com",
     password: "password123",
     first_name: "Anna",
@@ -83,7 +83,7 @@ users = [
     username: "anna_schmidt",
     job: "Casting Director"
   },
-  { 
+  {
     email: "robert.williams@theater.com",
     password: "password123",
     first_name: "Robert",
@@ -91,7 +91,7 @@ users = [
     username: "robert_williams",
     job: "Technical Director"
   },
-  { 
+  {
     email: "maria.garcia@theater.com",
     password: "password123",
     first_name: "Maria",
@@ -99,7 +99,7 @@ users = [
     username: "maria_garcia",
     job: "Choreographer"
   },
-  { 
+  {
     email: "thomas.miller@theater.com",
     password: "password123",
     first_name: "Thomas",
@@ -288,7 +288,7 @@ projects_data.each do |project_data|
   # Add 2-3 random members to each project
   team_members = created_users.sample(rand(2..3))
   team_members.each do |member|
-    ProjectUser.create!(project: project, user: member) unless member == project.user
+    ProjectUser.create!(project: project, user: member, status: "0") unless member == project.user
   end
 
   # Create 1-2 notes for each project
@@ -299,7 +299,7 @@ projects_data.each do |project_data|
     { title: "Design Concepts", content: "Main visual themes and aesthetic direction for #{project.name}." },
     { title: "Rehearsal Schedule", content: "Preliminary rehearsal plan and important milestone dates for #{project.name}." }
   ]
-  
+
   rand(1..2).times do
     note = note_contents.sample
     Note.create!(
@@ -363,7 +363,7 @@ projects_data.each do |project_data|
     # Add 3-4 random team members to the conversation
     conversation_members = team_members.sample(rand(3..4))
     conversation_members << project.user unless conversation_members.include?(project.user)
-    
+
     conversation_members.each do |member|
       ConversationUser.create!(conversation: conversation, user: member)
     end

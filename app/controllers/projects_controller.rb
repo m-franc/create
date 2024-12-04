@@ -1,10 +1,11 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :accept, :decline]
 
   # GET /projects
   def index
-    @projects = Project.all
-
+    @projects_user = ProjectUser.where(user: current_user)
+    @projects = Project.where(user: current_user)
+    @user = current_user
   end
 
   # GET /projects/:id
@@ -16,6 +17,8 @@ class ProjectsController < ApplicationController
     @note = Note.new
     @document = Document.new
     @folders = @project.documents.pluck(:folder_name).uniq
+    @documents = @project.documents
+    @notes = @project.notes
     @joined_users = @project.joined_users
   end
 
@@ -34,8 +37,10 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
     @project.user = current_user
+    @joined_users = @project.joined_users
 
     if @project.save
+      init_status_project_users(@project, "0")
       if params[:project][:image].present?
         @project.image.attach(params[:project][:image])
       end
@@ -45,6 +50,12 @@ class ProjectsController < ApplicationController
       render :new
     end
 
+    # @note = @project.notes.new(note_params)
+  # if @note.save
+  #   redirect_to project_notes_path(@project), notice: 'Note was successfully created.'
+  # else
+  #   render :new
+  # end
   end
 
   # GET /projects/:id/edit
@@ -73,6 +84,19 @@ class ProjectsController < ApplicationController
     redirect_to projects_path
   end
 
+  def accept
+    @project = Project.find(params[:id])
+    project_user = ProjectUser.find_by(user: current_user, project: @project)
+    project_user.update(status: "1")
+    flash[:notice] = "Project joined !"
+    redirect_to projects_path
+  end
+
+  def decline
+    flash[:notice] = "Project not joined 🗑️"
+    redirect_to projects_path
+  end
+
   private
 
   def set_project
@@ -85,5 +109,12 @@ class ProjectsController < ApplicationController
 
   def note_params
     params.require(:note).permit(:title, :content)
+  end
+
+  def init_status_project_users(project, value)
+    project.joined_users.each do |joined_user|
+      project_user = ProjectUser.find_by(user: joined_user, project: project)
+      project_user.update!(status: value)
+    end
   end
 end

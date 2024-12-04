@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   # General project routes
   root 'projects#index'
+
   resources :projects do
     resources :notes, only: [:create]
   end
@@ -28,8 +29,8 @@ Rails.application.routes.draw do
     resources :conversations, only: [:index, :new, :create, :show]
   end
 
-  resources :projects
-
+  get 'projects/:id/accept', to: "projects#accept", as: "accept"
+  get 'projects/:id/decline', to: "projects#decline", as: "decline"
 
   resources :searches, only: [:index]
 
