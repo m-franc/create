@@ -7,6 +7,10 @@ class SearchesController < ApplicationController
     if @query.present? && @query.length >= MIN_SEARCH_LENGTH
       search_pattern = "%#{@query}%"
       
+      # Debug logs pour la recherche de projets
+      Rails.logger.debug "Recherche - Query: #{@query}"
+      Rails.logger.debug "Recherche - Pattern: #{search_pattern}"
+      
       # Debug logs pour la recherche d'utilisateurs
       Rails.logger.debug "Index - Recherche d'utilisateurs avec pattern: #{search_pattern}"
       @users = User.where("LOWER(email) LIKE LOWER(?) OR LOWER(username) LIKE LOWER(?)", 
@@ -14,9 +18,10 @@ class SearchesController < ApplicationController
       Rails.logger.debug "Index - Nombre d'utilisateurs trouvés: #{@users.count}"
       Rails.logger.debug "Index - SQL généré: #{@users.to_sql}"
       
-      @projects = accessible_projects
-        .where("LOWER(projects.name) LIKE LOWER(?) OR LOWER(projects.description) LIKE LOWER(?)", 
-               search_pattern, search_pattern)
+      # Recherche de projets simplifiée
+      @projects = accessible_projects.where("name ILIKE ?", search_pattern)
+      Rails.logger.debug "Recherche - SQL Projets: #{@projects.to_sql}"
+      Rails.logger.debug "Recherche - Nombre de projets trouvés: #{@projects.count}"
       
       @documents = accessible_documents
         .where("LOWER(documents.name) LIKE LOWER(?) OR LOWER(documents.folder_name) LIKE LOWER(?)", 
@@ -51,8 +56,7 @@ class SearchesController < ApplicationController
 
     # Projets
     accessible_projects
-      .where("LOWER(projects.name) LIKE LOWER(?) OR LOWER(projects.description) LIKE LOWER(?)", 
-             search_pattern, search_pattern)
+      .where("name ILIKE ?", search_pattern)
       .limit(5)
       .each do |project|
         suggestions << {

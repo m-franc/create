@@ -34,7 +34,7 @@
             <div class="results-container">
               <% items.each do |item| %>
                 <% case model %>
-                <% when "Project" %>
+                <% when "Projet" %>
                   <%= link_to project_path(item), class: "result-card" do %>
                     <div class="result-content">
                       <h5 class="result-title"><%= item.name %></h5>
