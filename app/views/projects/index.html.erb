@@ -1,4 +1,20 @@
 <div class="projects-container">
+  <div class="search-container">
+    <div class="search-form mb-4">
+      <%= form_tag searches_path, method: :get, class: "d-flex" do %>
+        <div class="search-input-container">
+          <%= text_field_tag :query, @query, class: "form-control search-input", placeholder: "Rechercher..." %>
+          <%= button_tag type: 'submit', class: "search-button" do %>
+            <span class="search-icon-wrapper">
+              <%= inline_svg_tag "icons/search.svg", class: "search-icon" %>
+            </span>
+            <span class="search-text">SEARCH !</span>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
   <div class="projects-header">
     <h1>Projects List</h1>
     <%= link_to ' + New Project', new_project_path, class: 'new-link', data: {turbo: false}%>
