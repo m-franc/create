@@ -152,14 +152,34 @@ $red-create: #B93838;
     margin: 0 -1rem;
     border-bottom: 1px solid $gray-200;
     transition: background-color 0.2s ease;
+    position: relative;
 
     &:hover {
       background-color: $gray-100;
     }
 
+    &.completed {
+      &::after {
+        content: '';
+        position: absolute;
+        left: 65px;
+        right: 15px;
+        top: 50%;
+        height: 1px;
+        background-color: $gray-500;
+        pointer-events: none;
+      }
+
+      .fw-medium, .text-secondary {
+        color: $gray-500;
+      }
+    }
+
     .form-check-input {
       cursor: pointer;
       border-color: $gray-400;
+      position: relative;
+      z-index: 2;
 
       &:checked {
         background-color: $red-create;
@@ -173,6 +193,8 @@ $red-create: #B93838;
       color: $gray-500;
       padding: 0.25rem 0.5rem;
       transition: all 0.2s ease;
+      position: relative;
+      z-index: 2;
 
       &:hover {
         color: $red-create;

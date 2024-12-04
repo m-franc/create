@@ -61,14 +61,24 @@
 <% if @tasks.any? %>
   <div class="task-list">
     <% @tasks.first(6).each do |task| %>
-      <div class="task-item py-3 border-bottom" style="border-color: #f0f0f0 !important;">
-        <div class="d-flex align-items-center justify-content-between" style="gap: 30px;">
+      <div class="task-item py-3 border-bottom <%= 'completed' if task.completed %>" style="border-color: #f0f0f0 !important;">
+        <div class="d-flex align-items-center justify-content-between" style="gap: 30px;" data-controller="task">
           <div class="d-flex align-items-center gap-3">
             <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-
+              <%= form_with(url: toggle_status_project_task_path(@project, task), method: :patch, local: false) do |f| %>
+                <%= f.check_box :completed,
+                              class: "form-check-input",
+                              data: {
+                                task_target: "checkbox",
+                                action: "change->task#toggle"
+                              },
+                              id: "task_#{task.id}",
+                              checked: task.completed %>
+              <% end %>
             </div>
-            <div class="fw-medium " style="font-size: 0.95rem;">
+            <div class="fw-medium <%= 'text-decoration-line-through text-muted' if task.completed %>"
+                 data-task-target="text"
+                 style="font-size: 0.95rem;">
               <%= task.name %>
             </div>
           </div>
