@@ -23,16 +23,21 @@
           </li>
           <li class="nav-item-bar">
             <div class="search-container">
-              <%= form_tag searches_path, method: :get, class: "d-flex", data: { controller: "search" } do %>
-                <%= text_field_tag :query,
-                    params[:query],
-                    class: "form-control me-2",
-                    placeholder: "Rechercher...",
-                    data: {
-                      search_target: "input",
-                      action: "input->search#search"
-                    }
-                %>
+              <%= form_tag searches_path, method: :get, class: "search-form", data: { controller: "search" } do %>
+                <div class="search-input-container">
+                  <%= text_field_tag :query,
+                      params[:query],
+                      class: "form-control search-input",
+                      placeholder: "Rechercher...",
+                      data: {
+                        search_target: "input",
+                        action: "input->search#search"
+                      }
+                  %>
+                  <%= button_tag type: 'submit', class: "search-button" do %>
+                    <i class="fas fa-search"></i>
+                  <% end %>
+                </div>
                 <div class="suggestions-container d-none" data-search-target="suggestions">
                   <div class="suggestions-list list-group shadow"></div>
                 </div>

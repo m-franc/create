@@ -4,7 +4,7 @@
   top: 0;
   bottom: 0;
   width: 80px;
-  background-color: #B93838;
+  background-color: #B91C1C;
   color: white;
   display: flex;
   flex-direction: column;
@@ -118,10 +118,10 @@
     margin-top: auto;
     position: relative;
 
-    .dropdown-toggle {
+    .avatar-container {
       display: flex;
       justify-content: center;
-      position: relative;
+      cursor: pointer;
     }
 
     .avatar {
@@ -129,21 +129,10 @@
       height: 45px;
       border-radius: 50%;
       object-fit: cover;
-      transition: all 0.3s ease;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
     }
 
-    .username {
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      white-space: nowrap;
-    }
-
-    .dropdown-toggle::after {
-      opacity: 0;
-      transition: opacity 0.3s ease;
+    .dropdown-menu {
+      margin-top: 0.5rem;
     }
   }
 
@@ -178,15 +167,9 @@
     }
 
     .user-menu {
-      .dropdown-toggle {
-        justify-content: flex-start;
-      }
-
       .avatar {
-        width: 32px;
-        height: 32px;
-        position: static;
-        transform: none;
+        width: 45px;
+        height: 45px;
       }
     }
   }
