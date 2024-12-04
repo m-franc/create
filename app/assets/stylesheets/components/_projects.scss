@@ -9,7 +9,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 20px;
     padding: 0 1rem;
 
     h1 {
@@ -39,21 +39,91 @@
         transform: translateY(-2px);
       }
     }
+
+    .new-project-button {
+      height: 45px;
+      width: 45px;
+      border-radius: 50%;
+      border: none;
+      background-color: #B91C1C;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 0;
+      text-decoration: none;
+      position: relative;
+
+      .plus-icon-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        transition: all 0.3s ease;
+        font-size: 28px;
+        font-weight: 300;
+        position: absolute;
+      }
+
+      .new-project-text {
+        position: absolute;
+        opacity: 0;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        font-size: 15px;
+        width: 100%;
+        text-align: center;
+        pointer-events: none;
+      }
+
+      &:hover {
+        width: 140px;
+        padding: 0 15px;
+        border-radius: 22px;
+
+        .plus-icon-wrapper {
+          transform: translateX(-50px);
+          opacity: 0;
+        }
+
+        .new-project-text {
+          opacity: 1;
+        }
+      }
+    }
   }
 
   .card-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
     gap: 2rem;
-    padding: 1rem;
+    padding: 0rem 1rem 3rem 1rem;
     justify-items: center;
     max-width: 1200px;
     margin: 0 auto;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(185, 28, 28, 0.1);
+    }
   }
 
   .card {
     width: 100%;
     max-width: 300px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     background: white;
     border-radius: 12px;
     overflow: hidden;
@@ -85,12 +155,15 @@
 
     .card-image {
       width: 100%;
-      height: 180px;
+      height: 200px;
       object-fit: cover;
     }
 
     .card-content {
       padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
 
       h2 {
         font-family: "Roboto", sans-serif;
@@ -98,16 +171,12 @@
         font-weight: 500;
         color: #B91C1C;
         margin-bottom: 1rem;
+        min-height: 2.5em;  // Pour 2 lignes de titre
       }
 
       p {
-        color: #666;
-        margin: 0.5rem 0;
-        font-size: 0.9rem;
-
-        strong {
-          color: #1a1a1a;
-        }
+        margin-bottom: 0.5rem;
+        min-height: 1.5em;  // Pour une ligne de texte
       }
     }
   }
