@@ -63,3 +63,30 @@ input.btn-edit-p {
     border: solid 1px $red-create;
   }
 }
+
+.btn-close:hover {
+  color: $red-create !important;
+}
+
+
+/* Form Container */
+/* Form Container */
+.form-container {
+  display: flex;
+  flex-direction: column;  /* Organise les éléments en colonne */
+  justify-content: flex-start; /* Aligne les éléments au début (haut) */
+  align-items: flex-start; /* Aligne les éléments à gauche */
+}
+
+/* Bouton de suppression */
+.btn-destroy {
+  border: none;
+  color: $red-create;  /* Assure-toi que cette variable est définie ou remplace-la par une couleur explicite */
+  background-color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 2px;
+  align-self: flex-end; /* Aligne le bouton à la droite du conteneur */
+  margin-top: 10px; /* Espacement du haut */
+}

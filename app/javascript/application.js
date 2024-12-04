@@ -7,6 +7,7 @@ import "components/form";
 import "components/modals";
 import { Turbo } from "@hotwired/turbo-rails"
 
+
 // Disable Turbo for specific forms
 document.addEventListener('turbo:load', () => {
   const forms = document.querySelectorAll('form[data-turbo="false"]')

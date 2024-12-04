@@ -3,7 +3,7 @@
             <%= link_to project_path(@project, anchor: 'contact-tab') do %>
               <i class="fa-solid fa-arrow-left"></i>
             <% end %>
-            </div>  
+            </div>
 
 <%= form_with(model: @project, local: true) do |form| %>
   <div class="form-container">
@@ -25,6 +25,12 @@
       </div>
 
       <div class="right">
+<% if current_user == @project.user %>
+  <%= button_to 'Delete Project', project_path(@project),
+                method: :delete,
+                data: { confirm: 'Are you sure?', turbo: false },
+                class: 'btn-destroy' %>
+<% end %>
         <div class="field">
           <%= form.label :starting_date, class: "form-label-red" %>
           <%= form.text_field :starting_date, class:"form-control", data: { controller: "datepicker", datepicker_date_format: "Y-m-d", datepicker_min_date: Time.zone.now, }  %>
@@ -48,5 +54,7 @@
 <div class="actions">
   <%= form.submit 'Edit Project', class: 'btn-edit-p' %>
 </div>
-  </div>
+
+
 <% end %>
+</div>

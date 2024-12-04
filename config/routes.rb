@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   root 'projects#index'
 
   resources :projects do
-    resources :notes, only: [:create]
+    resources :notes, only: [:create, :destroy]
   end
 
   resources :projects do

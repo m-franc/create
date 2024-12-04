@@ -42,17 +42,17 @@ class NotesController < ApplicationController
     @note.project = @project
     @note.user = current_user
     if @note.update(note_params)
-      redirect_to project_notes_path(@project, @note), notice: 'Note was successfully updated.'
+      redirect_to project_path(@project, @note), notice: 'Note was successfully updated.'
     else
       flash[:alert] = "Unable to update the note. Please fix the errors."
-      redirect_to project_note_path(@project, @note), notice: 'Note was successfully updated.'
+      redirect_to project_path(@project, @note), notice: 'Note was successfully updated.'
     end
   end
 
   def destroy
-    project = @note.project
+    @project = @note.project
     @note.destroy
-    redirect_to project_notes_path(project), notice: 'Note was successfully deleted.'
+    redirect_to project_path(@project), notice: 'Note was successfully deleted.'
   end
 
   private

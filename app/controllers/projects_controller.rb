@@ -79,9 +79,9 @@ class ProjectsController < ApplicationController
 
   # DELETE /projects/:id
   def destroy
+    @project = Project.find(params[:id])
     @project.destroy
-    flash[:notice] = "Project deleted 🗑️"
-    redirect_to projects_path
+    redirect_to projects_path, notice: 'Project was successfully deleted.'
   end
 
   def accept

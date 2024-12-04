@@ -4,6 +4,8 @@ $red-create: #B93838;
 .project.h-100.d-flex.flex-column {
   margin: 0!important;
 }
+
+
 .content {
   margin: 5%;
   padding: 0!important;
@@ -36,9 +38,17 @@ $red-create: #B93838;
 
 .project-red {
     margin-top: 50px!important;
-  .page{
-    display: none;
-  }
+
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+
   background-color: $red-create;
   padding: 30px;
   border-radius: 20px;
@@ -207,6 +217,7 @@ $red-create: #B93838;
   height: 75px;
   object-fit: cover;
   border-radius: 10px;
+  margin-bottom: 30px;
 }
 
 .project-details {
