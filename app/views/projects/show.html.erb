@@ -7,26 +7,11 @@
     <% end %>
 
     <div class="project-details">
-      <div class="title-info">
       <h2><%= @project.name %></h2>
-        <div class="info-grid">
-          <div class="info-item">
-            <span class="info-label"><i class="fa-solid fa-city"></i></span>
-            <span class="info-value"><%= @project.location %></span>
-          </div>
-        </div>
-          <div class="info-item">
-            <span class="info-label"><i class="fa-regular fa-calendar-days"></i></span>
-            <span class="info-value"><%= @project.end_date&.strftime("%B %d, %Y") %></span>
-          </div>
-        </div>
       <p><%= @project.description %></p>
-<% if current_user == @project.user %>
-  <%= link_to edit_project_path(@project), class: 'edit-link' do %>
-    <i class="fa-regular fa-pen-to-square"></i>
-  <% end %>
+    <%= link_to edit_project_path(@project), class: 'edit-link' do %>
+  <i class="fa-regular fa-pen-to-square"></i> Edit Project
 <% end %>
-
 
     </div>
   </div>
@@ -42,7 +27,7 @@
       <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Tasks</button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link" id="note-tab" data-bs-toggle="tab" data-bs-target="#note-tab-pane" type="button" role="tab" aria-controls="note-tab-pane" aria-selected="false">Notes</button>
+      <button class="nav-link" id="notes-tab" data-bs-toggle="tab" data-bs-target="#notes-tab-pane" type="button" role="tab" aria-controls="notes-tab-pane" aria-selected="false">Notes</button>
     </li>
      <li class="nav-item" role="presentation">
       <button class="nav-link" id="document-tab" data-bs-toggle="tab" data-bs-target="#document-tab-pane" type="button" role="tab" aria-controls="document-tab-pane" aria-selected="false">Documents</button>
@@ -54,41 +39,68 @@
 
     <div class="tab-content flex-grow-1" id="myTabContent">
     <div class="tab-pane fade show active h-100" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-
+      <div class="project-info-section">
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">Place</span>
+            <span class="info-value"><%= @project.location %></span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Status</span>
+            <span class="info-value <%= @project.status.is_a?(String) ? @project.status.parameterize : @project.status %>">
+              <%= @project.status.is_a?(String) ? @project.status : (@project.status ? "Active" : "Inactive") %>
+            </span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Starting date</span>
+            <span class="info-value"><%= @project.starting_date&.strftime("%B %d, %Y") %></span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Creation</span>
+            <span class="info-value"><%= @project.created_at.strftime("%B %d, %Y") %></span>
+      </div>
+          </div>
+        </div>
       <div class="nav-project">
       </div>
       <div class="cards">
         <div class="card-project" id="task">
-<h4 class="mb-4">Tasks</h4>
+<h4 class="mb-4 text-dark">Tasks</h4>
 
 <% if @tasks.any? %>
   <div class="task-list">
     <% @tasks.first(6).each do |task| %>
       <div class="task-item py-3 border-bottom" style="border-color: #f0f0f0 !important;">
-        <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center justify-content-between" style="gap: 30px;">
           <div class="d-flex align-items-center gap-3">
-            <div class="task-dot rounded-circle bg-secondary opacity-25" style="width: 6px; height: 6px;"></div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+
+            </div>
             <div class="fw-medium text-dark" style="font-size: 0.95rem;">
               <%= task.name %>
             </div>
           </div>
+
+          <div class="cal-view">
           <% if task.deadline %>
             <% deadline_date = Date.parse(task.deadline) rescue nil %>
             <% if deadline_date %>
-              <div class="text-secondary d-flex align-items-center" style="font-size: 0.8rem;">
-                <i class="bi bi-calendar3 opacity-75 me-1"></i>
-                <%= deadline_date.strftime("%b %d") %>
+              <div class="text-secondary d-flex align-items-center" style="font-size: 0.8rem;justify-content: flex-start; margin: 0; min-width: 70px;">
+                <i class="bi bi-calendar3 opacity-75"></i>
+                <i class="fa-solid fa-calendar-days"></i>&nbsp;<%= deadline_date.strftime("%b %d") %>
               </div>
+
             <% end %>
           <% end %>
 
           <!-- Bouton pour ouvrir la modal -->
           <button type="button" class="btn-view" data-bs-toggle="modal" data-bs-target="#taskModal_<%= task.id %>">
-            <i class="fa-regular fa-eye"></i>
+            View <i class="fa-regular fa-eye"></i>
           </button>
         </div>
       </div>
-
+      </div>
       <!-- Modal pour cette tâche -->
       <div class="modal fade" id="taskModal_<%= task.id %>" tabindex="-1" aria-labelledby="taskModalLabel_<%= task.id %>" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
@@ -140,7 +152,7 @@
 </div>
 
         <div class="card-project" id="notes">
-          <h4 class="mb-4">Notes</h4>
+          <h4 class="mb-4 text-dark">Notes</h4>
 
           <% if @project.notes.any? %>
             <div class="list-group border-0">
@@ -169,7 +181,7 @@
         </div>
         <div class="card-project" id="card-4">
           <div class="text-center mb-4">
-            <h4 class="mb-4">Members</h4>
+            <h4 class="mb-0 text-dark">Members</h4>
           </div>
 
           <% if @project.project_users.any? %>
@@ -190,7 +202,7 @@
         </div>
         <div class="card-project" id="card-3">
           <div class="text-center mb-4">
-            <h4 class="mb-4">Documents</h4>
+            <h4 class="mb-0 text-dark">Documents</h4>
           </div>
 
           <% if @project.documents.any? %>
@@ -210,7 +222,7 @@
           <% end %>
         </div>
         <div class="card-project" id="card-5">
-          <h4 class="mb-4">Conversations</h4>
+          <h4 class="mb-4 text-dark">Conversations</h4>
           <% if @project.conversations.any? %>
             <div class="conversation-list">
               <% @project.conversations.first(3).each do |conversation| %>
@@ -326,91 +338,147 @@
         <% end %>
       </div>
     </div>
-    <div class="tab-pane fade h-100" id="note-tab-pane" role="tabpanel" aria-labelledby="note-tab" tabindex="0">
-      <%= render 'notes/dashboard_show', note: @note %>
+    <div class="tab-pane" id="notes-tab-pane">
+      <div class="container mt-4">
+        <!-- Notes Header -->
+        <div class="d-flex justify-content-end mb-4">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newNoteModal">
+            <i class="fas fa-plus me-2"></i>New Note
+          </button>
+        </div>
+
+        <!-- Notes List -->
+        <div class="card">
+          <div class="card-body p-0">
+            <% if @project.notes.any? %>
+              <% @project.notes.order(created_at: :desc).each do |note| %>
+                <div class="p-3 border-bottom">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div class="w-100 me-5">
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6 class="mb-0 fw-bold"><%= note.title %></h6>
+                        <small class="text-muted">
+                          <%= time_ago_in_words(note.created_at) %> ago by
+                          <%= "#{note.user.first_name} #{note.user.last_name}" %>
+                        </small>
+                      </div>
+                      <div class="text-muted">
+                        <%= note.content %>
+                      </div>
+                    </div>
+                    <%= link_to project_note_path(@project, note),
+                        data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this note?" },
+                        class: "btn-delete ms-3" do %>
+                      <i class="fas fa-trash-alt"></i>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="text-center text-muted p-4">
+                <i class="fas fa-sticky-note fa-2x mb-2"></i>
+                <p class="mb-0">No notes yet</p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="newNoteModal" tabindex="-1" aria-labelledby="newNoteModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="newNoteModalLabel">Add New Note</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <%= simple_form_for([@project, @note]) do |f| %>
+                  <%= f.input :title, label: 'Title', placeholder: 'Enter note title' %>
+                  <%= f.input :content,
+                      as: :text,
+                      label: 'Note Content',
+                      placeholder: 'Type your note here...',
+                      input_html: { rows: 4 } %>
+                  <div class="form-actions text-end mt-3">
+                    <%= f.button :submit, 'Add Note', class: 'btn btn-primary' %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="tab-pane fade" id="document-tab-pane" role="tabpanel" aria-labelledby="document-tab">
-      <div class="documents-list">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <h4 class="mb-0"></h4>
-          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#uploadDocumentModal">
+    <div class="tab-pane fade"
+         id="document-tab-pane"
+         role="tabpanel"
+         aria-labelledby="document-tab"
+         tabindex="0"
+         data-controller="documents"
+         data-turbo="false">
+      <div class="container mt-4">
+        <!-- Upload button -->
+        <div class="d-flex justify-content-end mb-4">
+          <button type="button"
+                  class="btn btn-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#uploadDocumentModal">
             <i class="fas fa-upload me-2"></i>Upload Document
           </button>
         </div>
 
-        <% if @project.documents.any? %>
-          <% @project.documents.each do |document| %>
-            <div class="document-item d-flex justify-content-between align-items-center p-2 border rounded mb-2" id="<%= dom_id(document) %>">
-              <div class="d-flex align-items-center">
-                <i class="fas fa-file me-2 text-secondary"></i>
-                <span class="text-dark"><%= document.name %></span>
-              </div>
-              <div class="d-flex align-items-center gap-3">
-                <% if @project.user == current_user || document.user == current_user %>
-                  <%= link_to download_project_document_path(@project, document),
-                      class: "text-decoration-none text-secondary",
-                      data: { turbo: false },
-                      target: "_blank",
-                      title: "Download" do %>
-                    <i class="fas fa-download"></i>
-                  <% end %>
-                <% end %>
-                <% if @project.user == current_user %>
-                  <%= button_to project_document_path(@project, document),
-                      method: :delete,
-                      form: {
-                        data: {
-                          turbo_confirm: "Are you sure you want to delete this document?"
-                        }
-                      },
-                      class: "btn btn-link text-decoration-none text-danger p-0",
-                      title: "Delete" do %>
-                    <i class="fas fa-trash-alt"></i>
-                  <% end %>
+        <!-- Document list -->
+        <div class="list-group">
+          <% if @project.documents.any? %>
+            <% @project.documents.each do |document| %>
+              <div class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <i class="fas fa-file-alt me-2"></i>
+                  <%= document.name %>
+                </div>
+                <%= link_to download_project_document_path(@project, document),
+                    class: "btn btn-sm btn-outline-primary",
+                    data: { turbo: false } do %>
+                  <i class="fas fa-download"></i>
                 <% end %>
               </div>
+            <% end %>
+          <% else %>
+            <div class="list-group-item text-center text-muted">
+              <p class="mb-0">No documents yet</p>
             </div>
           <% end %>
-        <% else %>
-          <div class="text-secondary d-flex align-items-center gap-2">
-            <i class="fas fa-file-alt"></i>
-            <span>No documents yet</span>
-          </div>
-        <% end %>
+        </div>
+      </div>
 
-        <!-- Upload Document Modal -->
-        <div class="modal fade" id="uploadDocumentModal" tabindex="-1" aria-labelledby="uploadDocumentModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="uploadDocumentModalLabel">Upload New Document</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <%= form_with(model: [@project, Document.new], local: true, data: { turbo: false }) do |f| %>
-                  <%= hidden_field_tag :redirect_tab, 'document' %>
-
-                  <div class="form-group mb-3">
-                    <%= f.label :name, class: 'form-label-red' %>
-                    <%= f.text_field :name, class: 'form-control' %>
-                  </div>
-
-                  <div class="form-group mb-3">
-                    <%= f.label :folder_name, 'Folder Name (optional)', class: 'form-label-red' %>
-                    <%= f.text_field :folder_name, class: 'form-control' %>
-                  </div>
-
-                  <div class="form-group mb-3">
-                    <%= f.label :file, class: 'form-label-red' %>
-                    <%= f.file_field :file, class: 'form-control' %>
-                  </div>
-
-                  <div class="text-end">
-
-                    <%= f.submit 'Upload Document', class: ' btn-edit-p' %>
-                  </div>
-                <% end %>
-              </div>
+      <!-- Upload Modal -->
+      <div class="modal fade"
+           id="uploadDocumentModal"
+           tabindex="-1"
+           aria-labelledby="uploadDocumentModalLabel"
+           aria-hidden="true"
+           data-documents-target="modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="uploadDocumentModalLabel">Upload Document</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <%= simple_form_for([@project, @document],
+                  html: {
+                    multipart: true,
+                    data: { turbo: false }
+                  }) do |f| %>
+                <div class="form-inputs">
+                  <%= f.input :name, required: true %>
+                  <%= f.input :folder_name %>
+                  <%= f.input :file, as: :file, required: true %>
+                </div>
+                <div class="form-actions text-end mt-3">
+                  <%= f.button :submit, "Upload", class: "btn btn-primary" %>
+                </div>
+              <% end %>
             </div>
           </div>
         </div>
@@ -502,6 +570,19 @@
 
     .document-item i {
       font-size: 0.9rem;
+    }
+
+    .btn-delete {
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-delete i {
+      color: grey;
+      transition: all 0.2s ease;
+    }
+    .btn-delete:hover i {
+      color: #dc3545;
+      transform: scale(1.1);
     }
   </style>
 <% end %>

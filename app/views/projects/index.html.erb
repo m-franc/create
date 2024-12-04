@@ -19,7 +19,10 @@
 
   <div class="projects-header">
     <h1>Projects created</h1>
-    <%= link_to ' + New Project', new_project_path, class: 'edit-link', data: {turbo: false}%>
+    <%= link_to new_project_path, class: 'new-project-button', data: {turbo: false} do %>
+      <span class="plus-icon-wrapper">+</span>
+      <span class="new-project-text">NEW PROJECT</span>
+    <% end %>
   </div>
 
   <div class="card-container">

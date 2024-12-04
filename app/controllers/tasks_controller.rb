@@ -17,7 +17,9 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     @task.project = @project
     @task.user = current_user
-
+    dates = params["task"]["date"].split("to").map(&:strip)
+    @task.date = dates[0]
+    @task.deadline = dates[1]
     if @task.save
       flash[:notice] = "Task created ✅"
       redirect_to project_path(@project, anchor: 'contact-tab')
@@ -34,6 +36,9 @@ class TasksController < ApplicationController
   end
 
   def update
+    dates = params["task"]["date"].split("to").map(&:strip)
+    @task.date = dates[0]
+    @task.deadline = dates[1]
     if @task.update(task_params)
       flash[:notice] = "Task successfully updated 💾"
       redirect_to project_path(@project, anchor: 'contact-tab')
@@ -51,7 +56,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :description, :location, :date, :deadline, :status, :priority)
+    params.require(:task).permit(:name, :description, :location, :status, :priority)
   end
 
   def set_task

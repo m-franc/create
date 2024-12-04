@@ -11,14 +11,21 @@ class ProjectsController < ApplicationController
   # GET /projects/:id
   def show
     @project = Project.find(params[:id])
-    @documents = @project.documents
-    @tasks = @project.tasks.includes(:user).order(deadline: :asc)
     @notes = @project.notes.includes(:user).order(created_at: :desc)
     @note = Note.new
-    @document = Document.new
+    @documents = @project.documents.includes(:user)
     @folders = @project.documents.pluck(:folder_name).uniq
     @documents = @project.documents
     @notes = @project.notes
+    @joined_users = @project.joined_users
+
+    # # Debug logging
+    # Rails.logger.debug "Project: #{@project.inspect}"
+    # Rails.logger.debug "Notes count: #{@notes.count}"
+
+    @tasks = @project.tasks.includes(:user).order(deadline: :asc)
+    @documents = @project.documents.includes(:user)
+    @document = Document.new
     @joined_users = @project.joined_users
   end
 
@@ -39,6 +46,9 @@ class ProjectsController < ApplicationController
     @project.user = current_user
     @joined_users = @project.joined_users
 
+    dates = params["project"]["starting_date"].split("to").map(&:strip)
+    @project.starting_date = dates[0]
+    @project.end_date = dates[1]
     if @project.save
       init_status_project_users(@project, "0")
       if params[:project][:image].present?
@@ -65,6 +75,9 @@ class ProjectsController < ApplicationController
 
   # PATCH/PUT /projects/:id
   def update
+    dates = params["project"]["starting_date"].split("to").map(&:strip)
+    @project.starting_date = dates[0]
+    @project.end_date = dates[1]
     if @project.update(project_params)
       if params[:project][:image].present?
         @project.image.attach(params[:project][:image])
@@ -104,7 +117,7 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:name, :location, :status, :notes, :date, :description, :image, joined_user_ids: [])
+    params.require(:project).permit(:name, :location, :status, :notes, :description, :image, joined_user_ids: [])
   end
 
   def note_params
