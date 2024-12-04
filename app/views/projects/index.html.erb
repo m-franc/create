@@ -15,14 +15,41 @@
     </div>
   </div>
 
+    <%# PROJECTS CREES %>
+
   <div class="projects-header">
-    <h1>Projects joined</h1>
+    <h1>Projects created</h1>
     <%= link_to ' + New Project', new_project_path, class: 'edit-link', data: {turbo: false}%>
   </div>
 
+  <div class="card-container">
+    <% Array(@projects).each do |project| %>
+      <%= link_to project_path(project.id), class: 'text-decoration-none' do %> <!-- Le lien englobe toute la carte -->
+        <div class="card">
+          <div class="card-image">
+            <% if project.image.attached? %>
+              <%= image_tag project.image, class: 'card-image', alt: "#{project.name} Image" %>
+            <% else %>
+              <%= image_tag "unavailable_image.jpg", class: 'card-image', alt: "No image available" %>
+            <% end %>
+          </div>
+          <div class="card-content">
+            <h2><%= project.name %></h2>
+            <p><strong>Location:</strong> <%= project.location %></p>
+            <p><strong>Start Date:</strong> <%= project.starting_date %></p>
+            <p><strong>End Date:</strong> <%= project.end_date %></p>
+          </div>
+        </div>
+      <% end %>  <!-- Fin du lien -->
+    <% end %>
+  </div>
+
+  <div class="projects-header">
+    <h1>Projects joined</h1>
+  </div>
   <%# PROJECTS REJOINTS %>
-<div class="card-container"> <!-- Le lien englobe toute la carte -->
-  <% Array(@projects_user).each do |project_user| %>
+  <div class="card-container"> <!-- Le lien englobe toute la carte -->
+    <% Array(@projects_user).each do |project_user| %>
       <div class="card">
         <%= link_to project_path(project_user.project.id), class: 'text-decoration-none' do %>
         <div class="card-image">
@@ -53,32 +80,4 @@
   <% end %>
 </div>
 
-    <%# PROJECTS CREES %>
-
-  <div class="projects-header">
-    <h1>Projects created</h1>
-    <%= link_to ' + New Project', new_project_path, class: 'edit-link', data: {turbo: false}%>
-  </div>
-
-  <div class="card-container">
-    <% Array(@projects).each do |project| %>
-      <%= link_to project_path(project.id), class: 'text-decoration-none' do %> <!-- Le lien englobe toute la carte -->
-        <div class="card">
-          <div class="card-image">
-            <% if project.image.attached? %>
-              <%= image_tag project.image, class: 'card-image', alt: "#{project.name} Image" %>
-            <% else %>
-              <%= image_tag "unavailable_image.jpg", class: 'card-image', alt: "No image available" %>
-            <% end %>
-          </div>
-          <div class="card-content">
-            <h2><%= project.name %></h2>
-            <p><strong>Location:</strong> <%= project.location %></p>
-            <p><strong>Start Date:</strong> <%= project.starting_date %></p>
-            <p><strong>End Date:</strong> <%= project.end_date %></p>
-          </div>
-        </div>
-      <% end %>  <!-- Fin du lien -->
-    <% end %>
-  </div>
 </div>
