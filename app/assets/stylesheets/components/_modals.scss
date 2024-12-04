@@ -1,8 +1,37 @@
+.modal {
+  background: rgba(0, 0, 0, 0);
+  transition: background-color 0.3s ease;
+
+  &.show {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.modal-dialog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100% - 1rem);
+  margin: 1rem auto;
+  max-width: 500px !important;
+  width: 90%;
+  transform: scale(0.95);
+  opacity: 0;
+  transition: all 0.3s ease;
+
+  .modal.show & {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 .modal-content {
   border-radius: 10px;
   border: solid 2px $red-create;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
-
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .modal-header {
@@ -33,4 +62,3 @@
   background-color: none;
   color: $red-create;
 }
-
