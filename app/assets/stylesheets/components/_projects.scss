@@ -9,7 +9,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 20px;
     padding: 0 1rem;
 
     h1 {
@@ -101,10 +101,21 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
     gap: 2rem;
-    padding: 1rem;
+    padding: 0rem 1rem 3rem 1rem;
     justify-items: center;
     max-width: 1200px;
     margin: 0 auto;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(185, 28, 28, 0.1);
+    }
   }
 
   .card {
