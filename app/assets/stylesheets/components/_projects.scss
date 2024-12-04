@@ -169,3 +169,13 @@
     }
   }
 }
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-btn-status {
+  margin-top: auto;
+}
