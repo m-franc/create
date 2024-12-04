@@ -1,0 +1,2 @@
+      invoke  active_record
+      create    db/migrate/20241202093059_add_status_to_project_user.rb
