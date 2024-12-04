@@ -431,6 +431,12 @@ $red-create: #B93838;
   border: none
 }
 
+.cal-view{
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+
 .projects-container{
   padding-top: 0!important;
 }

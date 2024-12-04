@@ -42,8 +42,8 @@
 
             <div class="col-md-6">
               <%= form.label :status, class: "form-label-red" %>
-              <%= form.select :status,
-                  ['pending', 'in_progress', 'completed'],
+              <%= form.select :status, id:"statusCheck",
+                  ['in_progress', 'completed'],
                   {},
                   {
                     class: "form-select",

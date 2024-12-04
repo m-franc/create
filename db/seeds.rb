@@ -317,8 +317,6 @@ projects_data.each do |project_data|
       description: "#{task_data[:name]} - Detailed task for #{project.name} production",
       project: project,
       user: team_members.sample,
-      status: task_data[:status],
-      priority: ["low", "medium", "high"].sample,
       deadline: task_data[:due_date]
     )
   end
