@@ -28,8 +28,7 @@
               <%= form.text_field :location, class: "form-control", placeholder: "Enter task location" %>
             </div>
 
-            <div class="row mb-4">
-              <div class="col-md-6">
+            <div class="mb-4">
                 <%= form.label :date, class: "form-label-red" %>
                 <%= form.text_field :date,
                   class: "form-control",
@@ -40,46 +39,10 @@
                     datepicker_min_date: Time.zone.now
                   }
                 %>
-              </div>
 
-              <div class="col-md-6">
-                <%= form.label :deadline, class: "form-label-red" %>
-                <%= form.text_field :deadline,
-                  class: "form-control",
-                  placeholder: "Select deadline",
-                  data: {
-                    controller: "datepicker",
-                    datepicker_date_format: "Y-m-d",
-                    datepicker_min_date: Time.zone.now
-                  }
-                %>
-              </div>
             </div>
       <div class="d-flex mb-4">
-  <div class="col-6 pe-3"> <!-- "col-6" pour occuper la moitié de l'espace, "pe-3" pour ajouter de l'espace à droite -->
-    <%= form.label :status, class: "form-label-red" %>
-    <%= form.select :status,
-      ['pending', 'in_progress', 'completed'],
-      { selected: 'pending' },
-      {
-        class: "form-select",
-        data: { controller: "tom-select" }
-      }
-    %>
-  </div>
 
-  <div class="col-6"> <!-- "col-6" pour occuper la moitié de l'espace -->
-    <%= form.label :priority, class: "form-label-red" %>
-    <%= form.select :priority,
-      ['High', 'Medium', 'Low'],
-      { selected: 'pending' },
-      {
-        placeholder: "Enter task priority",
-        class: "form-select",
-        data: { controller: "tom-select" }
-      }
-    %>
-  </div>
 </div>
 
 

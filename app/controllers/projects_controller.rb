@@ -19,9 +19,9 @@ class ProjectsController < ApplicationController
     @notes = @project.notes
     @joined_users = @project.joined_users
 
-    # Debug logging
-    Rails.logger.debug "Project: #{@project.inspect}"
-    Rails.logger.debug "Notes count: #{@notes.count}"
+    # # Debug logging
+    # Rails.logger.debug "Project: #{@project.inspect}"
+    # Rails.logger.debug "Notes count: #{@notes.count}"
 
     @tasks = @project.tasks.includes(:user).order(deadline: :asc)
     @documents = @project.documents.includes(:user)
@@ -45,6 +45,10 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     @project.user = current_user
     @joined_users = @project.joined_users
+
+    dates = params["project"]["starting_date"].split("to").map(&:strip)
+    @project.starting_date = dates[0]
+    @project.end_date = dates[1]
 
     if @project.save
       init_status_project_users(@project, "0")
@@ -72,6 +76,9 @@ class ProjectsController < ApplicationController
 
   # PATCH/PUT /projects/:id
   def update
+    dates = params["project"]["starting_date"].split("to").map(&:strip)
+    @project.starting_date = dates[0]
+    @project.end_date = dates[1]
     if @project.update(project_params)
       if params[:project][:image].present?
         @project.image.attach(params[:project][:image])
@@ -111,7 +118,7 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:name, :location, :status, :notes, :date, :description, :image, joined_user_ids: [])
+    params.require(:project).permit(:name, :location, :status, :notes, :description, :image, joined_user_ids: [])
   end
 
   def note_params
