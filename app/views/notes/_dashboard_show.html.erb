@@ -1,45 +1,55 @@
-
 <div class="note">
-
-
-<% if @project.user == current_user %>
-  <div class="new-note">
-    <%= render 'notes/form_note', note: @note %>
-  </div>
-<% else %>
-  <div class="new-note">
-    <p>Only <%= @project.user.username %> can add notes.</p>
-  </div>
-<% end %>
-
-
+  <% if @project.user == current_user %>
+    <div class="new-note">
+      <%= render 'notes/form_note', note: @note %>
+    </div>
+  <% else %>
+    <div class="new-note">
+      <p>Only <%= @project.user.username %> can add notes.</p>
+    </div>
+  <% end %>
 
   <div class="all-notes">
-  <% if @notes.present? %>
+    <% if @notes.present? %>
+      <% @notes.each do |note| %>
+        <div class="card-note">
+          <div class="card-body-note">
+            <h1 class="card-title"><%= note.title %></h1>
+            <p class="card-text"><%= note.content %></p>
+            <small class="text-muted">Created by: <%= note.user.username %></small>
 
-    <% @notes.each do |note| %>
-      <div class="card-note">
-        <div class="card-body-note">
-          <h1 class="card-title"><%= note.title %></h1>
-          <p class="card-text"><%= note.content %></p>
-          <small class="text-muted">Created by: <%= note.user.username %></small>
-                  <% if note.project.user == current_user %>
-<%= link_to edit_project_note_path(note.project, note), class: 'btn-edit-note' do %>
-  <i class="fa-regular fa-pen-to-square"></i> Edit
-<% end %>
+            <% if note.project.user == current_user %>
+              <%= link_to '#', class: 'btn-edit-note', data: { bs_toggle: 'modal', bs_target: "#modal-#{note.id}" } do %>
+                <i class="fa-regular fa-pen-to-square"></i> Edit
+              <% end %>
 
-          <%= link_to 'Delete', project_note_path(note.project, note),
-              method: :delete,
-              data: { confirm: 'Are you sure?' },
-              class: 'btn' %>
-        <% end %>
+           <%= link_to 'Delete', project_path(@project, @note),
+            method: :delete,
+            data: { confirm: 'Are you sure?', turbo: false },
+            class: 'btn' %>
+
+            <% end %>
+
+          </div>
         </div>
 
-
-    <% end %>
-  <% else %>
+        <!-- Modal Structure -->
+        <div class="modal fade" id="modal-<%= note.id %>" tabindex="-1" aria-labelledby="modalLabel-<%= note.id %>" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel-<%= note.id %>">Edit Note</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <%= render 'notes/form_note', note: note %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
       <p>Pas de notes ...</p>
-  <% end %>
+    <% end %>
   </div>
-</div>
 </div>

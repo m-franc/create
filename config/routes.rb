@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   # General project routes
   root 'projects#index'
   resources :projects do
-    resources :notes, only: [:create]
+    resources :notes, only: [:create, :destroy]
   end
 
   resources :projects do
