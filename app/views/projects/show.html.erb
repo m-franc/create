@@ -7,11 +7,23 @@
     <% end %>
 
     <div class="project-details">
+      <div class="title-info">
       <h2><%= @project.name %></h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label"><i class="fa-solid fa-city"></i></span>
+            <span class="info-value"><%= @project.location %></span>
+          </div>
+        </div>
+          <div class="info-item">
+            <span class="info-label"><i class="fa-regular fa-calendar-days"></i></span>
+            <span class="info-value"><%= @project.end_date&.strftime("%B %d, %Y") %></span>
+          </div>
+        </div>
       <p><%= @project.description %></p>
 <% if current_user == @project.user %>
   <%= link_to edit_project_path(@project), class: 'edit-link' do %>
-    <i class="fa-regular fa-pen-to-square"></i> Edit Project
+    <i class="fa-regular fa-pen-to-square"></i>
   <% end %>
 <% end %>
 
@@ -42,33 +54,12 @@
 
     <div class="tab-content flex-grow-1" id="myTabContent">
     <div class="tab-pane fade show active h-100" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-      <div class="project-info-section">
-        <div class="info-grid">
-          <div class="info-item">
-            <span class="info-label">Place</span>
-            <span class="info-value"><%= @project.location %></span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">Status</span>
-            <span class="info-value <%= @project.status.is_a?(String) ? @project.status.parameterize : @project.status %>">
-              <%= @project.status.is_a?(String) ? @project.status : (@project.status ? "Active" : "Inactive") %>
-            </span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">Starting date</span>
-            <span class="info-value"><%= @project.starting_date&.strftime("%B %d, %Y") %></span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">Creation</span>
-            <span class="info-value"><%= @project.created_at.strftime("%B %d, %Y") %></span>
-      </div>
-          </div>
-        </div>
+
       <div class="nav-project">
       </div>
       <div class="cards">
         <div class="card-project" id="task">
-<h4 class="mb-4 text-dark">Tasks</h4>
+<h4 class="mb-4">Tasks</h4>
 
 <% if @tasks.any? %>
   <div class="task-list">
@@ -93,7 +84,7 @@
 
           <!-- Bouton pour ouvrir la modal -->
           <button type="button" class="btn-view" data-bs-toggle="modal" data-bs-target="#taskModal_<%= task.id %>">
-            View <i class="fa-regular fa-eye"></i>
+            <i class="fa-regular fa-eye"></i>
           </button>
         </div>
       </div>
@@ -149,7 +140,7 @@
 </div>
 
         <div class="card-project" id="notes">
-          <h4 class="mb-4 text-dark">Notes</h4>
+          <h4 class="mb-4">Notes</h4>
 
           <% if @project.notes.any? %>
             <div class="list-group border-0">
@@ -178,7 +169,7 @@
         </div>
         <div class="card-project" id="card-4">
           <div class="text-center mb-4">
-            <h4 class="mb-0 text-dark">Members</h4>
+            <h4 class="mb-4">Members</h4>
           </div>
 
           <% if @project.project_users.any? %>
@@ -199,7 +190,7 @@
         </div>
         <div class="card-project" id="card-3">
           <div class="text-center mb-4">
-            <h4 class="mb-0 text-dark">Documents</h4>
+            <h4 class="mb-4">Documents</h4>
           </div>
 
           <% if @project.documents.any? %>
@@ -219,7 +210,7 @@
           <% end %>
         </div>
         <div class="card-project" id="card-5">
-          <h4 class="mb-4 text-dark">Conversations</h4>
+          <h4 class="mb-4">Conversations</h4>
           <% if @project.conversations.any? %>
             <div class="conversation-list">
               <% @project.conversations.first(3).each do |conversation| %>

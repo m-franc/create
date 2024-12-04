@@ -441,3 +441,34 @@ $red-create: #B93838;
   border: solid 1px $red-create;
   border-radius: 6px;
 }
+
+.info-grid {
+  display: flex;
+  margin-left: 100px;
+  align-items: center;
+}
+
+.info-item {
+  margin-right: 30px;
+
+  align-items: center;
+}
+
+.info-label {
+  color: $red-create;
+  align-items: center;
+}
+
+.info-value {
+  align-items: center;
+}
+
+.title-info {
+  display: flex;
+  align-items: center;
+}
+
+h4.mb-4 {
+  color: $red-create;
+  font-size: 20px;
+}
