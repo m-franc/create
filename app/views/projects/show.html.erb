@@ -71,20 +71,26 @@
   <div class="task-list">
     <% @tasks.first(6).each do |task| %>
       <div class="task-item py-3 border-bottom" style="border-color: #f0f0f0 !important;">
-        <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center justify-content-between" style="gap: 30px;">
           <div class="d-flex align-items-center gap-3">
-            <div class="task-dot rounded-circle bg-secondary opacity-25" style="width: 6px; height: 6px;"></div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+
+            </div>
             <div class="fw-medium text-dark" style="font-size: 0.95rem;">
               <%= task.name %>
             </div>
           </div>
+
+          <div class="cal-view">
           <% if task.deadline %>
             <% deadline_date = Date.parse(task.deadline) rescue nil %>
             <% if deadline_date %>
-              <div class="text-secondary d-flex align-items-center" style="font-size: 0.8rem;">
-                <i class="bi bi-calendar3 opacity-75 me-1"></i>
-                <%= deadline_date.strftime("%b %d") %>
+              <div class="text-secondary d-flex align-items-center" style="font-size: 0.8rem;justify-content: flex-start; margin: 0; min-width: 70px;">
+                <i class="bi bi-calendar3 opacity-75"></i>
+                <i class="fa-solid fa-calendar-days"></i>&nbsp;<%= deadline_date.strftime("%b %d") %>
               </div>
+
             <% end %>
           <% end %>
 
@@ -94,7 +100,7 @@
           </button>
         </div>
       </div>
-
+      </div>
       <!-- Modal pour cette tâche -->
       <div class="modal fade" id="taskModal_<%= task.id %>" tabindex="-1" aria-labelledby="taskModalLabel_<%= task.id %>" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
