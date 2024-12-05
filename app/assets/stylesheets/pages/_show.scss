@@ -473,7 +473,7 @@ $red-create: #B93838;
 
 .info-grid {
   display: flex;
-  margin-left: 100px;
+  margin-left: 15px;
   align-items: center;
 }
 
@@ -500,4 +500,9 @@ $red-create: #B93838;
 h4.mb-4 {
   color: $red-create;
   font-size: 20px;
+}
+
+
+.icon-red {
+  color: #ff0000 !important; /* Changez la couleur ici */
 }

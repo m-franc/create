@@ -46,10 +46,10 @@
 .modal-header {
   border-bottom: 1px solid rgba(185, 28, 28, 0.1);
   padding: 1.5rem;
-  background-color: #B91C1C;
+  background-color: $red-create;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
-  
+
   .modal-title {
     font-size: 1.5rem;
     font-weight: 600;
@@ -93,7 +93,7 @@
 
     &:focus {
       outline: none;
-      border-color: #B91C1C;
+      border-color: $red-create;
       box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.1);
     }
   }
@@ -102,7 +102,7 @@
 .modal-footer {
   border-top: 1px solid rgba(185, 28, 28, 0.1);
   padding: 1.5rem;
-  
+
   .btn {
     padding: 0.5rem 1.5rem;
     border-radius: 25px;
@@ -120,7 +120,7 @@
     }
 
     &-primary {
-      background: #B91C1C;
+      background: $red-create;
       color: white;
       border: none;
 

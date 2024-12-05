@@ -14,11 +14,18 @@
       <span class="menu-label">Home</span>
     <% end %>
 
-    <%= link_to all_task_path , class: "menu-item", data: { menu: "create" } do %>
+      <%= link_to all_task_path , class: "menu-item", data: { menu: "create" } do %>
+      <div class="icon-container">
+        <%= inline_svg_tag "icons/task.svg", class: "icon" %>
+      </div>
+      <span class="menu-label">Task</span>
+    <% end %>
+
+    <%= link_to new_project_path , class: "menu-item", data: { menu: "create" } do %>
       <div class="icon-container">
         <%= inline_svg_tag "icons/create.svg", class: "icon" %>
       </div>
-      <span class="menu-label">Tasks</span>
+      <span class="menu-label">Create</span>
     <% end %>
 
     <%= link_to searches_path, class: "menu-item", data: { menu: "search" } do %>
