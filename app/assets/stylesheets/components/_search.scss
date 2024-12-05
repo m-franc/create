@@ -41,7 +41,7 @@
 
   &:focus {
     box-shadow: none;
-    border-color: #B91C1C;
+    border-color:$red-create;
     background-color: white;
   }
 }
@@ -55,7 +55,7 @@
   width: 37px;
   border-radius: 50%;
   border: none;
-  background-color: #B91C1C;
+  background-color: $red-create;
   color: white;
   display: flex;
   align-items: center;
@@ -152,7 +152,7 @@
 }
 
 .mb-0 {
-  color: #B91C1C;
+  color: $red-create;
 }
 
 .search-results {
@@ -172,7 +172,7 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 
       .mb-0 {
-        color: #B91C1C;
+        color: $red-create;
         font-weight: 600;
         font-size: 1.5rem;
         margin: 0;
@@ -182,7 +182,7 @@
         color: #6b7280;
         font-size: 0.9rem;
         background: #fee2e2;
-        color: #B91C1C;
+        color: $red-create;
         padding: 0.25rem 1rem;
         border-radius: 999px;
         font-weight: 500;
@@ -211,7 +211,7 @@
         left: 0;
         right: 0;
         height: 4px;
-        background: #B91C1C;
+        background: $red-create;
         transform: scaleX(0);
         transition: transform 0.3s ease;
       }
@@ -262,7 +262,7 @@
           align-items: center;
           gap: 0.5rem;
           background: #fee2e2;
-          color: #B91C1C;
+          color: $red-create;
           padding: 0.25rem 1rem;
           border-radius: 999px;
           font-size: 0.75rem;
@@ -271,7 +271,7 @@
       }
 
       .download-btn {
-        color: #B91C1C;
+        color: $red-create;
         padding: 0.5rem;
         border-radius: 8px;
         transition: all 0.2s ease;

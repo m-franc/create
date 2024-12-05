@@ -28,7 +28,7 @@
   margin-bottom: 15px;
 }
 label {
-  color: #d32f2f; /* Utilisation de ta couleur personnalisée pour les labels */
+  color: $red-create; /* Utilisation de ta couleur personnalisée pour les labels */
   margin-bottom: 5px;
 }
 input,
@@ -46,7 +46,7 @@ textarea {
   width: 100%; /* S'assurer qu'il s'étend sur toute la largeur */
 }
 input[type="submit"] {
-  background-color: #d32f2f; /* Rouge spécifique */
+  background-color: $red-create; /* Rouge spécifique */
   color: white;
   border: none;
   padding: 10px 20px;

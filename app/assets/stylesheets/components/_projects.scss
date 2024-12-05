@@ -21,7 +21,7 @@
     }
 
     .new-link {
-      background-color: #B91C1C;
+      background-color: $red-create;
       color: white;
       padding: 0.75rem 1.5rem;
       border-radius: 8px;
@@ -48,6 +48,9 @@
       width: 45px;
       border-radius: 50%;
       border: none;
+
+      background-color: $red-create;
+
       color: white;
       display: flex;
       align-items: center;
@@ -58,6 +61,7 @@
       padding: 0;
       text-decoration: none;
       position: relative;
+      margin-right: 10px;
 
       .plus-icon-wrapper {
         display: flex;
@@ -150,7 +154,7 @@
       left: 0;
       right: 0;
       height: 5px;
-      background: #B91C1C;
+      background: $red-create;
       transform: scaleX(0);
       transition: transform 0.3s ease;
     }
@@ -171,7 +175,7 @@
         font-family: "Roboto", sans-serif;
         font-size: 1.25rem;
         font-weight: 500;
-        color: #B91C1C;
+        color: $red-create;
         margin-bottom: 1rem;
         min-height: 2.5em;  // Pour 2 lignes de titre
       }
@@ -260,7 +264,7 @@ button.new-project-button.position-absolute.top-0.end-0.m-3 {
   background-color: white;
   color: #B91C1C;
   border: 1px solid #B91C1C;
-  
+
   .plus-icon-wrapper {
     font-size: 14px;  // Réduit de 30%
     color: inherit;
@@ -275,7 +279,7 @@ button.new-project-button.position-absolute.top-0.end-0.m-3 {
     background-color: #B91C1C;
     color: white;
     width: 98px;  // Réduit de 30%
-    
+
     .plus-icon-wrapper {
       transform: translateX(-35px);  // Réduit de 30%
     }
