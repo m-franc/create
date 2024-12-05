@@ -4,7 +4,7 @@
 
         <%= link_to "#", class: "navbar-brand mb-3 text-center" do %>
           <%= link_to projects_path do %>
-  <img src="<%= asset_path('icons/create.svg') %>" alt="Créer un projet" />
+  <img src="<%= asset_path('icons/create.svg') %>" alt="Create a project" />
 <% end %>
 
 
@@ -28,7 +28,7 @@
                   <%= text_field_tag :query,
                       params[:query],
                       class: "form-control search-input",
-                      placeholder: "Rechercher...",
+                      placeholder: "Search...",
                       data: {
                         search_target: "input",
                         action: "input->search#search"

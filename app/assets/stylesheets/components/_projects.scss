@@ -188,6 +188,68 @@
   }
 }
 
+// Style commun pour les boutons d'action
+.new-project-button,
+.new-task-button,
+.new-note-button,
+.new-document-button {
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  border: none;
+  background-color: #B91C1C;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0;
+  text-decoration: none;
+  position: relative;
+
+  .plus-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease;
+    font-size: 20px;
+    font-weight: 300;
+    position: absolute;
+  }
+
+  .new-project-text,
+  .new-task-text {
+    position: absolute;
+    opacity: 0;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-size: 15px;
+    width: 100%;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  &:hover {
+    width: 140px;
+    padding: 0 15px;
+    border-radius: 22px;
+
+    .plus-icon-wrapper {
+      transform: translateX(-50px);
+      opacity: 0;
+    }
+
+    .new-project-text,
+    .new-task-text {
+      opacity: 1;
+    }
+  }
+}
+
 // Responsive Design
 @media (max-width: 1400px) {
   .projects-container {

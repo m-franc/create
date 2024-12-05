@@ -11,21 +11,21 @@ class ProjectsController < ApplicationController
   # GET /projects/:id
   def show
     @project = Project.find(params[:id])
-    @notes = @project.notes.includes(:user).order(created_at: :desc)
+    @task = Task.new
     @note = Note.new
+    @document = Document.new
+    @tasks = @project.tasks.order(created_at: :desc)
+    @joined_users = @project.joined_users
+    @notes = @project.notes.includes(:user).order(created_at: :desc)
     @documents = @project.documents.includes(:user)
     @folders = @project.documents.pluck(:folder_name).uniq
     @documents = @project.documents
-    @notes = @project.notes
-    @joined_users = @project.joined_users
 
     # # Debug logging
     # Rails.logger.debug "Project: #{@project.inspect}"
     # Rails.logger.debug "Notes count: #{@notes.count}"
 
-    @tasks = @project.tasks.includes(:user).order(deadline: :asc)
     @documents = @project.documents.includes(:user)
-    @document = Document.new
     @joined_users = @project.joined_users
   end
 
