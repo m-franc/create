@@ -76,7 +76,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_04_220459) do
 
   create_table "messages", force: :cascade do |t|
     t.bigint "conversation_id", null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
