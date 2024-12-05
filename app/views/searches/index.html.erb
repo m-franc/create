@@ -6,7 +6,7 @@
     <div class="search-form mb-4">
       <%= form_tag searches_path, method: :get, class: "d-flex" do %>
         <div class="search-input-container">
-          <%= text_field_tag :query, @query, class: "form-control search-input", placeholder: "Rechercher..." %>
+          <%= text_field_tag :query, @query, class: "form-control search-input", placeholder: "Search..." %>
           <%= button_tag type: 'submit', class: "search-button" do %>
             <span class="search-icon-wrapper">
               <%= inline_svg_tag "icons/search.svg", class: "search-icon" %>

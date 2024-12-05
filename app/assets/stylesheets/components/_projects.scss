@@ -41,11 +41,13 @@
     }
 
     .new-project-button {
+      z-index: 10;
+      background-color: rgba(185, 28, 28, 0.9);  // Un peu transparent
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);  // Ombre légère
       height: 45px;
       width: 45px;
       border-radius: 50%;
       border: none;
-      background-color: $red-create;
       color: white;
       display: flex;
       align-items: center;
@@ -85,6 +87,7 @@
         width: 140px;
         padding: 0 15px;
         border-radius: 22px;
+        background-color: #B91C1C;  // Couleur pleine au survol
 
         .plus-icon-wrapper {
           transform: translateX(-50px);
@@ -124,7 +127,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    background: white;
+    background: B91C1C;
     border-radius: 12px;
     overflow: hidden;
     position: relative;
@@ -186,6 +189,97 @@
     color: #666;
     padding: 2rem;
     font-size: 1.1rem;
+  }
+}
+
+// Style commun pour les boutons d'action
+.new-project-button,
+.new-task-button,
+.new-note-button,
+.new-document-button {
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  border: none;
+  background-color: #B91C1C;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0;
+  text-decoration: none;
+  position: relative;
+
+  .plus-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease;
+    font-size: 20px;
+    font-weight: 300;
+    position: absolute;
+  }
+
+  .new-project-text,
+  .new-task-text {
+    position: absolute;
+    opacity: 0;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-size: 15px;
+    width: 100%;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  &:hover {
+    width: 140px;
+    padding: 0 15px;
+    border-radius: 22px;
+
+    .plus-icon-wrapper {
+      transform: translateX(-50px);
+      opacity: 0;
+    }
+
+    .new-project-text,
+    .new-task-text {
+      opacity: 1;
+    }
+  }
+}
+
+// Style pour le bouton d'édition dans le dashboard
+button.new-project-button.position-absolute.top-0.end-0.m-3 {
+  height: 31px;  // Réduit de 30%
+  width: 31px;   // Réduit de 30%
+  background-color: white;
+  color: #B91C1C;
+  border: 1px solid #B91C1C;
+
+  .plus-icon-wrapper {
+    font-size: 14px;  // Réduit de 30%
+    color: inherit;
+  }
+
+  .new-project-text {
+    font-size: 10px;  // Texte plus petit
+    color: inherit;
+  }
+
+  &:hover {
+    background-color: #B91C1C;
+    color: white;
+    width: 98px;  // Réduit de 30%
+
+    .plus-icon-wrapper {
+      transform: translateX(-35px);  // Réduit de 30%
+    }
   }
 }
 
