@@ -76,9 +76,6 @@ class ProjectsController < ApplicationController
 
   # PATCH/PUT /projects/:id
   def update
-    dates = params["project"]["starting_date"].split("to").map(&:strip)
-    @project.starting_date = dates[0]
-    @project.end_date = dates[1]
     if @project.update(project_params)
       if params[:project][:image].present?
         @project.image.attach(params[:project][:image])
@@ -118,7 +115,7 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:name, :location, :status, :notes, :description, :image, joined_user_ids: [])
+    params.require(:project).permit(:name, :location, :status, :notes, :description, :image, :starting_date, :end_date, joined_user_ids: [])
   end
 
   def note_params
