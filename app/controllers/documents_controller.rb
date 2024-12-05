@@ -48,9 +48,9 @@ class DocumentsController < ApplicationController
     if @document.save
       # Debug logs
       if params[:redirect_tab] == 'document'
-        redirect_to project_path(@project, tab: 'document'), notice: 'Document was successfully uploaded.'
+        redirect_to project_path(@project, tab: 'documents'), notice: 'Document was successfully uploaded.'
       else
-        redirect_to project_path(@project), notice: 'Document was successfully uploaded.'
+        redirect_to project_path(@project, tab: 'documents'), notice: 'Document was successfully uploaded.'
       end
     else
       render :new
