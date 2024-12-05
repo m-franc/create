@@ -47,11 +47,10 @@ class DocumentsController < ApplicationController
 
     if @document.save
       # Debug logs
-      Rails.logger.debug "Saved document with extension: #{@document.file_extension}"
       if params[:redirect_tab] == 'document'
-        redirect_to project_path(@project, tab: 'document'), notice: 'Document was successfully uploaded.'
+        redirect_to project_path(@project, tab: 'documents'), notice: 'Document was successfully uploaded.'
       else
-        redirect_to project_documents_path(@project), notice: 'Document was successfully uploaded.'
+        redirect_to project_path(@project, tab: 'documents'), notice: 'Document was successfully uploaded.'
       end
     else
       render :new
@@ -71,14 +70,14 @@ class DocumentsController < ApplicationController
       begin
         # Get file info from Cloudinary
         info = Cloudinary::Api.resource(@document.cloudinary_id)
-        
+
         # Get the file
         response = Cloudinary::Downloader.download(@document.cloudinary_id)
-        
+
         # Build filename with extension
         extension = info['format']
         filename = "#{@document.name}.#{extension}"
-        
+
         # Send file to browser without redirecting
         send_data response,
                 filename: filename,
