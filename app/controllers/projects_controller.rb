@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy, :accept, :decline]
-
+  
   # GET /projects
   def index
     @projects_user = ProjectUser.where(user: current_user)
