@@ -324,9 +324,10 @@
       <div class="tasks-container p-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h3>Tasks</h3>
-          <%= link_to new_project_task_path(@project), class: "btn btn-primary rounded-pill" do %>
-            <i class="bi bi-plus-lg"></i> Add Task
-          <% end %>
+          <button type="button" class="new-task-button" data-bs-toggle="modal" data-bs-target="#newTaskModal">
+            <span class="plus-icon-wrapper"><i class="fas fa-list-check"></i></span>
+            <span class="new-task-text">+ ADD TASK</span>
+          </button>
         </div>
 
         <% if @tasks.any? %>
@@ -377,9 +378,11 @@
     <div class="tab-pane fade" id="notes-tab-pane" role="tabpanel" aria-labelledby="notes-tab" tabindex="0">
       <div class="container mt-4">
         <!-- Notes Header -->
-        <div class="d-flex justify-content-end mb-4">
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newNoteModal">
-            <i class="fas fa-plus me-2"></i>New Note
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3>Notes</h3>
+          <button type="button" class="new-note-button" data-bs-toggle="modal" data-bs-target="#newNoteModal">
+            <span class="plus-icon-wrapper"><i class="fas fa-note-sticky"></i></span>
+            <span class="new-task-text">+ ADD NOTE</span>
           </button>
         </div>
 
@@ -454,12 +457,11 @@
          data-turbo="false">
       <div class="container mt-4">
         <!-- Upload button -->
-        <div class="d-flex justify-content-end mb-4">
-          <button type="button"
-                  class="btn btn-primary"
-                  data-bs-toggle="modal"
-                  data-bs-target="#uploadDocumentModal">
-            <i class="fas fa-upload me-2"></i>Upload Document
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3>Documents</h3>
+          <button type="button" class="new-document-button" data-bs-toggle="modal" data-bs-target="#uploadDocumentModal">
+            <span class="plus-icon-wrapper"><i class="fas fa-file-circle-plus"></i></span>
+            <span class="new-task-text">+ ADD FILE</span>
           </button>
         </div>
 
@@ -563,6 +565,42 @@
 
   </div>
 
+</div>
+
+<!-- New Task Modal -->
+<div class="modal fade" 
+     id="newTaskModal" 
+     tabindex="-1" 
+     aria-labelledby="newTaskModalLabel" 
+     aria-hidden="true"
+     data-controller="task-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newTaskModalLabel">Add New Task</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for([@project, @task], 
+            html: { 
+              data: { 
+                action: "turbo:submit-end->task-modal#closeModal",
+                turbo_frame: "tasks_list"
+              }
+            }) do |f| %>
+          <div class="form-inputs">
+            <%= f.input :name, required: true, placeholder: 'Enter task name' %>
+            <%= f.input :description, as: :text, input_html: { rows: 3 }, placeholder: 'Enter task description' %>
+            <%= f.input :deadline, as: :date, html5: true %>
+            <%= f.input :priority, collection: ['Low', 'Medium', 'High'], prompt: 'Select priority' %>
+          </div>
+          <div class="form-actions text-end mt-3">
+            <%= f.button :submit, 'Create Task', class: 'btn btn-primary' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
 
 <% content_for :styles do %>
