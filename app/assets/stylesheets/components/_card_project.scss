@@ -137,12 +137,24 @@ $red-create: #B93838;
 
 /// ALL TASKS
 
+
+.task-title{
+  margin: 20px;
+}
+
+.all-task-container {
+  width: 80%; /* ou une autre valeur */
+  margin: 0 auto;
+}
+
+
 .card-all-task-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* Crée 2 colonnes de taille égale */
   gap: 20px; /* Espace entre les cartes */
-  width: 80%;
+  width: 100%;
   height: auto; /* Laisse la hauteur ajustée en fonction du contenu */
+
 }
 
 .card-all-tasks {
@@ -153,7 +165,7 @@ $red-create: #B93838;
   border-radius: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
-  height: 200px;
+  height: 250px;
   width: 100%; /* Occupe toute la largeur disponible dans la grille */
   border: solid 1px $red-create;
 
@@ -354,6 +366,7 @@ $red-create: #B93838;
     width: 100%;
     position: relative;
     padding-bottom: 0.75rem;
+
 
     &:after {
       content: '';
