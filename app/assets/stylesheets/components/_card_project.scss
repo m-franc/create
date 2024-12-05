@@ -315,3 +315,56 @@ $red-create: #B93838;
     }
   }
 }
+
+// Styles spécifiques pour la section des tâches dans le nav-link
+#contact-tab-pane {
+  .tasks-container {
+    height: 100%;
+    background-color: white;
+    
+    .list-group {
+      .task-item {
+        padding: 1rem;
+        transition: all 0.2s ease;
+        border-radius: 8px;
+        margin-bottom: 0.5rem;
+        border: 1px solid transparent;
+
+        &:hover {
+          background-color: #f8f9fa;
+          border-color: #e9ecef;
+        }
+
+        &.completed {
+          background-color: #f8f9fa;
+          
+          .task-content {
+            opacity: 0.7;
+          }
+        }
+
+        .task-content {
+          transition: all 0.2s ease;
+          
+          .fw-medium {
+            margin-bottom: 0.25rem;
+          }
+
+          .text-muted {
+            font-size: 0.875rem;
+          }
+        }
+
+        .form-check-input {
+          cursor: pointer;
+          border-color: #dee2e6;
+          
+          &:checked {
+            background-color: $red-create;
+            border-color: $red-create;
+          }
+        }
+      }
+    }
+  }
+}
