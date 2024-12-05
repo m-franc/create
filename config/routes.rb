@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'home/index'
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -11,7 +12,11 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show]
 
   # General project routes
+
+
   root 'projects#index'
+
+  get 'home/', to: "home#index", as: "home"
 
   resources :projects do
     resources :notes, only: [:create, :destroy]
