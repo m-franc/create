@@ -133,6 +133,64 @@ $red-create: #B93838;
   margin: 3rem 0;
 }
 
+
+
+/// ALL TASKS
+
+.card-all-task-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Crée 2 colonnes de taille égale */
+  gap: 20px; /* Espace entre les cartes */
+  width: 80%;
+  height: auto; /* Laisse la hauteur ajustée en fonction du contenu */
+}
+
+.card-all-tasks {
+  display: flex;
+  align-items: center; /* Aligne les éléments verticalement */
+  gap: 10px; /* Espacement entre l'image et le contenu */
+  margin-top: 10px;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  height: 200px;
+  width: 100%; /* Occupe toute la largeur disponible dans la grille */
+  border: solid 1px $red-create;
+
+  &:hover {
+    transform: scale(1.04);
+  }
+}
+
+.card-all-tasks-image {
+  width: 100px; /* Fixe la largeur de l'image */
+  height: 100%; /* L'image prend toute la hauteur du conteneur */
+  display: flex;
+  align-items: center; /* Centrer l'image verticalement dans le conteneur */
+  justify-content: center; /* Centrer l'image horizontalement */
+  border-radius: 20px 0 0 20px;
+  overflow: hidden; /* Assure que l'image ne dépasse pas du conteneur */
+}
+
+.card-all-tasks-image img {
+  width: 100%; /* L'image prend toute la largeur du conteneur de l'image */
+  height: 100%; /* L'image prend toute la hauteur du conteneur de l'image */
+  object-fit: cover; /* Permet à l'image de remplir le conteneur sans déformer l'image */
+}
+
+
+.card-all-tasks-image {
+  width: 100px; /* Garde la largeur de l'image */
+  display: flex;
+  align-items: center; /* Centrer l'image verticalement dans le conteneur */
+  justify-content: center; /* Centrer l'image horizontalement */
+}
+
+
+
+.card-content {
+  flex-grow: 1; /* Permet au contenu de s'étendre sur l'espace restant */
+=======
 // Hover effects for list items
 .list-group {
   .d-flex {
@@ -367,4 +425,5 @@ $red-create: #B93838;
       }
     }
   }
+
 }
