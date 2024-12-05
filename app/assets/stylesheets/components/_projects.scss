@@ -21,7 +21,7 @@
     }
 
     .new-link {
-      background-color: #B91C1C;
+      background-color: $red-create;
       color: white;
       padding: 0.75rem 1.5rem;
       border-radius: 8px;
@@ -45,7 +45,7 @@
       width: 45px;
       border-radius: 50%;
       border: none;
-      background-color: #B91C1C;
+      background-color: $red-create;
       color: white;
       display: flex;
       align-items: center;
@@ -147,7 +147,7 @@
       left: 0;
       right: 0;
       height: 5px;
-      background: #B91C1C;
+      background: $red-create;
       transform: scaleX(0);
       transition: transform 0.3s ease;
     }
@@ -168,7 +168,7 @@
         font-family: "Roboto", sans-serif;
         font-size: 1.25rem;
         font-weight: 500;
-        color: #B91C1C;
+        color: $red-create;
         margin-bottom: 1rem;
         min-height: 2.5em;  // Pour 2 lignes de titre
       }
