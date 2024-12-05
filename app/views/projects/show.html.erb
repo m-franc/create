@@ -1,10 +1,15 @@
 <div class="project h-100 d-flex flex-column">
-  <div class="project-header">
+  <div class="project-header position-relative">
     <% if @project.image.present? %>
       <%= image_tag @project.image, class: 'project-image' %>
     <% else %>
       <%= image_tag "unavailable_image.jpg", class: 'project-image' %>
     <% end %>
+
+    <button type="button" class="new-project-button position-absolute top-0 end-0 m-3" data-bs-toggle="modal" data-bs-target="#editProjectModal">
+      <span class="plus-icon-wrapper"><i class="fa-regular fa-pen-to-square"></i></span>
+      <span class="new-project-text">EDIT PROJECT</span>
+    </button>
 
     <div class="project-details">
         <div class="title-info">
@@ -21,9 +26,6 @@
           </div>
         </div>
       <p><%= @project.description %></p>
-    <%= link_to edit_project_path(@project), class: 'edit-link' do %>
-  <i class="fa-regular fa-pen-to-square"></i>
-<% end %>
 
     </div>
   </div>
@@ -324,9 +326,10 @@
       <div class="tasks-container p-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h3>Tasks</h3>
-          <%= link_to new_project_task_path(@project), class: "btn btn-primary rounded-pill" do %>
-            <i class="bi bi-plus-lg"></i> Add Task
-          <% end %>
+          <button type="button" class="new-task-button" data-bs-toggle="modal" data-bs-target="#newTaskModal">
+            <span class="plus-icon-wrapper"><i class="fas fa-list-check"></i></span>
+            <span class="new-task-text">+ ADD TASK</span>
+          </button>
         </div>
 
         <% if @tasks.any? %>
@@ -377,9 +380,11 @@
     <div class="tab-pane fade" id="notes-tab-pane" role="tabpanel" aria-labelledby="notes-tab" tabindex="0">
       <div class="container mt-4">
         <!-- Notes Header -->
-        <div class="d-flex justify-content-end mb-4">
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newNoteModal">
-            <i class="fas fa-plus me-2"></i>New Note
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3>Notes</h3>
+          <button type="button" class="new-note-button" data-bs-toggle="modal" data-bs-target="#newNoteModal">
+            <span class="plus-icon-wrapper"><i class="fas fa-note-sticky"></i></span>
+            <span class="new-task-text">+ ADD NOTE</span>
           </button>
         </div>
 
@@ -418,7 +423,16 @@
                   <p class="mb-0">No notes yet</p>
                 </div>
               <% end %>
+
             </div>
+
+            <% else %>
+              <div class="text-center text-muted p-4">
+                <i class="fas fa-sticky-note fa-2x mb-2 text-danger"></i>
+                <p class="mb-0">No notes yet</p>
+              </div>
+            <% end %>
+
           </div>
 
 
@@ -457,12 +471,11 @@
          data-turbo="false">
       <div class="container mt-4">
         <!-- Upload button -->
-        <div class="d-flex justify-content-end mb-4">
-          <button type="button"
-                  class="btn btn-primary"
-                  data-bs-toggle="modal"
-                  data-bs-target="#uploadDocumentModal">
-            <i class="fas fa-upload me-2"></i>Upload Document
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3>Documents</h3>
+          <button type="button" class="new-document-button" data-bs-toggle="modal" data-bs-target="#uploadDocumentModal">
+            <span class="plus-icon-wrapper"><i class="fas fa-file-circle-plus"></i></span>
+            <span class="new-task-text">+ ADD FILE</span>
           </button>
         </div>
 
@@ -566,6 +579,90 @@
 
   </div>
 
+</div>
+
+<!-- New Task Modal -->
+<div class="modal fade"
+     id="newTaskModal"
+     tabindex="-1"
+     aria-labelledby="newTaskModalLabel"
+     aria-hidden="true"
+     data-controller="task-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newTaskModalLabel">Add New Task</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for([@project, @task],
+            html: {
+              data: {
+                action: "turbo:submit-end->task-modal#closeModal",
+                turbo_frame: "tasks_list"
+              }
+            }) do |f| %>
+          <div class="form-inputs">
+            <%= f.input :name, required: true, placeholder: 'Enter task name' %>
+            <%= f.input :description, as: :text, input_html: { rows: 3 }, placeholder: 'Enter task description' %>
+            <%= f.label :date, class: "form-label-red" %>
+                <%= f.text_field :date,
+                  class: "form-control",
+                  placeholder: "Select date",
+                  data: {
+                    controller: "datepicker",
+                    datepicker_date_format: "Y-m-d",
+                    datepicker_min_date: Time.zone.now
+                  }
+                %>
+          </div>
+          <div class="form-actions text-end mt-3">
+            <%= f.button :submit, 'Create Task', class: 'btn btn-primary' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Project Modal -->
+<div class="modal fade" id="editProjectModal" tabindex="-1" aria-labelledby="editProjectModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProjectModalLabel">Edit Project</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with(model: @project, local: true) do |form| %>
+          <div class="field mb-3">
+            <%= form.label :name, class: "form-label" %>
+            <%= form.text_field :name, class: "form-control" %>
+          </div>
+          <div class="field mb-3">
+            <%= form.label :description, class: "form-label" %>
+            <%= form.text_area :description, class: "form-control" %>
+          </div>
+          <div class="field mb-3">
+            <%= form.label :location, class: "form-label" %>
+            <%= form.text_field :location, class: "form-control" %>
+          </div>
+          <div class="field mb-3">
+            <%= form.label :end_date, class: "form-label" %>
+            <%= form.date_field :end_date, class: "form-control" %>
+          </div>
+          <div class="form-group mb-3">
+            <%= form.label :image, "Upload Project Image", class: "form-label" %>
+            <%= form.file_field :image, class: "form-control" %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <%= form.submit "Update Project", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
 
 <% content_for :styles do %>
