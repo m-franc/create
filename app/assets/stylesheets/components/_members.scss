@@ -1,0 +1,102 @@
+.members-container {
+  .list-group {
+    display: grid;
+    gap: 1rem;
+    padding: 0.5rem;
+    
+    .list-group-item {
+      border: none;
+      border-radius: 16px;
+      padding: 1.5rem;
+      background: white;
+      position: relative;
+      transition: all 0.3s ease;
+      
+      // Ombre portée asymétrique
+      box-shadow: 
+        -8px 8px 16px rgba(0, 0, 0, 0.03),
+        -4px 4px 8px rgba(0, 0, 0, 0.02);
+      
+      &:hover {
+        transform: translateY(-2px) translateX(2px);
+        box-shadow: 
+          -12px 12px 20px rgba(0, 0, 0, 0.04),
+          -6px 6px 12px rgba(0, 0, 0, 0.03);
+      }
+
+      // Style spécial pour le propriétaire
+      &.border-start {
+        border: none !important;
+        background: linear-gradient(135deg, rgba($red-create, 0.05), white 60%);
+        
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          height: 100%;
+          width: 6px;
+          background: linear-gradient(to bottom, $red-create, rgba($red-create, 0.6));
+          border-radius: 16px 0 0 16px;
+        }
+      }
+
+      // Avatar style
+      .avatar-placeholder {
+        width: 48px !important;
+        height: 48px !important;
+        position: relative;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          inset: -2px;
+          border-radius: 50%;
+          background: linear-gradient(45deg, rgba($red-create, 0.4), transparent);
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+        
+        &:hover::after {
+          opacity: 1;
+        }
+
+        &.bg-primary {
+          background: linear-gradient(135deg, $red-create, darken($red-create, 10%)) !important;
+        }
+
+        &.bg-secondary {
+          background: linear-gradient(135deg, $gray-600, darken($gray-600, 10%)) !important;
+        }
+      }
+
+      // Badge style
+      .badge {
+        background: linear-gradient(135deg, $red-create, darken($red-create, 10%)) !important;
+        padding: 0.5em 1em;
+        border-radius: 12px;
+        font-weight: 500;
+        font-size: 0.7rem;
+        box-shadow: 0 2px 4px rgba($red-create, 0.2);
+      }
+
+      // Text styles
+      .fw-medium {
+        font-size: 1.1rem;
+        background: linear-gradient(45deg, $gray-900, $gray-700);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .text-muted {
+        font-size: 0.85rem;
+        opacity: 0.8;
+      }
+    }
+
+    // Layout responsive
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+  }
+}
