@@ -21,95 +21,32 @@ ProjectUser.destroy_all
 Project.destroy_all
 User.destroy_all
 
-puts "Database cleaned!"
-
 # Create Users
 puts "Creating users..."
 
-users = [
-  {
-    email: "sarah.anderson@theater.com",
-    password: "password123",
-    first_name: "Sarah",
-    last_name: "Anderson",
-    username: "sarah_anderson",
-    job: "Artistic Director"
-  },
-  {
-    email: "michael.thompson@theater.com",
-    password: "password123",
-    first_name: "Michael",
-    last_name: "Thompson",
-    username: "michael_thompson",
-    job: "Stage Manager"
-  },
-  {
-    email: "emma.rodriguez@theater.com",
-    password: "password123",
-    first_name: "Emma",
-    last_name: "Rodriguez",
-    username: "emma_rodriguez",
-    job: "Lighting Designer"
-  },
-  {
-    email: "david.chen@theater.com",
-    password: "password123",
-    first_name: "David",
-    last_name: "Chen",
-    username: "david_chen",
-    job: "Sound Engineer"
-  },
-  {
-    email: "lisa.patel@theater.com",
-    password: "password123",
-    first_name: "Lisa",
-    last_name: "Patel",
-    username: "lisa_patel",
-    job: "Costume Designer"
-  },
-  {
-    email: "james.murphy@theater.com",
-    password: "password123",
-    first_name: "James",
-    last_name: "Murphy",
-    username: "james_murphy",
-    job: "Props Master"
-  },
-  {
-    email: "anna.schmidt@theater.com",
-    password: "password123",
-    first_name: "Anna",
-    last_name: "Schmidt",
-    username: "anna_schmidt",
-    job: "Casting Director"
-  },
-  {
-    email: "robert.williams@theater.com",
-    password: "password123",
-    first_name: "Robert",
-    last_name: "Williams",
-    username: "robert_williams",
-    job: "Technical Director"
-  },
-  {
-    email: "maria.garcia@theater.com",
-    password: "password123",
-    first_name: "Maria",
-    last_name: "Garcia",
-    username: "maria_garcia",
-    job: "Choreographer"
-  },
-  {
-    email: "thomas.miller@theater.com",
-    password: "password123",
-    first_name: "Thomas",
-    last_name: "Miller",
-    username: "thomas_miller",
-    job: "Production Manager"
-  }
+users_data = [
+  { first_name: "Gautier", last_name: "David", email: "gautier.david@theater.com", username: "gautier_d", job: "Theater Director", password: "password123" },
+  { first_name: "Nicolas", last_name: "Delfour", email: "nicolas.delfour@theater.com", username: "nicolas_d", job: "Stage Manager", password: "password123" },
+  { first_name: "Diane", last_name: "Johnston", email: "diane.johnston@theater.com", username: "diane_j", job: "Costume Designer", password: "password123" },
+  { first_name: "Louise", last_name: "Ouldhaddi", email: "louise.ouldhaddi@theater.com", username: "louise_o", job: "Lighting Designer", password: "password123" },
+  { first_name: "Thomas", last_name: "Desmoulins", email: "thomas.desmoulins@theater.com", username: "thomas_d", job: "Sound Engineer", password: "password123" },
+  { first_name: "Mathieu", last_name: "Trancoso", email: "mathieu.trancoso@theater.com", username: "mathieu_t", job: "Set Designer", password: "password123" },
+  { first_name: "Nicolas", last_name: "Bischoff", email: "nicolas.bischoff@theater.com", username: "nicolas_b", job: "Production Manager", password: "password123" },
+  { first_name: "Julien", last_name: "Da Silva", email: "julien.dasilva@theater.com", username: "julien_d", job: "Technical Director", password: "password123" },
+  { first_name: "Robin", last_name: "Rettien", email: "robin.rettien@theater.com", username: "robin_r", job: "Props Master", password: "password123" },
+  { first_name: "Pierre", last_name: "Penhard", email: "pierre.penhard@theater.com", username: "pierre_p", job: "Scenic Artist", password: "password123" },
+  { first_name: "Tristan", last_name: "Monteiro", email: "tristan.monteiro@theater.com", username: "tristan_m", job: "Stage Carpenter", password: "password123" },
+  { first_name: "Paul", last_name: "Portier", email: "paul.portier@theater.com", username: "paul_p", job: "Lighting Technician", password: "password123" },
+  { first_name: "Timothée", last_name: "Régis", email: "timothee.regis@theater.com", username: "timothee_r", job: "Sound Technician", password: "password123" },
+  { first_name: "Adil", last_name: "Sari", email: "adil.sari@theater.com", username: "adil_s", job: "Wardrobe Supervisor", password: "password123" },
+  { first_name: "Zena", last_name: "El Kurdi", email: "zena.elkurdi@theater.com", username: "zena_e", job: "Makeup Artist", password: "password123" },
+  { first_name: "Clothilde", last_name: "Scache", email: "clothilde.scache@theater.com", username: "clothilde_s", job: "Choreographer", password: "password123" },
+  { first_name: "Rayan", last_name: "Anser", email: "rayan.anser@theater.com", username: "rayan_a", job: "Production Assistant", password: "password123" },
+  { first_name: "Manon", last_name: "Roussel", email: "manon.roussel@theater.com", username: "manon_r", job: "Stage Hand", password: "password123" },
+  { first_name: "Mathias", last_name: "Durand", email: "mathias.durand@theater.com", username: "mathias_d", job: "Front of House Manager", password: "password123" }
 ]
 
-created_users = users.map do |user_data|
+users = users_data.map do |user_data|
   User.create!(
     email: user_data[:email],
     password: user_data[:password],
@@ -120,7 +57,7 @@ created_users = users.map do |user_data|
   )
 end
 
-puts "Created #{created_users.length} users!"
+puts "Created #{users.length} users!"
 
 # Project images mapping
 CLOUDINARY_IMAGES = {
@@ -268,7 +205,7 @@ projects_data.each do |project_data|
     location: project_data[:location],
     starting_date: project_data[:starting_date],
     end_date: project_data[:end_date],
-    user: created_users[rand(created_users.length)],
+    user: users[rand(users.length)],
     status: ["In Progress", "Pending", "Completed"].sample
   )
 
@@ -286,7 +223,7 @@ projects_data.each do |project_data|
   end
 
   # Add 2-3 random members to each project
-  team_members = created_users.sample(rand(2..3))
+  team_members = users.sample(rand(4..6))
   team_members.each do |member|
     ProjectUser.create!(project: project, user: member, status: "0") unless member == project.user
   end
@@ -377,5 +314,4 @@ projects_data.each do |project_data|
     end
   end
 end
-
 puts "Created 10 theater projects with tasks, conversations, and assigned team members!"
