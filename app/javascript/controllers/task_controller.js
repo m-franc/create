@@ -7,6 +7,20 @@ export default class extends Controller {
     console.log("Task controller connected")
   }
 
+  openEditModal(event) {
+    // Ne pas ouvrir la modal si on clique sur le checkbox
+    if (event.target.closest('.form-check')) {
+      return
+    }
+    
+    const taskItem = event.currentTarget
+    const taskId = taskItem.dataset.taskId
+    const editButton = document.querySelector(`.task-item[data-task-id="${taskId}"] .btn-edit`)
+    if (editButton) {
+      editButton.click()
+    }
+  }
+
   toggle(event) {
     event.preventDefault()
     const form = event.target.closest('form')
@@ -27,14 +41,14 @@ export default class extends Controller {
       if (data.success) {
         // Trouver toutes les instances de la même tâche
         const allTaskItems = document.querySelectorAll(`.task-item[data-task-id="${taskId}"]`)
-        
+
         allTaskItems.forEach(taskItem => {
           const textElement = taskItem.querySelector('[data-task-target="text"]')
           const checkbox = taskItem.querySelector('input[type="checkbox"]')
-          
+
           // Synchroniser l'état du checkbox
           if (checkbox) checkbox.checked = data.completed
-          
+
           // Synchroniser les classes CSS
           if (data.completed) {
             textElement.classList.add('text-decoration-line-through', 'text-muted')

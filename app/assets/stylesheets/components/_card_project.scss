@@ -155,7 +155,7 @@ $red-create: #B93838;
       transition: all 0.2s ease;
 
       &:hover {
-        color: #0d6efd;
+        color: $red-create;
       }
     }
 
@@ -178,7 +178,7 @@ $red-create: #B93838;
     transition: all 0.2s ease;
 
     &:hover {
-      color: #0d6efd;
+      color: $red-create;
     }
   }
 
@@ -279,6 +279,11 @@ $red-create: #B93838;
 
 // Unified h4 styling
 .card-project {
+  &#task {
+    min-height: 600px;  /* Augmente la hauteur de la carte */
+    overflow-y: auto;
+  }
+
   h4 {
     font-size: 1.25rem;
     font-weight: 600;
