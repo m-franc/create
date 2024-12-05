@@ -389,11 +389,11 @@
         </div>
 
         <!-- Notes List -->
-        <div class="card">
-          <div class="card-body p-0">
-            <% if @project.notes.any? %>
-              <% @project.notes.order(created_at: :desc).each do |note| %>
-                <div class="p-3 border-bottom">
+        <div class="notes-list">
+          <% if @project.notes.any? %>
+            <% @project.notes.order(created_at: :desc).each do |note| %>
+              <div class="card mb-3">
+                <div class="card-body">
                   <div class="d-flex justify-content-between align-items-start">
                     <div class="w-100 me-5">
                       <div class="d-flex justify-content-between align-items-center mb-2">
@@ -414,39 +414,14 @@
                     <% end %>
                   </div>
                 </div>
-              <% end %>
-            <% else %>
-              <div class="text-center text-muted p-4">
-                <i class="fas fa-sticky-note fa-2x mb-2 text-danger"></i>
-                <p class="mb-0">No notes yet</p>
               </div>
             <% end %>
-          </div>
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="newNoteModal" tabindex="-1" aria-labelledby="newNoteModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="newNoteModalLabel">Add New Note</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <%= simple_form_for([@project, @note]) do |f| %>
-                  <%= f.input :title, label: 'Title', placeholder: 'Enter note title' %>
-                  <%= f.input :content,
-                      as: :text,
-                      label: 'Note Content',
-                      placeholder: 'Type your note here...',
-                      input_html: { rows: 4 } %>
-                  <div class="form-actions text-end mt-3">
-                    <%= f.button :submit, 'Add Note', class: 'btn btn-primary' %>
-                  </div>
-                <% end %>
-              </div>
+          <% else %>
+            <div class="text-center text-muted p-4">
+              <i class="fas fa-sticky-note fa-2x mb-2 text-danger"></i>
+              <p class="mb-0">No notes yet</p>
             </div>
-          </div>
+          <% end %>
         </div>
       </div>
     </div>
