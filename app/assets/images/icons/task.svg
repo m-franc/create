@@ -1,0 +1,14 @@
+<svg width="53" height="53" viewBox="0 0 53 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Bordure extérieure avec coins arrondis, remis tout à droite -->
+  <rect x="10" y="8" width="33" height="37" rx="8" stroke="#F9F9F9" stroke-width="1.5" fill="none"/>
+
+  <!-- Carré arrondi du haut, remis tout à droite -->
+  <rect x="16.5" y="16" width="20" height="7" rx="6" fill="none" stroke="#F9F9F9" stroke-width="1.5"/>
+
+  <!-- Carré arrondi du bas, remis tout à droite -->
+  <rect x="16.5" y="30" width="20" height="7" rx="6" fill="none" stroke="#F9F9F9" stroke-width="1.5"/>
+
+  <!-- Anneaux supérieurs pour les attaches, remis tout à droite -->
+  <path d="M17 6V12" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M36.5 6V12" stroke="#F9F9F9" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
