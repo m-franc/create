@@ -24,7 +24,11 @@ Rails.application.routes.draw do
       end
     end
     resources :notes
-    resources :tasks
+    resources :tasks do
+      member do
+        patch :toggle_status
+      end
+    end
     # Project-specific conversations
     resources :conversations, only: [:index, :new, :create, :show]
   end

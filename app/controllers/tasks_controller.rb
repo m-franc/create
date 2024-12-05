@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_project
-  before_action :set_task, except: [:index, :new, :create]
+  before_action :set_task, except: [:index, :new, :create, :toggle_status]
 
   def index
     # project_user_ids = @project.project_users.pluck(:id)
@@ -56,10 +56,21 @@ class TasksController < ApplicationController
   end
 
 
+
     def all_task
       @tasks = current_user.tasks.order(deadline: :asc)
       today = Date.today
     end
+
+
+  def toggle_status
+    @task = Task.find(params[:id])
+    @task.update(completed: params[:completed])
+
+    respond_to do |format|
+      format.json { render json: { completed: @task.completed, success: true } }
+    end
+  end
 
 
   private
