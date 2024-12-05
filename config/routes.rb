@@ -31,6 +31,7 @@ Rails.application.routes.draw do
 
   get 'projects/:id/accept', to: "projects#accept", as: "accept"
   get 'projects/:id/decline', to: "projects#decline", as: "decline"
+  get 'all_task', to: 'tasks#all_task', as: 'all_task'
 
   resources :searches, only: [:index]
 
