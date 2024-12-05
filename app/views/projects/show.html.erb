@@ -64,7 +64,7 @@
 <% if @tasks.any? %>
   <div class="task-list">
     <% @tasks.first(6).each do |task| %>
-      <div class="task-item py-3 border-bottom <%= 'completed' if task.completed %>" style="border-color: #f0f0f0 !important;">
+      <div class="task-item py-3 border-bottom <%= 'completed' if task.completed %>" style="border-color: #f0f0f0 !important;" data-task-target="item">
         <div class="d-flex align-items-center justify-content-between" style="gap: 30px;" data-controller="task">
           <div class="d-flex align-items-center gap-3">
             <div class="form-check form-switch">
@@ -75,13 +75,11 @@
                                 task_target: "checkbox",
                                 action: "change->task#toggle"
                               },
-                              id: "task_#{task.id}",
                               checked: task.completed %>
               <% end %>
             </div>
             <div class="fw-medium <%= 'text-decoration-line-through text-muted' if task.completed %>"
-                 data-task-target="text"
-                 style="font-size: 0.95rem;">
+                 data-task-target="text">
               <%= task.name %>
             </div>
           </div>

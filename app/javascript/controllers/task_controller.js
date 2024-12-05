@@ -8,9 +8,13 @@ export default class extends Controller {
   }
 
   toggle(event) {
+    event.preventDefault()
     const form = event.target.closest('form')
-    const taskId = event.target.id
     const taskItem = event.target.closest('.task-item')
+    const textElement = taskItem.querySelector('[data-task-target="text"]')
+    
+    const formData = new FormData(form)
+    formData.set('completed', event.target.checked)
 
     fetch(form.action, {
       method: 'PATCH',
@@ -18,19 +22,22 @@ export default class extends Controller {
         'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
         'Accept': 'application/json'
       },
-      body: new FormData(form)
+      body: formData
     })
     .then(response => response.json())
     .then(data => {
-      if (data.completed) {
-        taskItem.classList.add('completed')
-      } else {
-        taskItem.classList.remove('completed')
+      if (data.success) {
+        if (data.completed) {
+          textElement.classList.add('text-decoration-line-through', 'text-muted')
+          taskItem.classList.add('completed')
+        } else {
+          textElement.classList.remove('text-decoration-line-through', 'text-muted')
+          taskItem.classList.remove('completed')
+        }
       }
     })
     .catch(error => {
       console.error('Error:', error)
-      // Revert the checkbox state if there's an error
       event.target.checked = !event.target.checked
     })
   }

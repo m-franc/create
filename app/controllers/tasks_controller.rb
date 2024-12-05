@@ -55,10 +55,10 @@ class TasksController < ApplicationController
 
   def toggle_status
     @task = Task.find(params[:id])
-    @task.update(completed: !@task.completed)
+    @task.update(completed: params[:completed])
+
     respond_to do |format|
-      format.json { render json: { status: 'success', completed: @task.completed } }
-      format.html { redirect_back(fallback_location: project_path(@task.project)) }
+      format.json { render json: { completed: @task.completed, success: true } }
     end
   end
 
