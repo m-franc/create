@@ -24,13 +24,18 @@ Rails.application.routes.draw do
       end
     end
     resources :notes
-    resources :tasks
+    resources :tasks do
+      member do
+        patch :toggle_status
+      end
+    end
     # Project-specific conversations
     resources :conversations, only: [:index, :new, :create, :show]
   end
 
   get 'projects/:id/accept', to: "projects#accept", as: "accept"
   get 'projects/:id/decline', to: "projects#decline", as: "decline"
+  get 'all_task', to: 'tasks#all_task', as: 'all_task'
 
   resources :searches, only: [:index]
 
