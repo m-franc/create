@@ -43,7 +43,8 @@ users_data = [
   { first_name: "Clothilde", last_name: "Scache", email: "clothilde.scache@theater.com", username: "clothilde_s", job: "Choreographer", password: "password123" },
   { first_name: "Rayan", last_name: "Anser", email: "rayan.anser@theater.com", username: "rayan_a", job: "Production Assistant", password: "password123" },
   { first_name: "Manon", last_name: "Roussel", email: "manon.roussel@theater.com", username: "manon_r", job: "Stage Hand", password: "password123" },
-  { first_name: "Mathias", last_name: "Durand", email: "mathias.durand@theater.com", username: "mathias_d", job: "Front of House Manager", password: "password123" }
+  { first_name: "Mathias", last_name: "Durand", email: "mathias.durand@theater.com", username: "mathias_d", job: "Front of House Manager", password: "password123" },
+  { first_name: "Guest", last_name: "Guest", email: "guest@theater.com", username: "guest", job: "Guest", password: "guest123" }
 ]
 
 users = users_data.map do |user_data|
